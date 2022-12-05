@@ -1,0 +1,11 @@
+<svg>
+    <circle *ngFor="let circle of circles; let i = index" 
+        (focus)="selectObject(i)" 
+        (keydown.delete)="deleteObject(i)" 
+        [attr.cx]="circle.x" 
+        [attr.cy]="circle.y" 
+        [attr.r]="circle.r" 
+        [attr.fill]="circle.color" 
+        cdkDrag 
+    />
+</svg>

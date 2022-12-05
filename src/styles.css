@@ -11,3 +11,12 @@ body {
     transition-timing-function: cubic-bezier(0.42,0,0.58,1);
 } */
 
+svg {
+    height: 100%;
+    width: 100%;
+    background-color: grey;
+    border: 2px solid green;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

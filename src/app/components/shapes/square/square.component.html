@@ -1,0 +1,12 @@
+<svg>
+    <rect *ngFor="let square of squares; let i = index" 
+        (focus)="selectObject(i)" 
+        (keydown.delete)="deleteObject(i)" 
+        [attr.x]="square.x" 
+        [attr.y]="square.y" 
+        [attr.width]="square.sideLength" 
+        [attr.height]="square.sideLength" 
+        [attr.fill]="square.color" 
+        cdkDrag 
+    />
+</svg>
