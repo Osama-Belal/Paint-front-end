@@ -8,6 +8,7 @@
         [attr.width]="rectangle.width" 
         [attr.height]="rectangle.height" 
         [attr.fill]="rectangle.color" 
+        [isObjectSelected]="isSelected"
 
         appBoxResize
         [(width)]="rectangle.width"
@@ -15,7 +16,6 @@
         [mouseX]="mouseX"
         [mouseY]="mouseY"
         [isMouseDown]="isMouseDown">
-        [isObjectSelected]="isSelected"
     </rect>
 
 </svg>

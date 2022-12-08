@@ -9,7 +9,7 @@ export class BoxResizeDirective implements OnChanges{
   @Input() mouseX!:number;
   @Input() mouseY!:number;
   @Input() isMouseDown!: boolean;
-  @Input() isObjectSelected!: boolean;
+  @Input() isObjectSelected: boolean = true;
   @Output() widthChange =  new EventEmitter<number>();
   @Output() heightChange =  new EventEmitter<number>();
 
@@ -22,7 +22,7 @@ export class BoxResizeDirective implements OnChanges{
    }
 
   ngOnChanges(changes: SimpleChanges): void {
-    //console.log(changes);
+    console.log(this.el);
     if(changes['isMouseDown']){
       if(changes['isMouseDown'].currentValue == true)
         this.setStatus();
@@ -88,6 +88,6 @@ export class BoxResizeDirective implements OnChanges{
   resizeConditions(){
     const {left, top} = this.el.nativeElement.getBoundingClientRect();
     console.log('isObject: ' + this.isObjectSelected);
-    return left >= 0 && this.isObjectSelected;
+    return left >= 0 && this.isObjectSelected === true;
   }
 }

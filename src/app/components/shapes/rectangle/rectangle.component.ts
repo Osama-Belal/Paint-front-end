@@ -11,16 +11,16 @@ export class RectangleComponent implements OnInit {
   @Input() mouseY!:number;
   @Input() isMouseDown!:boolean;
   selectedID: number = 0;
-  isSelected!: boolean;
+  isSelected: boolean = false;
   constructor() { }
 
   ngOnInit(): void {
   }
 
   rectangles: Rectangle[] = [
-    {id:0, x: 50, y: 50, width: 40, height:50, color: 'red'},
-    {id:1, x: 100, y: 200, width: 90, height:60, color: 'green'},
-    {id:2, x: 200, y: 300, width: 100, height:200, color: 'blue'}
+    {id:0, x: 50, y: 50, width: 40, height:50, color: 'grey'},
+    {id:1, x: 100, y: 200, width: 90, height:60, color: 'grey'},
+    {id:2, x: 200, y: 300, width: 100, height:200, color: 'grey'}
   ];
 
   selectObject(index: number){
