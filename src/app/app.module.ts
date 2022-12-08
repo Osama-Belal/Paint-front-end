@@ -26,6 +26,7 @@ import { RectangleComponent } from './components/shapes/rectangle/rectangle.comp
 import { SquareComponent } from './components/shapes/square/square.component';
 import { BoxResizeDirective } from './directives/box-resize.directive';
 import { MyResizeDirective } from './directives/my-resize.directive';
+import { TriangleComponent } from './components/shapes/triangle/triangle.component';
 
 enableRipple(true);
 
@@ -41,7 +42,8 @@ enableRipple(true);
     RectangleComponent,
     EllipseComponent,
     MyResizeDirective,
-    BoxResizeDirective
+    BoxResizeDirective,
+    TriangleComponent
   ],
   imports: [
     BrowserModule,

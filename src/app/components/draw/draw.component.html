@@ -3,23 +3,6 @@
   <svg app-square   [mouseX]="mouseX" [mouseY]="mouseY" [isMouseDown]='isMouseDown' [dragFlag]="myService.dragFlag"></svg>
   <svg app-rectangle [mouseX]="mouseX" [mouseY]="mouseY" [isMouseDown]='isMouseDown' [dragFlag]="myService.dragFlag"></svg>
   <svg app-ellipse  [mouseX]="mouseX" [mouseY]="mouseY" [isMouseDown]='isMouseDown' [dragFlag]="myService.dragFlag"></svg>
- <!--  <path [attr.d]="pathData" ></path>  -->
+  <svg app-triangle></svg>
+  <path [attr.d]="pathData" ></path> 
 </svg>
-
-<!--   <span>
-  </span>
-  <span>
-    
-  </span>
-  
-  <svg>
-      <line x1="0" y1="0" x2="200" y2="200" style="stroke:rgb(255,0,0);stroke-width:2" cdkDrag class='resizable'/>
-  </svg>
-
-
-<div class="myShapes">
-  <button (click)="func()">Press for circle</button>
-  <button>Press for rectangle</button>
-  <button>Press for ellipse</button>
-  <button>Press for square</button>
-</div> -->

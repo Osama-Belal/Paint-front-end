@@ -1,0 +1,10 @@
+<svg>
+    <polygon *ngFor="let triangle of triangles; let i = index"
+    [attr.points]= triangle.pointsToString
+    [attr.fill] = triangle.color
+
+    cdkDrag
+    appBoxResize
+    style="width:1000px;"
+     />
+</svg>
