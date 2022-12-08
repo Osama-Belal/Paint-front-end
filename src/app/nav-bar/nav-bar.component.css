@@ -86,6 +86,11 @@
   height: 100%;
   padding: 5px 0;
   overflow: auto;
+  box-sizing: border-box;
+  max-height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  grid-gap: 6px;
 }
 
 
@@ -114,14 +119,6 @@
   font-size: 80%;
 }
 
-.navbar .block .grid{
-  box-sizing: border-box;
-  max-height: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  grid-gap: 6px;
-  overflow: auto;
-}
 .navbar .block .grid.two-btns{
   grid-gap: 40px;
 }
