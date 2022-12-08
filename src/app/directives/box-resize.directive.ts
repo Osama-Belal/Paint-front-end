@@ -22,7 +22,7 @@ export class BoxResizeDirective implements OnChanges{
    }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.el);
+    //console.log(this.el);
     if(changes['isMouseDown']){
       if(changes['isMouseDown'].currentValue == true)
         this.setStatus();
@@ -40,8 +40,8 @@ export class BoxResizeDirective implements OnChanges{
     this.object = {left, top};
     let widthString = this.width;
     let heightString = this.height;
-
-
+    
+    
     if(typeof widthString === 'string'){
       let temp2 = (widthString as string).replace('px', '');
       this.width = Number(temp2);
@@ -55,15 +55,16 @@ export class BoxResizeDirective implements OnChanges{
     if(Math.abs(this.mouse.x - (left + (this.width))) <= 10 && Math.abs(this.mouse.y - (top + (this.height))) <= 10){
       this.status = 'resize';
     }
+
   
   }
-
-
+  
+  
   removeStatus(){
     this.status = "";
   }
   
-
+  
   @HostListener('window:mousemove', ['$event'])
   onMouseMove(event: MouseEvent){
     this.mouse = {
@@ -72,19 +73,20 @@ export class BoxResizeDirective implements OnChanges{
     }
     if(this.status == 'resize')
       this.resize();
+
   }
   
   resize(){
     if(this.resizeConditions()){
       const {left, top} = this.object
-     /*  console.log("currx: " + this.mouse.x + " left: " + left); */
+      /*  console.log("currx: " + this.mouse.x + " left: " + left); */
       this.el.nativeElement.style.width = this.mouse.x - left;
       this.el.nativeElement.style.height = this.mouse.y - top;
       this.widthChange.emit(this.el.nativeElement.style.width);
       this.heightChange.emit(this.el.nativeElement.style.height);
     }
   }
-
+  
   resizeConditions(){
     const {left, top} = this.el.nativeElement.getBoundingClientRect();
     console.log('isObject: ' + this.isObjectSelected);

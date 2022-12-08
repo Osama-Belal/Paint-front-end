@@ -11,6 +11,7 @@ export class CircleComponent implements OnInit {
   @Input() mouseX!:number;
   @Input() mouseY!:number;
   @Input() isMouseDown!:boolean;
+  @Input() dragFlag!:boolean;
   isPressed = false;
   selectedID = 1;
 

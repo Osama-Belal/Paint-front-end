@@ -9,6 +9,7 @@
         [attr.fill]="square.color" 
         cdkDrag
         appBoxResize
+        [cdkDragDisabled] = 'dragFlag'
         [(width)]="square.sideLength"
         [(height)]="square.sideLength"
         [mouseX]="mouseX"

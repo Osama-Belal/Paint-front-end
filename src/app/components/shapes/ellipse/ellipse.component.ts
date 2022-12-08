@@ -10,7 +10,7 @@ export class EllipseComponent implements OnInit {
   @Input() mouseX!:number;
   @Input() mouseY!:number;
   @Input() isMouseDown!:boolean;
-  
+  @Input() dragFlag!:boolean;
   selectedID: number = 0;
 
   constructor() { }

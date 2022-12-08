@@ -6,14 +6,15 @@
     [attr.cy]="circle.y" 
     [attr.r]="circle.r" 
     [attr.fill]="circle.color" 
-        stroke="black"
-        strokeWidth="3"
-        
-        appMyResize
-        [(r)] = circle.r
-        [mouseX]="mouseX"
-        [mouseY]="mouseY"
-        [isMouseDown] = 'isMouseDown'
+    stroke="black"
+    strokeWidth="3"
+    [cdkDragDisabled] = 'dragFlag'
+    cdkDrag
+    appMyResize
+    [(r)] = circle.r
+    [mouseX]="mouseX"
+    [mouseY]="mouseY"
+    [isMouseDown] = 'isMouseDown'
     >
 </circle>
 </svg>

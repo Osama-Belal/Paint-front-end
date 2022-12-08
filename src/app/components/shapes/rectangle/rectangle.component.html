@@ -9,13 +9,12 @@
         [attr.height]="rectangle.height" 
         [attr.fill]="rectangle.color" 
         [isObjectSelected]="isSelected"
-
+        cdkDrag
+        [cdkDragDisabled] = 'dragFlag'
         appBoxResize
         [(width)]="rectangle.width"
         [(height)]="rectangle.height"
         [mouseX]="mouseX"
         [mouseY]="mouseY"
-        [isMouseDown]="isMouseDown">
-    </rect>
-
+        [isMouseDown]="isMouseDown"/>
 </svg>

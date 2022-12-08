@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { DragHandlerService } from '../services/drag-handler.service';
 
 export interface Tile {
   color: string;
@@ -16,7 +17,7 @@ export interface Tile {
 
 export class NavBarComponent implements OnInit {
 
-  constructor() { }
+  constructor(public  myService: DragHandlerService) { }
 
   ngOnInit(): void {
   }

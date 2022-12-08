@@ -5,6 +5,7 @@ export class Rectangle{
     x: number;
     y: number;
     color: string;
+    flag: boolean;
     constructor(id:number ,x: number, y: number, width:number, height:number, color: string)
     {
         this.id = id;
@@ -13,5 +14,6 @@ export class Rectangle{
         this.width = width;
         this.height = height;
         this.color = color;
+        this.flag = false;
     }
 }
