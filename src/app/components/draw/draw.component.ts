@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Circle } from '../shapes/circle/circle';
-import { Square } from '../shapes/square/square';
+import { CircleComponent } from '../shapes/circle/circle.component';
+
 
 @Component({
   selector: 'app-draw',
@@ -8,12 +8,31 @@ import { Square } from '../shapes/square/square';
   styleUrls: ['./draw.component.css']
 })
 export class DrawComponent implements OnInit {
-
-
-  constructor() { 
+  mouseX!: number;
+  mouseY!: number;
+  isMouseDown: boolean = false;
+  constructor(private cc:CircleComponent) { 
   }
 
   ngOnInit(): void {
+  }
+
+  func(){
+    this.cc.createObject();
+  }
+
+  @HostListener('mousemove', ['$event'])
+  recordMouse(e: MouseEvent){
+    this.mouseX = e.clientX;
+    this.mouseY = e.clientY;
+  }
+  @HostListener('mousedown', ['$event'])
+  recordMouseDown(){
+    this.isMouseDown = true;
+  }
+  @HostListener('mouseup', ['$event'])
+  recordMouseup(){
+    this.isMouseDown = false;
   }
 
 }

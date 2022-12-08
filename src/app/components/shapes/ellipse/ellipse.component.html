@@ -1,0 +1,18 @@
+<svg>
+    <ellipse *ngFor="let ellipse of ellipses; let i = index" 
+        (focus)="selectObject(i)" 
+        (keydown.delete)="deleteObject(i)" 
+        [attr.cx]="ellipse.cx" 
+        [attr.cy]="ellipse.cy" 
+        [attr.rx]="ellipse.rx" 
+        [attr.ry]="ellipse.ry" 
+        [attr.fill]="ellipse.color" 
+        style="stroke: lightcoral; stroke-width: 2px;"
+        cdkDrag
+        appMyResize
+        [(r)] = ellipse.rx
+        [mouseX]="mouseX"
+        [mouseY]="mouseY"
+        [isMouseDown] = 'isMouseDown' 
+    />
+</svg>

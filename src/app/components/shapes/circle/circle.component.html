@@ -1,11 +1,19 @@
 <svg>
     <circle *ngFor="let circle of circles; let i = index" 
-        (focus)="selectObject(i)" 
-        (keydown.delete)="deleteObject(i)" 
-        [attr.cx]="circle.x" 
-        [attr.cy]="circle.y" 
-        [attr.r]="circle.r" 
-        [attr.fill]="circle.color" 
-        cdkDrag 
-    />
+    (focus)="selectObject(i)" 
+    (keydown.delete)="deleteObject(i)" 
+    [attr.cx]="circle.x" 
+    [attr.cy]="circle.y" 
+    [attr.r]="circle.r" 
+    [attr.fill]="circle.color" 
+        stroke="black"
+        strokeWidth="3"
+        cdkDrag
+        appMyResize
+        [(r)] = circle.r
+        [mouseX]="mouseX"
+        [mouseY]="mouseY"
+        [isMouseDown] = 'isMouseDown'
+    >
+</circle>
 </svg>

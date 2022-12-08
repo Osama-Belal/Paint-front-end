@@ -7,6 +7,12 @@
         [attr.width]="square.sideLength" 
         [attr.height]="square.sideLength" 
         [attr.fill]="square.color" 
-        cdkDrag 
+        cdkDrag
+        appBoxResize
+        [(width)]="square.sideLength"
+        [(height)]="square.sideLength"
+        [mouseX]="mouseX"
+        [mouseY]="mouseY"
+        [isMouseDown]="isMouseDown"
     />
 </svg>

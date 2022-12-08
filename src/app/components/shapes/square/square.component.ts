@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Square } from './square';
 
 @Component({
@@ -7,6 +7,10 @@ import { Square } from './square';
   styleUrls: ['./square.component.css']
 })
 export class SquareComponent implements OnInit {
+  @Input() mouseX!:number;
+  @Input() mouseY!:number;
+  @Input() isMouseDown!:boolean;
+  
   selectedID: number = 0;
   
   constructor() { }
