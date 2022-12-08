@@ -1,0 +1,213 @@
+/*--------------------------------- Start Header -----------------------------------*/
+
+.navbar{
+  top: 0;width: 100%;
+  max-height: 30%;
+  border-bottom: 1px solid rgb(255, 115, 0);
+  /*position: fixed;*/
+  background: #DDDDDD;
+  /*display: grid;*/
+  /*grid-column-gap: 20px;*/
+  /*grid-template-columns: 18% 31% auto auto;*/
+  /*grid-template-rows: auto auto auto;*/
+  z-index: 99999;
+  resize: vertical;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.navbar .mat-tab-body-content{
+  /*padding: 30px 10px;*/
+  display: flex;
+  flex-wrap: nowrap;
+  box-sizing: border-box;
+}
+
+.navbar .mat-tab-label{
+  /*background: #6D67E4;*/
+  /*color: #FFFFFF;*/
+  outline: none;
+  transition: all 10ms ease-in-out;
+}
+
+.navbar .mat-ink-bar{
+  width: 50%;
+  height: 4px;
+  background-color: #2B3A55 !important;
+}
+
+.mat-ripple-element{
+  background-color: rgba(209, 255, 153, 0.55) !important;
+}
+
+.navbar .mat-tab-label:active{
+  /*background: #544fb4;*/
+  color: #000;
+  box-shadow: inset 2px 2px 10px rgb(0 0 0 / 20%), 0 2px 2px #ddd;
+}
+
+.navbar .mat-tab-label:focus{
+  background: #f7b704;
+}
+
+/*.navbar .mat-tab-labels{*/
+/*  background: #6f61a6;*/
+/*}*/
+
+.navbar .block{
+  background: #DDDDDD;
+  text-align: center;
+  width: 30%;
+  height: 100%;
+  padding: 30px 10px;
+  box-sizing: border-box;
+  align-items: center;
+  display: grid;
+  grid-column-gap: 5%;
+  grid-template-areas: 'menu 1';
+  /*grid-template-columns: auto auto;*/
+  border-left: 5px solid #0077ff;
+}
+
+.navbar .block .menu{
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.navbar .block i.menu{
+  grid-area: menu;
+  font-size: 60px;
+}
+.navbar .block .grid{
+  grid-area: 1;
+  height: 100%;
+  padding: 5px 0;
+  overflow: auto;
+}
+
+
+.navbar .block i{
+  padding: 7px;
+  color: #333;
+  user-select: none;
+  background-color: #f3f3f3;
+  background-image: linear-gradient(rgba(255,255,255,.3) 0%,rgba(255,255,255,0) 40%,rgba(111,111,111,.1) 100%);
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 4%), 0 1px rgb(0 0 0 / 10%), 0 2px 3px rgb(0 0 0 / 5%);
+  box-sizing: border-box;
+  text-align: center;
+  transition: all 20ms ease-in-out;
+}
+
+.navbar .block i:active{
+  background-color: #ddd;
+  box-shadow: inset 2px 2px 10px rgb(0 0 0 / 20%), 0 2px 2px #ddd;
+}
+
+.navbar .block i span{
+  margin: 0 10px ;
+  text-align: center;
+  font-size: 80%;
+}
+
+.navbar .block .grid{
+  box-sizing: border-box;
+  max-height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  grid-gap: 20px;
+  overflow: auto;
+}
+
+.navbar .block.select .grid i{
+  padding: 7px;
+  width: 100%;
+}
+
+.navbar .block.shapes .grid i{
+  width:40px;
+  height: 40px;
+}
+
+.navbar .block.style .grid i{
+  padding: 5px;
+  width: 35px;
+  height: 35px;
+}
+
+.navbar .block input[type="color"]{
+  background: transparent;
+  outline: none;
+  width: 30px;
+  height: 30px;
+  border: 2px dashed #837dff;
+}
+
+
+
+
+
+
+
+
+/*------------------------------------to be used------------------------------------------*/
+.navbar ul li a{
+  color: #837dff;text-decoration: none;
+  position: relative;
+  padding: 15px 5px;font-weight: 900;
+  opacity: .7;transition: .5s ease
+}
+
+.navbar ul li a::after{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  padding: 15px 5px;
+  opacity: 1;color: #3976ff;
+  border-bottom: 4px solid #ec2525;
+  transform: scaleX(0);font-weight: 900;
+  transform-origin: center right;
+  transition: transform .2s ease;
+}
+.navbar ul li a.active:after,
+.navbar ul li a:hover:after{
+  transform: scaleX(1);
+  transform-origin: center left;
+}
+.navbar ul li a.active,
+.navbar ul li a:hover{opacity: 1}
+
+@media (max-width: 991px){   /* SM */
+
+  .navbar{
+    width:45%;top: 0;right: 0;
+    background: #333 !important;
+    padding-left: 50px;height: 100%;
+    transform: translateX(100%);
+    transition: .5s ease
+  }
+  .nav-trslt{transform: translateX(0%)}
+
+  .navbar h5{width: 100%;margin: 50px 0 100px !important;font-size: 50px !important}
+
+  .navbar ul{text-align: left;float: none}
+  .navbar ul li{overflow: hidden;display: block;margin: 18px 0 !important;font-size: 22px;}
+  .navbar ul li a{padding:15px 30px !important}
+  .navbar ul li a::after{padding:15px 30px !important;background: #ffd581}
+
+}
+
+@media (max-width: 767px){   /* XS */
+  .navbar{padding-left: 10px !important}
+  .navbar h5{font-size: 30px !important}
+  .navbar ul li{font-size: 15px !important}
+  .navbar ul a{padding: 15px 20px !important}
+  .navbar ul a::after{background: #ffd581}
+}
+
+
+/*--------------------------------- Start Header -----------------------------------*/

@@ -1,0 +1,10 @@
+.side{
+  display: inline-block;
+  /*box-sizing: border-box;*/
+  /*position: relative;*/
+}
+
+/*.side input{*/
+/*  position: absolute;*/
+/*  top: 0;left: 0;*/
+/*}*/

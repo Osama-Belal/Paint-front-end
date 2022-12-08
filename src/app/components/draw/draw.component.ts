@@ -11,15 +11,12 @@ export class DrawComponent implements OnInit {
   mouseX!: number;
   mouseY!: number;
   isMouseDown: boolean = false;
-  constructor(private cc:CircleComponent) { 
+  constructor() { 
   }
 
   ngOnInit(): void {
   }
 
-  func(){
-    this.cc.createObject();
-  }
 
   @HostListener('mousemove', ['$event'])
   recordMouse(e: MouseEvent){
