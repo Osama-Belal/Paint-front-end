@@ -28,6 +28,7 @@ import { BoxResizeDirective } from './directives/box-resize.directive';
 import { MyResizeDirective } from './directives/my-resize.directive';
 import { TriangleComponent } from './components/shapes/triangle/triangle.component';
 
+
 enableRipple(true);
 
 @NgModule({

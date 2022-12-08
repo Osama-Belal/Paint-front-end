@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DragHandlerService } from '../services/drag-handler.service';
+import {MatDialog} from "@angular/material/dialog";
 
 export interface Tile {
   color: string;
@@ -22,11 +23,11 @@ export class NavBarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  tiles: Tile[] = [
-    {text: 'One', cols: 3, rows: 1, color: 'lightblue'},
-    {text: 'Two', cols: 1, rows: 2, color: 'lightgreen'},
-    {text: 'Three', cols: 1, rows: 1, color: 'lightpink'},
-    {text: 'Four', cols: 2, rows: 1, color: '#DDBDF1'},
-  ];
-
+  // openDialog() {
+  //   const dialogRef = this.dialog.open();
+  //
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log(`Dialog result: ${result}`);
+  //   });
+  // }
 }

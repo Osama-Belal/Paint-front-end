@@ -1,22 +1,39 @@
 <mat-tab-group fitinkbartocontent="SS" class="navbar"
-               animationDuration="500ms"
-               [backgroundColor]="" [color]="">
-  <mat-tab label="View">
-    <div class="block select">
-      <i class="menu fa fa-arrows fa-4x" (click)="myService.toggleDrag()"></i>
+               animationDuration="500ms" [selectedIndex]="1"
+               [backgroundColor]="'primary'" [color]="" dynamicHeight>
+
+  <mat-tab label="File">
+    <div class="block file">
+      <i class="menu fa fa-arrows fa-4x" (click)="myService.toggleDrag()" ></i>
       <div class="grid">
-        <i class="fa fa-scissors fa-2x"><span>Cut</span></i>
-        <i class="fa fa-clone fa-2x"><span>Clone</span></i>
-      </div>
-      <div class="grid">
-        <i class="fa fa-trash-o fa-2x"><span>Delete</span></i>
-        <i class="fa fa-clone fa-2x"><span>Duplicate</span></i>
+        <i class="fa fa-floppy-o fa-2x"><span>Save</span></i>
+        <i class="fa fa-download fa-2x"><span>Save as</span></i>
+        <i class="fa fa-upload fa-2x"><span>Load</span></i>
       </div>
     </div>
   </mat-tab>
 
-  <mat-tab class="tab" label="Shapes">
-    <div class="block shapes">
+
+  <mat-tab label="Home">
+    <div class="block home">
+      <i class="menu fa fa-arrows fa-4x"></i>
+      <div class="grid">
+        <i class="fa fa-scissors fa-2x"><span>Cut</span></i>
+        <i class="fa fa-undo fa-2x"><span>Undo</span></i>
+        <i class="fa fa-expand fa-2x"><span>Resize</span></i>
+      </div>
+
+      <div class="grid">
+        <i class="fa fa-clone fa-2x"><span>Clone</span></i>
+        <i class="fa fa-repeat fa-2x"><span>Redo</span></i>
+        <i class="fa fa-trash-o fa-2x"><span>Delete</span></i>
+      </div>
+    </div>
+  </mat-tab>
+
+
+  <mat-tab class="tab" label="Draw">
+    <div class="block draw">
       <i class="menu fa fa-paint-brush fa-2x"></i>
       <div class="grid">
         <i class="one fa fa-circle fa-2x"></i>
