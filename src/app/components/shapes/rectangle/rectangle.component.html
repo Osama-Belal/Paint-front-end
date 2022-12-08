@@ -1,6 +1,7 @@
 <svg>
     <rect *ngFor="let rectangle of rectangles; let i = index" 
         (focus)="selectObject(i)" 
+        (blur)="deSelect()"
         (keydown.delete)="deleteObject(i)" 
         [attr.x]="rectangle.x" 
         [attr.y]="rectangle.y" 
@@ -8,13 +9,13 @@
         [attr.height]="rectangle.height" 
         [attr.fill]="rectangle.color" 
 
-         
         appBoxResize
         [(width)]="rectangle.width"
         [(height)]="rectangle.height"
         [mouseX]="mouseX"
         [mouseY]="mouseY"
         [isMouseDown]="isMouseDown">
+        [isObjectSelected]="isSelected"
     </rect>
 
 </svg>

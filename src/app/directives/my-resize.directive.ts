@@ -29,19 +29,16 @@ export class MyResizeDirective implements OnChanges{
     }
   }
 
-
+  //TODO make the resize work only on the boundaries and not inside the object
   setStatus(){
     const {left, top} = this.el.nativeElement.getBoundingClientRect();
     this.object = {left, top};
-    if(Math.abs(this.mouse.x - (left + this.r*2)) <= 0.1 * this.r){
+    if(Math.abs(this.mouse.x - (left + this.r*2)) <= this.r + 10 && Math.abs(this.mouse.y - (top + this.r*2)) <= this.r + 10){
       this.status = 'resize';
-      console.log("status set: " + left);
     }
   }
   
   removeStatus(){
-    const {left, top} = this.el.nativeElement.getBoundingClientRect();
-    this.object = {left, top};
     this.status = "";
     console.log('status removed')
   }

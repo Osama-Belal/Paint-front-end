@@ -9,6 +9,7 @@ export class BoxResizeDirective implements OnChanges{
   @Input() mouseX!:number;
   @Input() mouseY!:number;
   @Input() isMouseDown!: boolean;
+  @Input() isObjectSelected!: boolean;
   @Output() widthChange =  new EventEmitter<number>();
   @Output() heightChange =  new EventEmitter<number>();
 
@@ -21,33 +22,40 @@ export class BoxResizeDirective implements OnChanges{
    }
 
   ngOnChanges(changes: SimpleChanges): void {
+    //console.log(changes);
     if(changes['isMouseDown']){
       if(changes['isMouseDown'].currentValue == true)
         this.setStatus();
       else
         this.removeStatus();
     }
+    if(changes['isObjectSelected']){
+      console.log("changes fired");
+      console.log(changes['isObjectSelected']);
+    }
   }
 
   setStatus(){
     const {left, top} = this.el.nativeElement.getBoundingClientRect();
     this.object = {left, top};
-    let temp = this.width;
-    let newWidth:number;
-    if(typeof temp === 'string'){
-      let temp2 = (temp as string).replace('px', '');
-      newWidth = <number><unknown>temp2;
-      console.log("curr x: " + typeof this.mouse.x + " left: " + typeof left + " widthnew: " + typeof newWidth + ' calc: ' + Math.abs(this.mouse.x - (left + newWidth)))
-      if(Math.abs(this.mouse.x - (left + (newWidth) )) <= 10){
-        this.status = 'resize';
-      }
-    }else{
-      console.log("curr x: " + this.mouse.x + " left: " + left + " width: " + this.width + ' calc: ' + Math.abs(this.mouse.x - (left + this.width)))
+    let widthString = this.width;
+    let heightString = this.height;
 
-      if(Math.abs(this.mouse.x - (left + (this.width) )) <= 10){
-        this.status = 'resize';
-      }
+
+    if(typeof widthString === 'string'){
+      let temp2 = (widthString as string).replace('px', '');
+      this.width = Number(temp2);
     }
+    
+    if(typeof heightString === 'string'){
+      let temp2 = (heightString as string).replace('px', '');
+      this.height = Number(temp2);
+    }
+
+    if(Math.abs(this.mouse.x - (left + (this.width))) <= 10 && Math.abs(this.mouse.y - (top + (this.height))) <= 10){
+      this.status = 'resize';
+    }
+  
   }
 
 
@@ -79,6 +87,7 @@ export class BoxResizeDirective implements OnChanges{
 
   resizeConditions(){
     const {left, top} = this.el.nativeElement.getBoundingClientRect();
-    return left >= 0;
+    console.log('isObject: ' + this.isObjectSelected);
+    return left >= 0 && this.isObjectSelected;
   }
 }

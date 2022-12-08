@@ -11,7 +11,7 @@ export class RectangleComponent implements OnInit {
   @Input() mouseY!:number;
   @Input() isMouseDown!:boolean;
   selectedID: number = 0;
-
+  isSelected!: boolean;
   constructor() { }
 
   ngOnInit(): void {
@@ -24,8 +24,14 @@ export class RectangleComponent implements OnInit {
   ];
 
   selectObject(index: number){
+    this.isSelected = true;
+    console.log("isSelected: " + this.isSelected);
     this.selectedID = index;
     console.log('select called with index ' + index);
+  }
+  deSelect(){
+    this.isSelected = false;
+    console.log("isSelected: " + this.isSelected);
   }
 
   deleteObject(index:number){
