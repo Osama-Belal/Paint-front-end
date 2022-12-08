@@ -2,7 +2,8 @@
 
 .navbar{
   top: 0;width: 100%;
-  max-height: 30%;
+  /*height: 29%;*/
+  max-height: 29%;
   border-bottom: 1px solid rgb(255, 115, 0);
   /*position: fixed;*/
   background: #DDDDDD;
@@ -16,15 +17,17 @@
   overflow: auto;
 }
 
-.navbar .mat-tab-body-content{
+.navbar .mat-tab-body-content {
   /*padding: 30px 10px;*/
   display: flex;
   flex-wrap: nowrap;
   box-sizing: border-box;
 }
+.navbar .mat-tab-labels{
+  border-bottom: 3px solid red;
+}
 
 .navbar .mat-tab-label{
-  /*background: #6D67E4;*/
   /*color: #FFFFFF;*/
   outline: none;
   transition: all 10ms ease-in-out;
@@ -33,11 +36,11 @@
 .navbar .mat-ink-bar{
   width: 50%;
   height: 4px;
-  background-color: #2B3A55 !important;
+  background-color: #DDDDDD !important;
 }
 
 .mat-ripple-element{
-  background-color: rgba(209, 255, 153, 0.55) !important;
+  background-color: rgb(0, 0, 0) !important;
 }
 
 .navbar .mat-tab-label:active{
@@ -45,21 +48,17 @@
   color: #000;
   box-shadow: inset 2px 2px 10px rgb(0 0 0 / 20%), 0 2px 2px #ddd;
 }
-
-.navbar .mat-tab-label:focus{
-  background: #f7b704;
+.navbar .mat-tab-label:focus:not(:nth-of-type(1)){
+  color: #333 !important;
+  background: #DDDDDD !important;
 }
-
-/*.navbar .mat-tab-labels{*/
-/*  background: #6f61a6;*/
-/*}*/
 
 .navbar .block{
   background: #DDDDDD;
   text-align: center;
   width: 30%;
   height: 100%;
-  padding: 30px 10px;
+  padding: 10px;
   box-sizing: border-box;
   align-items: center;
   display: grid;
@@ -67,6 +66,10 @@
   grid-template-areas: 'menu 1';
   /*grid-template-columns: auto auto;*/
   border-left: 5px solid #0077ff;
+}
+
+.navbar .block.home{
+  width: 50%;
 }
 
 .navbar .block .menu{
@@ -116,16 +119,24 @@
   max-height: 100%;
   display: flex;
   flex-wrap: wrap;
-  grid-gap: 20px;
+  grid-gap: 6px;
   overflow: auto;
 }
+.navbar .block .grid.two-btns{
+  grid-gap: 40px;
+}
 
-.navbar .block.select .grid i{
+.navbar .block.file .grid i{
   padding: 7px;
   width: 100%;
 }
 
-.navbar .block.shapes .grid i{
+.navbar .block.home .grid i{
+  padding: 7px;
+  width: 100%;
+}
+
+.navbar .block.draw .grid i{
   width:40px;
   height: 40px;
 }
@@ -208,6 +219,5 @@
   .navbar ul a{padding: 15px 20px !important}
   .navbar ul a::after{background: #ffd581}
 }
-
 
 /*--------------------------------- Start Header -----------------------------------*/

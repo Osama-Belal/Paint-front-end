@@ -19,6 +19,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import { ColorPickerModule } from '@syncfusion/ej2-angular-inputs';
 import { SideBarComponent } from './side-bar/side-bar.component';
 
+
 enableRipple(true);
 
 @NgModule({
