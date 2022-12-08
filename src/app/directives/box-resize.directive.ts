@@ -30,20 +30,29 @@ export class BoxResizeDirective implements OnChanges{
   }
 
   setStatus(){
-    console.log("status called")
     const {left, top} = this.el.nativeElement.getBoundingClientRect();
     this.object = {left, top};
-    console.log("curr x: " + this.mouse.x + " left: " + left + " width: " + this.width + ' calc: ' + Math.abs(this.mouse.x - (left + this.width)))
-    if(Math.abs(this.mouse.x - (left + this.width )) <= 10){
-      this.status = 'resize';
-      console.log("status set")
+    let temp = this.width;
+    let newWidth:number;
+    if(typeof temp === 'string'){
+      let temp2 = (temp as string).replace('px', '');
+      newWidth = <number><unknown>temp2;
+      console.log("curr x: " + typeof this.mouse.x + " left: " + typeof left + " widthnew: " + typeof newWidth + ' calc: ' + Math.abs(this.mouse.x - (left + newWidth)))
+      if(Math.abs(this.mouse.x - (left + (newWidth) )) <= 10){
+        this.status = 'resize';
+      }
+    }else{
+      console.log("curr x: " + this.mouse.x + " left: " + left + " width: " + this.width + ' calc: ' + Math.abs(this.mouse.x - (left + this.width)))
+
+      if(Math.abs(this.mouse.x - (left + (this.width) )) <= 10){
+        this.status = 'resize';
+      }
     }
   }
 
 
   removeStatus(){
     this.status = "";
-    console.log('status removed')
   }
   
 
@@ -59,9 +68,8 @@ export class BoxResizeDirective implements OnChanges{
   
   resize(){
     if(this.resizeConditions()){
-      console.log("resize called")
       const {left, top} = this.object
-      console.log("currx: " + this.mouse.x + " left: " + left);
+     /*  console.log("currx: " + this.mouse.x + " left: " + left); */
       this.el.nativeElement.style.width = this.mouse.x - left;
       this.el.nativeElement.style.height = this.mouse.y - top;
       this.widthChange.emit(this.el.nativeElement.style.width);

@@ -1,4 +1,5 @@
 import { NumberSymbol } from '@angular/common';
+import { ThisReceiver } from '@angular/compiler';
 import { Directive, ElementRef, EventEmitter, Host, HostListener, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { NonNullableFormBuilder } from '@angular/forms';
 
@@ -34,32 +35,35 @@ export class MyResizeDirective implements OnChanges{
     this.object = {left, top};
     if(Math.abs(this.mouse.x - (left + this.r*2)) <= 0.1 * this.r){
       this.status = 'resize';
-      console.log("status set")
+      console.log("status set: " + left);
     }
   }
-
+  
   removeStatus(){
+    const {left, top} = this.el.nativeElement.getBoundingClientRect();
+    this.object = {left, top};
     this.status = "";
     console.log('status removed')
   }
   
-
+  
   @HostListener('window:mousemove', ['$event'])
   onMouseMove(event: MouseEvent){
     this.mouse = {
       x: this.mouseX,
       y: this.mouseY
     }
-    if(this.status == 'resize')
-    this.resize();
+
+    if(this.status == 'resize'){
+      this.resize();
+    }
   }
   
   resize(){
     if(this.resizeConditions()){
       console.log("resize called")
-      const {left, top} = this.object
-      console.log("currx: " + this.mouse.x + " left: " + left);
-      this.el.nativeElement.style.r = this.mouse.x - left;
+
+      this.el.nativeElement.style.r = (this.mouse.x - this.object.left) / 2;
       this.rChange.emit(this.el.nativeElement.style.r);
     }
   }
