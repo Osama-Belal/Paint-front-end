@@ -31,9 +31,9 @@ export class DrawComponent implements AfterViewInit {
   recordMouse(e: MouseEvent){
     this.mouseX = this.myService.mouseX;
     this.mouseY = this.myService.mouseY;
-    console.log('x: ', this.mouseX, ' y: ', this.mouseY)
+    /* console.log('x: ', this.mouseX, ' y: ', this.mouseY) */
     if(this.myService.isMouseDown){
-      console.log(this.points);
+    /*   console.log(this.points); */
       this.points.push({x: this.myService.mouseX, y: this.myService.mouseY - this.sheetCoors.y});
       const outlinePoints = getStroke(this.points)
       this.pathData = this.getSvgPathFromStroke(outlinePoints)

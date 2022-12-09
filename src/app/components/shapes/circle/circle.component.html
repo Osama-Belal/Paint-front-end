@@ -1,10 +1,10 @@
 <svg>
-    <circle *ngFor="let circle of circles; let i = index" 
+    <circle *ngFor="let circle of this.reqService.circles; let i = index" 
     (focus)="selectObject(i)" 
     (keydown.delete)="deleteObject(i)" 
     [attr.cx]="circle.x" 
     [attr.cy]="circle.y" 
-    [attr.r]="circle.r" 
+    [attr.r]="circle.radius" 
     [attr.fill]="circle.color" 
     stroke="black"
     strokeWidth="3"
@@ -12,7 +12,7 @@
     cdkDrag
     appMyResize
     [resizeFlag]="resizeFlag"
-    [(r)] = circle.r
+    [(r)] = circle.radius
     [mouseX]="mouseX"
     [mouseY]="mouseY"
     [isMouseDown] = 'isMouseDown'

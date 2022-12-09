@@ -11,7 +11,7 @@ export class TriangleComponent extends ShapeComponent implements OnInit {
   aString: string = '';
 
   triangles: Triangle[] =[
-    new Triangle(0, 50, 50, {x:250, y:60}, {x:100, y: 400}, {x:400, y:400}, 'red')
+    new Triangle('0', 50, 50, {x:250, y:60}, {x:100, y: 400}, {x:400, y:400}, 'red')
   ]
 
   deleteObject(index:number){

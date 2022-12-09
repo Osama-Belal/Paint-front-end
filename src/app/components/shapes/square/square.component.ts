@@ -10,9 +10,9 @@ import { Square } from './square';
 export class SquareComponent extends ShapeComponent implements OnInit {
   
   squares: Square[] = [
-    {id:0, x: 50, y: 50, sideLength: 40, color: 'red'},
-    {id:1, x: 100, y: 200, sideLength: 50, color: 'green'},
-    {id:2, x: 200, y: 300, sideLength: 60, color: 'blue'}
+    {id:'0', x: 50, y: 50, sideLength: 40, color: 'red'},
+    {id:'1', x: 100, y: 200, sideLength: 50, color: 'green'},
+    {id:'2', x: 200, y: 300, sideLength: 60, color: 'blue'}
   ];
 
   deleteObject(index:number){
@@ -20,7 +20,7 @@ export class SquareComponent extends ShapeComponent implements OnInit {
   }
 
   createObject(){
-    this.squares.push(new Square(this.squares.length, 100,  200, 30, 'blue'));
+    
   }
 
 }

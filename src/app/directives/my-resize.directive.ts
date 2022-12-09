@@ -41,7 +41,7 @@ export class MyResizeDirective implements OnChanges{
   
   removeStatus(){
     this.status = "";
-    console.log('status removed')
+    /* console.log('status removed') */
   }
   
   
@@ -59,7 +59,7 @@ export class MyResizeDirective implements OnChanges{
   
   resize(){
     if(this.resizeConditions()){
-      console.log("resize called")
+    /*   console.log("resize called") */
 
       this.el.nativeElement.style.r = (this.mouse.x - this.object.left) / 2;
       this.rChange.emit(this.el.nativeElement.style.r);

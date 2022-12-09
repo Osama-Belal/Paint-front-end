@@ -17,13 +17,11 @@ export class DragHandlerService {
   
   toggleResize(){
     this.resizeFlag = (this.resizeFlag == true ? false : true);
-    console.log("RESIZE: " + this.resizeFlag);
   }
 
   setCoor(x: number, y: number, isClick: boolean){
     this.mouseX = x;
     this.mouseY = y;
     this.isMouseDown = isClick;
-    console.log("service called: ");
   }
 }

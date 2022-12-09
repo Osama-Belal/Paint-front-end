@@ -6,7 +6,7 @@ export class Triangle extends Shape {
     p2: {x: number, y: number};
     p3: {x: number, y: number};
     pointsToString: string
-    constructor(id:number ,x: number, y: number, p1:{x: number, y: number}, p2: {x: number, y: number}, p3: {x: number, y: number}, color: string)
+    constructor(id:string ,x: number, y: number, p1:{x: number, y: number}, p2: {x: number, y: number}, p3: {x: number, y: number}, color: string)
     {
         super(id, x, y, color);
         this.p1 = p1;

@@ -30,13 +30,13 @@ export class BoxResizeDirective implements OnChanges{
         this.removeStatus();
     }
     if(changes['isObjectSelected']){
-      console.log("changes fired");
-      console.log(changes['isObjectSelected']);
+    /*   console.log("changes fired");
+      console.log(changes['isObjectSelected']); */
     }
   }
 
   setStatus(){
-    console.log('status set');
+ /*    console.log('status set'); */
     const {left, top} = this.el.nativeElement.getBoundingClientRect();
     this.object = {left, top};
     let widthString = this.width;
@@ -54,7 +54,7 @@ export class BoxResizeDirective implements OnChanges{
     }
 
     if(Math.abs(this.mouse.x - (left + (this.width))) <= 10 && Math.abs(this.mouse.y - (top + (this.height))) <= 10){
-      console.log('resize ');
+     /*  console.log('resize '); */
       this.status = 'resize';
     }
 
@@ -91,7 +91,7 @@ export class BoxResizeDirective implements OnChanges{
   
   resizeConditions(){
     const {left, top} = this.el.nativeElement.getBoundingClientRect();
-    console.log('isObject: ' + this.isObjectSelected);
+    /* console.log('isObject: ' + this.isObjectSelected); */
     return left >= 0 && this.isObjectSelected === true;
   }
 }

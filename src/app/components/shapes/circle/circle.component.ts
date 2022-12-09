@@ -11,18 +11,14 @@ import { Circle } from './circle';
 })
 export class CircleComponent extends ShapeComponent implements OnInit {
 
-  circles: Circle[] = [
-    {id:0, x: 500, y: 500, r: 40, color: 'red'},
-    {id:1, x: 100, y: 200, r: 50, color: 'green'},
-    {id:2, x: 200, y: 300, r: 60, color: 'blue'}
-  ];
+
 
   deleteObject(index:number){
-    this.circles.splice(index, 1);
+    this.reqService.circles.splice(index, 1);
   }
 
   createObject(){
-    this.circles.push(new Circle(this.circles.length, 100,  200, 30, 'blue'));
+  /*   this.circles.push(new Circle(this.circles.length, 100,  200, 30, 'blue')); */
   }
 
 }

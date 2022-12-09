@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DragHandlerService } from '../services/drag-handler.service';
 import {MatDialog} from "@angular/material/dialog";
+import { Circle } from '../components/shapes/circle/circle';
+import { RequestsService } from '../services/requests.service';
 
 export interface Tile {
   color: string;
@@ -18,7 +20,7 @@ export interface Tile {
 
 export class NavBarComponent implements OnInit {
 
-  constructor(public  myService: DragHandlerService) { }
+  constructor(public  myService: DragHandlerService, private myReqService: RequestsService) { }
 
   ngOnInit(): void {
   }
@@ -30,4 +32,9 @@ export class NavBarComponent implements OnInit {
   //     console.log(`Dialog result: ${result}`);
   //   });
   // }
+
+  drawCircle(){
+    let circle = new Circle('1', 100, 100, 50, 'green');
+    this.myReqService.drawCircle(circle);
+  }
 }

@@ -10,7 +10,7 @@ import { Line } from './Line';
 export class LineComponent extends ShapeComponent implements OnInit {
 
   lines: Line[] = [
-    {id: 0, x1:100, y1: 100, x2: 200, y2: 200, color: 'green'}
+    {id: '0', x1:150, y1: 100, x2: 200, y2: 600, color: 'green'}
   ]
 
   deleteObject(index:number){

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { RequestsService } from 'src/app/services/requests.service';
 
 @Component({
   selector: 'app-shape',
@@ -13,21 +14,21 @@ export class ShapeComponent implements OnInit {
   @Input() resizeFlag!: boolean;
   selectedID: number = 0;
   isSelected: boolean = false;
-  
-  constructor() { }
+
+  constructor(public reqService: RequestsService) { }
 
   ngOnInit(): void {
   }
 
   selectObject(index: number){
     this.isSelected = true;
-    console.log("isSelected: " + this.isSelected);
+  /*   console.log("isSelected: " + this.isSelected); */
     this.selectedID = index;
-    console.log('select called with index ' + index);
+  /*   console.log('select called with index ' + index); */
   }
   deSelect(){
     this.isSelected = false;
-    console.log("isSelected: " + this.isSelected);
+   /*  console.log("isSelected: " + this.isSelected); */
   }
 
 }
