@@ -5,10 +5,25 @@ import { Injectable } from '@angular/core';
 })
 export class DragHandlerService {
   dragFlag: boolean = false;
+  resizeFlag: boolean = false;
+  mouseX!: number;
+  mouseY!: number;
+  isMouseDown: boolean = false;
   constructor() { }
 
   toggleDrag(){
     this.dragFlag = (this.dragFlag == true ? false : true)
-    console.log("draggg: " + this.dragFlag);
+  }
+  
+  toggleResize(){
+    this.resizeFlag = (this.resizeFlag == true ? false : true);
+    console.log("RESIZE: " + this.resizeFlag);
+  }
+
+  setCoor(x: number, y: number, isClick: boolean){
+    this.mouseX = x;
+    this.mouseY = y;
+    this.isMouseDown = isClick;
+    console.log("service called: ");
   }
 }

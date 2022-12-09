@@ -1,0 +1,16 @@
+<svg>
+    <line *ngFor="let line of lines; let i = index"
+        (focus)="selectObject(i)" 
+        (blur)="deSelect()"
+        (keydown.delete)="deleteObject(i)" 
+        [attr.x1]='line.x1'
+        [attr.y1]='line.y1'
+        [attr.x2]='line.x2'
+        [attr.y2]='line.y2'
+        [ngStyle]="{'stroke' : line.color}"
+        [style.stroke-width]="4"
+        cdkDrag
+        [cdkDragDisabled] = 'dragFlag'
+    />
+
+</svg>

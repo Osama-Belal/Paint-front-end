@@ -11,5 +11,6 @@ app-nav-bar{
   margin: 0;
   box-sizing: border-box;
 }
-app-drawing-space{width: 80%}
+/* app-drawing-space{width: 80%} */
+app-draw{width: 80%}
 app-side-bar{width: 20%}

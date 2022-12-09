@@ -11,6 +11,7 @@ export class MyResizeDirective implements OnChanges{
   @Input() mouseX!:number;
   @Input() mouseY!:number;
   @Input() isMouseDown!: boolean;
+  @Input() resizeFlag!: boolean;
   @Output() rChange =  new EventEmitter<number>();
   mouse!: {x:number, y:number};
   resizeTool: boolean = false;
@@ -21,7 +22,7 @@ export class MyResizeDirective implements OnChanges{
    }
 
    ngOnChanges(changes: SimpleChanges): void {
-    if(changes['isMouseDown']){
+    if(changes['isMouseDown'] && this.resizeFlag){
       if(changes['isMouseDown'].currentValue == true)
         this.setStatus();
       else

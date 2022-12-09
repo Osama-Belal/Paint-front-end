@@ -1,10 +1,16 @@
 <svg>
     <polygon *ngFor="let triangle of triangles; let i = index"
+    (focus)="selectObject(i)" 
+    (blur)="deSelect()"
+    (keydown.delete)="deleteObject(i)" 
     [attr.points]= triangle.pointsToString
     [attr.fill] = triangle.color
-
     cdkDrag
     appBoxResize
-    style="width:1000px;"
-     />
+    [cdkDragDisabled] = 'dragFlag'
+    [mouseX]="mouseX"
+    [mouseY]="mouseY"
+    [isMouseDown]="isMouseDown"   
+    />
 </svg>
+<!-- viewBox="0 0 1 1" height="1em" width="1em" y="7em" -->

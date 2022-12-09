@@ -1,46 +1,51 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChildren,QueryList,OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Input } from '@syncfusion/ej2-angular-inputs';
 import getStroke from 'perfect-freehand';
 import { DragHandlerService } from 'src/app/services/drag-handler.service';
 import { CircleComponent } from '../shapes/circle/circle.component';
 
+import {Subscription,fromEvent} from 'rxjs'
+import {tap,filter} from 'rxjs/operators'
+import { ResizeBorderComponent } from '../resize-border/resize-border.component';
 
 @Component({
   selector: 'app-draw',
   templateUrl: './draw.component.html',
   styleUrls: ['./draw.component.css']
 })
-export class DrawComponent implements OnInit {
+export class DrawComponent implements AfterViewInit {
   mouseX!: number;
   mouseY!: number;
   isMouseDown: boolean = false;
   points: {x:number, y:number}[] = [];
   pathData: string = '';
+  sheetCoors = {x: 0, y: 300};
+  container!:any;
   constructor(public myService: DragHandlerService) { 
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
   }
-
 
   @HostListener('mousemove', ['$event'])
   recordMouse(e: MouseEvent){
-    this.mouseX = e.clientX;
-    this.mouseY = e.clientY;
-    if(this.isMouseDown){
-    /*   console.log(this.points); */
-      this.points.push({x: this.mouseX, y: this.mouseY});
+    this.mouseX = this.myService.mouseX;
+    this.mouseY = this.myService.mouseY;
+    console.log('x: ', this.mouseX, ' y: ', this.mouseY)
+    if(this.myService.isMouseDown){
+      console.log(this.points);
+      this.points.push({x: this.myService.mouseX, y: this.myService.mouseY - this.sheetCoors.y});
       const outlinePoints = getStroke(this.points)
       this.pathData = this.getSvgPathFromStroke(outlinePoints)
     }
   }
   @HostListener('mousedown', ['$event'])
   recordMouseDown(){
-    this.isMouseDown = true;
+    this.isMouseDown = this.myService.isMouseDown;
   }
   @HostListener('mouseup', ['$event'])
   recordMouseup(){
-    this.isMouseDown = false;
+    this.isMouseDown = this.myService.isMouseDown;
   }
 
 

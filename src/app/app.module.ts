@@ -27,6 +27,11 @@ import { SquareComponent } from './components/shapes/square/square.component';
 import { BoxResizeDirective } from './directives/box-resize.directive';
 import { MyResizeDirective } from './directives/my-resize.directive';
 import { TriangleComponent } from './components/shapes/triangle/triangle.component';
+import { TriangleResizeDirective } from './directives/triangle-resize.directive';
+import { ResizeBorderComponent } from './components/resize-border/resize-border.component';
+import { ShapeComponent } from './components/shapes/shape/shape.component';
+import { LineComponent } from './components/shapes/line/line.component';
+
 
 
 enableRipple(true);
@@ -44,7 +49,11 @@ enableRipple(true);
     EllipseComponent,
     MyResizeDirective,
     BoxResizeDirective,
-    TriangleComponent
+    TriangleComponent,
+    TriangleResizeDirective,
+    ResizeBorderComponent,
+    ShapeComponent,
+    LineComponent,
   ],
   imports: [
     BrowserModule,

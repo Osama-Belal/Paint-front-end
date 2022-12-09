@@ -1,9 +1,13 @@
 import { Directive, ElementRef, EventEmitter, Host, HostListener, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
+
 @Directive({
-  selector: '[appBoxResize]'
+  selector: '[appTriangleResize]'
 })
-export class BoxResizeDirective implements OnChanges{
+export class TriangleResizeDirective {
+
+  constructor(private el: ElementRef) { }
+
   @Input() width!:number;
   @Input() height!:number;
   @Input() mouseX!:number;
@@ -18,9 +22,6 @@ export class BoxResizeDirective implements OnChanges{
   status: string = "";
   object!: {left:number, top:number};
   
-  constructor(private el: ElementRef) {
-   }
-
   ngOnChanges(changes: SimpleChanges): void {
     //console.log(this.el);
     if(changes['isMouseDown']){
@@ -36,7 +37,6 @@ export class BoxResizeDirective implements OnChanges{
   }
 
   setStatus(){
-    console.log('status set');
     const {left, top} = this.el.nativeElement.getBoundingClientRect();
     this.object = {left, top};
     let widthString = this.width;
@@ -54,7 +54,6 @@ export class BoxResizeDirective implements OnChanges{
     }
 
     if(Math.abs(this.mouse.x - (left + (this.width))) <= 10 && Math.abs(this.mouse.y - (top + (this.height))) <= 10){
-      console.log('resize ');
       this.status = 'resize';
     }
 

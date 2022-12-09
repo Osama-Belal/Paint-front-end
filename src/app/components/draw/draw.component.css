@@ -1,0 +1,12 @@
+.sheet {
+    width: 100%;
+    height: 100%;
+    min-width: 30%;
+    min-height: 30%;
+    /*max-width: 70%;*/
+    /*max-height: 100%;*/
+    background-color: #FFF;
+    resize: vertical;
+    box-sizing: border-box;
+    display: inline-block;
+}

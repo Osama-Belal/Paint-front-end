@@ -1,15 +1,10 @@
-export class Circle{
-    id:number;
-    x:number;
-    y:number;
+import { Shape } from "../shape/shape";
+
+export class Circle extends Shape{
     r:number;
-    color:string;
     constructor(id:number ,x: number, y: number, r:number, color: string)
     {
-        this.id = id;
-        this.x = x;
-        this.y = y;
+        super(id, x, y, color);
         this.r = r;
-        this.color = color;
     }
 }

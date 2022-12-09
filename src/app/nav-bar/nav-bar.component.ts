@@ -22,7 +22,7 @@ export class NavBarComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  
   // openDialog() {
   //   const dialogRef = this.dialog.open();
   //
