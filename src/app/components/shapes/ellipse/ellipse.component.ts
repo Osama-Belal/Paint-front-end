@@ -19,7 +19,12 @@ export class EllipseComponent extends ShapeComponent implements OnInit {
     this.ellipses.splice(index, 1);
   }
 
+
+
   createObject(){
     /* this.ellipses.push(new Ellipse(this.ellipses.length, 100,  300, 400, 30, 'blue')); */
+  }
+
+  func(){
   }
 }

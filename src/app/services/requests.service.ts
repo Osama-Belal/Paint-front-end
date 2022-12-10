@@ -28,9 +28,9 @@ export class RequestsService {
       "commandType":"draw",
       "id":"s4"
     };
-
-    let temp:Circle = new Circle(circle.id, circle.x, circle.y, circle.radius, circle.color);
-    this.circles.push(temp);
+    
+        let temp:Circle = new Circle(circle.id, circle.x, circle.y, circle.radius, circle.color);
+        this.circles.push(temp);
     this.http.post<Circle>(`${this.configUrl}/draw`, test).subscribe((data => {
       console.log("data: ", data);
       console.log(this.circles);

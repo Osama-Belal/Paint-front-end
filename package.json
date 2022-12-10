@@ -23,6 +23,8 @@
     "@syncfusion/ej2-angular-grids": "^20.3.60",
     "@syncfusion/ej2-angular-inputs": "^20.3.57-ngcc",
     "font-awesome": "^4.7.0",
+    "konva": "^8.3.14",
+    "ng2-konva": "^6.0.0",
     "ngx-color-picker": "^13.0.0",
     "perfect-freehand": "^1.2.0",
     "rxjs": "~7.5.0",
