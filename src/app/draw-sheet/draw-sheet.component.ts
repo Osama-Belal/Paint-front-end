@@ -14,16 +14,19 @@ import { Transformer } from 'konva/lib/shapes/Transformer';
 
 
 export class DrawSheetComponent implements OnInit{
-  shapes: any = [];
   stage!: Stage;
   layer!: Layer;
-  inkColor: string = '#000000';
+  shapes: any = [];
+  transformers: Transformer[] = [];
+
+  fillColor: string = '#000000';
+  strokeColor: string = '#000000';
+
   selectedButton: any = {
     'line': false,
     'eraser': false
   }
   eraser: boolean = false;
-  transformers: Transformer[] = [];
   brushSize: number = 3;
   brushOpacity: number = 1.0;
 
@@ -44,13 +47,30 @@ export class DrawSheetComponent implements OnInit{
     this.addLineListeners();
   }
 
+  createShape(shape: string){
+    let created: any;
+    this.konvaService.fillColor = this.fillColor;
+    this.konvaService.strokeColor = this.strokeColor;
+    switch (shape){
+      case 'circle': created = this.konvaService.circle();break;
+      case 'rect': created = this.konvaService.rect();break;
+      case 'triangle': created = this.konvaService.triangle();break;
+      case 'ellipse': created = this.konvaService.ellipse();break;
+      case 'wedge': created = this.konvaService.wedge();break;
+      case 'text': created = this.konvaService.text();break;
+    }
+
+    this.shapes.push(created);
+    this.layer.add(created);
+    this.stage.add(this.layer)
+  }
+
   clearSelection(): void {
     this.selectedButton = {
       'brush': false,
       'eraser': false
     }
   }
-
   // openBottomSheet(): void {
   //   const bottomSheetRef = this._bottomSheet.open(BottomSheet);
   //   bottomSheetRef.afterDismissed().subscribe((result: any) => {
@@ -59,6 +79,7 @@ export class DrawSheetComponent implements OnInit{
   //       this.brushOpacity = result.brushOpacity;
   //     }
   //   });
+
   // }
 
   setSelection(type: string) {
@@ -91,7 +112,7 @@ export class DrawSheetComponent implements OnInit{
       }
       isPaint = true;
       let pos = component.stage.getPointerPosition();
-      lastLine = component.eraser ? component.konvaService.erase(pos, 30) : component.konvaService.brush(pos, component.brushSize, component.inkColor, component.brushOpacity);
+      lastLine = component.eraser ? component.konvaService.erase(pos, 30) : component.konvaService.brush(pos, component.brushSize, component.fillColor, component.brushOpacity);
       component.shapes.push(lastLine);
       component.layer.add(lastLine);
       control_container?.classList.add('hide_palette');
@@ -145,7 +166,6 @@ export class DrawSheetComponent implements OnInit{
     link.href = dataUrl;
     link.click();
   }
-
   getCursorClass(): string {
     if (this.selectedButton['brush'] || this.selectedButton['eraser']) {
       return 'pointer_cursor';
@@ -154,25 +174,4 @@ export class DrawSheetComponent implements OnInit{
     }
   }
 
-  createcircle(){
-    const component = this;
-    let lastLine: any = component.konvaService.circle();
-    component.shapes.push(lastLine);
-    component.layer.add(lastLine);
-  }
-
-  createrect(){
-    const component = this;
-    let lastLine: any = component.konvaService.rect();
-    component.shapes.push(lastLine);
-    component.layer.add(lastLine);
-  }
-
-  createS(){
-    const component = this;
-    let lastLine: any = component.konvaService.square();
-    component.shapes.push(lastLine);
-    component.layer.add(lastLine);
-    this.stage.add(this.layer);
-  }
 }

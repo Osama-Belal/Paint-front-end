@@ -5,16 +5,18 @@ import Konva from "konva";
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class KonvaService {
   brushSize!: number;
   brushOpacity!: number;
   fillColor: string = 'red'
-  borderColor: string = 'green'
+  strokeColor: string = 'green'
 
   circle(){
     return new Konva.Circle({
       radius: 50 * Math.random() + 40,
-      stroke: this.borderColor,
+      stroke: this.strokeColor,
       fill: this.fillColor,
       x: 300 * Math.random() + 200,
       y: 500 * Math.random() + 300
@@ -25,20 +27,56 @@ export class KonvaService {
     return new Konva.Rect({
       width: 50 * Math.random() + 40,
       height: 50 * Math.random() + 40,
-      stroke: this.borderColor,
+      stroke: this.strokeColor,
       fill: this.fillColor,
       x: 300 * Math.random() + 200 * Math.random(),
       y: 500 * Math.random() + 300 * Math.random()
     });
   }
 
-  square(){
+  triangle(){
     return new Konva.Line({
       points: [10, 10, 100, 100, 500, 0],
-      fill: '#00D2FF',
-      stroke: 'black',
+      fill: this.fillColor,
+      stroke: this.strokeColor,
       strokeWidth: 5,
       closed: true,
+      x: 300 * Math.random() + 200 * Math.random(),
+      y: 500 * Math.random() + 300 * Math.random()
+    });
+  }
+
+  ellipse(){
+    return new Konva.Ellipse({
+      radiusX: 100,
+      radiusY: 50,
+      fill: this.fillColor,
+      stroke: this.strokeColor,
+      strokeWidth: 4,
+      x: 300 * Math.random() + 200 * Math.random(),
+      y: 500 * Math.random() + 300 * Math.random()
+    });
+  }
+
+  wedge(){
+    return new Konva.Wedge({
+      radius: 70,
+      angle: 60,
+      fill: this.fillColor,
+      stroke: this.strokeColor,
+      strokeWidth: 4,
+      rotation: -120,
+      x: 300 * Math.random() + 200 * Math.random(),
+      y: 500 * Math.random() + 300 * Math.random()
+    });
+  }
+
+  text(){
+    return new Konva.Text({
+      text: 'Write Here !',
+      fontSize: 30,
+      fontFamily: 'Calibri',
+      fill: this.fillColor,
       x: 300 * Math.random() + 200 * Math.random(),
       y: 500 * Math.random() + 300 * Math.random()
     });
