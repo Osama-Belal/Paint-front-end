@@ -5,6 +5,11 @@ import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-shee
 import { Stage } from 'konva/lib/Stage';
 import { Layer } from 'konva/lib/Layer';
 import { Transformer } from 'konva/lib/shapes/Transformer';
+import { ShapeFactory } from './ShapeFactory';
+import { Dto } from './dto';
+import { ShapesService } from '../shapes.service';
+import { Circle } from 'konva/lib/shapes/Circle';
+import { DtoAdapterService } from '../dto-adapter.service';
 
 @Component({
   selector: 'app-draw-sheet',
@@ -13,12 +18,14 @@ import { Transformer } from 'konva/lib/shapes/Transformer';
 })
 
 
+
+
 export class DrawSheetComponent implements OnInit{
   stage!: Stage;
   layer!: Layer;
   shapes: any = [];
   transformers: Transformer[] = [];
-
+  trans: Transformer = new Transformer();
   fillColor: string = '#000000';
   strokeColor: string = '#000000';
 
@@ -32,7 +39,9 @@ export class DrawSheetComponent implements OnInit{
 
   constructor(
     private _bottomSheet: MatBottomSheet,
-    private konvaService: KonvaService
+    private konvaService: KonvaService,
+    private reqService: ShapesService,
+    private dtoAdapter: DtoAdapterService
   ) { }
 
   ngOnInit(): void {
@@ -48,21 +57,37 @@ export class DrawSheetComponent implements OnInit{
   }
 
   createShape(shape: string){
-    let created: any;
-    this.konvaService.fillColor = this.fillColor;
-    this.konvaService.strokeColor = this.strokeColor;
-    switch (shape){
-      case 'circle': created = this.konvaService.circle();break;
-      case 'rect': created = this.konvaService.rect();break;
-      case 'triangle': created = this.konvaService.triangle();break;
-      case 'ellipse': created = this.konvaService.ellipse();break;
-      case 'wedge': created = this.konvaService.wedge();break;
-      case 'text': created = this.konvaService.text();break;
-    }
+    let shapeFactory: ShapeFactory = new ShapeFactory(this.konvaService, this.reqService, this.dtoAdapter);
+    let newShape = shapeFactory.createShape(shape);
+    newShape.on('mouseup', (e: any) => {
+      this.dtoAdapter.postMove(newShape.toObject(), newShape.getClassName());
+      console.log(newShape);
+    });
 
-    this.shapes.push(created);
-    this.layer.add(created);
-    this.stage.add(this.layer)
+
+    // let transformer = new Transformer()
+    this.layer.add(this.trans)
+    this.trans.nodes([newShape]);
+    
+    let dto:Dto = new Dto;
+    this.shapes.push(newShape);
+    this.layer.add(newShape);
+    this.stage.add(this.layer); 
+
+  }
+  
+  undo(){
+    this.reqService.undo().subscribe((data => {
+      if(data.commandType == 'draw'){
+        this.stage.find(data.id)[0].destroy();
+        this.trans.nodes([]);
+      }else if(data.commandType == 'move'){
+        this.stage.find(data.id)[0]._setAttr('x', data.x);
+        this.stage.find(data.id)[0]._setAttr('y', data.y);
+      }
+      
+      console.log("data: ", data);
+    }))
   }
 
   clearSelection(): void {
@@ -135,7 +160,7 @@ export class DrawSheetComponent implements OnInit{
     });
   }
 
-  undo(): void {
+ /*  undo(): void {
     const removedShape = this.shapes.pop();
 
     this.transformers.forEach(t => {
@@ -147,7 +172,7 @@ export class DrawSheetComponent implements OnInit{
     }
 
     this.layer.draw();
-  }
+  } */
 
   clearBoard(): void {
     this.layer.destroyChildren();

@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DrawSheetComponent } from './draw-sheet/draw-sheet.component';
+import { HttpClientModule } from '@angular/common/http';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { KonvaService } from './konva.service';
@@ -21,14 +22,15 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+        AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
     MatButtonModule,
     MatTooltipModule,
     MatMenuModule,
     MatSliderModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    HttpClientModule
   ],
   providers: [KonvaService],
   bootstrap: [AppComponent]

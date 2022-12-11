@@ -17,9 +17,12 @@ export class KonvaService {
     return new Konva.Circle({
       radius: 50 * Math.random() + 40,
       stroke: this.strokeColor,
+      strokeWidth: 5,
       fill: this.fillColor,
       x: 300 * Math.random() + 200,
-      y: 500 * Math.random() + 300
+      y: 500 * Math.random() + 300,
+      draggable: true,
+      id: 's1'
     });
   }
 
@@ -30,7 +33,8 @@ export class KonvaService {
       stroke: this.strokeColor,
       fill: this.fillColor,
       x: 300 * Math.random() + 200 * Math.random(),
-      y: 500 * Math.random() + 300 * Math.random()
+      y: 500 * Math.random() + 300 * Math.random(),
+      draggable: true
     });
   }
 
