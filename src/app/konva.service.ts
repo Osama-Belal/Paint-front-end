@@ -46,7 +46,8 @@ export class KonvaService {
       strokeWidth: 5,
       closed: true,
       x: 300 * Math.random() + 200 * Math.random(),
-      y: 500 * Math.random() + 300 * Math.random()
+      y: 500 * Math.random() + 300 * Math.random(),
+      draggable: true
     });
   }
 
@@ -58,7 +59,8 @@ export class KonvaService {
       stroke: this.strokeColor,
       strokeWidth: 4,
       x: 300 * Math.random() + 200 * Math.random(),
-      y: 500 * Math.random() + 300 * Math.random()
+      y: 500 * Math.random() + 300 * Math.random(),
+      draggable: true
     });
   }
 
@@ -71,7 +73,8 @@ export class KonvaService {
       strokeWidth: 4,
       rotation: -120,
       x: 300 * Math.random() + 200 * Math.random(),
-      y: 500 * Math.random() + 300 * Math.random()
+      y: 500 * Math.random() + 300 * Math.random(),
+      draggable: true
     });
   }
 
@@ -82,7 +85,8 @@ export class KonvaService {
       fontFamily: 'Calibri',
       fill: this.fillColor,
       x: 300 * Math.random() + 200 * Math.random(),
-      y: 500 * Math.random() + 300 * Math.random()
+      y: 500 * Math.random() + 300 * Math.random(),
+      draggable: true
     });
   }
 
@@ -111,4 +115,5 @@ export class KonvaService {
       lineJoin: 'round'
     });
   }
+
 }

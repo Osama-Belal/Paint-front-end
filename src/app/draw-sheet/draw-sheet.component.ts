@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 
 import { KonvaService } from '../konva.service';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
@@ -10,6 +10,7 @@ import { Dto } from './dto';
 import { ShapesService } from '../shapes.service';
 import { Circle } from 'konva/lib/shapes/Circle';
 import { DtoAdapterService } from '../dto-adapter.service';
+import Konva from "konva";
 
 @Component({
   selector: 'app-draw-sheet',
@@ -21,8 +22,9 @@ import { DtoAdapterService } from '../dto-adapter.service';
 
 
 export class DrawSheetComponent implements OnInit{
-  stage!: Stage;
-  layer!: Layer;
+  stage!: any;
+  layer!: any;
+  transformer : any;
   shapes: any = [];
   transformers: Transformer[] = [];
   trans: Transformer = new Transformer();
@@ -52,18 +54,31 @@ export class DrawSheetComponent implements OnInit{
       height: window.innerHeight
     });
     this.layer = new Layer();
+    this.transformer = new Transformer();
+    this.layer.add(this.transformer);
     this.stage.add(this.layer);
+
+    this.stage.on('mousedown touchstart', (e:any) => {
+      if(e.target === this.stage) {
+        this.transformer.nodes([])
+      }
+      if(e.target.hasName('shape')){
+        this.transformer.nodes([e.target])
+      }
+    });
     this.addLineListeners();
   }
 
   createShape(shape: string){
+    this.konvaService.fillColor = this.fillColor;
+    this.konvaService.strokeColor = this.strokeColor;
     let shapeFactory: ShapeFactory = new ShapeFactory(this.konvaService, this.reqService, this.dtoAdapter);
     let newShape = shapeFactory.createShape(shape);
     newShape.on('mouseup', (e: any) => {
       this.dtoAdapter.postMove(newShape.toObject(), newShape.getClassName());
       console.log(newShape);
     });
-
+    newShape.name('shape')
 
     // let transformer = new Transformer()
     this.layer.add(this.trans)
@@ -89,6 +104,12 @@ export class DrawSheetComponent implements OnInit{
       console.log("data: ", data);
     }))
   }
+
+  // transform
+  selectionRectangle: any = new Konva.Rect({
+    fill: 'rgba(0,0,255,0.5)',
+    visible: false,
+  });
 
   clearSelection(): void {
     this.selectedButton = {
@@ -148,7 +169,7 @@ export class DrawSheetComponent implements OnInit{
       control_container?.classList.remove('hide_palette');
     });
 
-    this.stage.on('mousemove touchmove', function (e) {
+    this.stage.on('mousemove touchmove', function (e:any) {
       if (!isPaint) {
         return;
       }
