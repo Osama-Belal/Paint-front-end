@@ -72,7 +72,7 @@ export class DrawSheetComponent implements OnInit{
       case 'wedge': created = this.konvaService.wedge();break;
       case 'text': created = this.konvaService.text();break;
     }
-    created.name = 'shape';
+    created.name('shape')
     this.shapes.push(created);
     this.transformer.nodes([created]);
     // this.stage.on('mousedown touchstart', function(e){
