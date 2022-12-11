@@ -22,12 +22,11 @@ import Konva from "konva";
 
 
 export class DrawSheetComponent implements OnInit{
-  stage!: any;
-  layer!: any;
-  transformer : any;
+  stage!: Stage;
+  layer!: Layer;
+  transformer!: Transformer;
   shapes: any = [];
   transformers: Transformer[] = [];
-  trans: Transformer = new Transformer();
   fillColor: string = '#000000';
   strokeColor: string = '#000000';
 
@@ -74,9 +73,8 @@ export class DrawSheetComponent implements OnInit{
 
     newShape.name('shape')
 
-    this.layer.add(this.trans)
-    this.trans.nodes([newShape]);
-
+    this.layer.add(this.transformer);
+    this.transformer.nodes([newShape]);
     let dto:Dto = new Dto;
     this.shapes.push(newShape);
     this.layer.add(newShape);
@@ -88,7 +86,7 @@ export class DrawSheetComponent implements OnInit{
     this.reqService.undo().subscribe((data => {
       if(data.commandType == 'draw'){
         this.stage.find(data.id)[0].destroy();
-        this.trans.nodes([]);
+        this.transformer.nodes([]);
       }else if(data.commandType == 'move'){
         this.stage.find(data.id)[0]._setAttr('x', data.x);
         this.stage.find(data.id)[0]._setAttr('y', data.y);
@@ -140,28 +138,27 @@ export class DrawSheetComponent implements OnInit{
     const control_container = document.getElementById('control_container');
 
     this.stage.on('mousedown touchstart', (e: any) => {
-      isFreeHand = true;
+      // isFreeHand = true;
       let pos = component.stage.getPointerPosition();
-
 
       // select this shape
       if(e.target === this.stage) {
         this.transformer.nodes([])
+
+        isFreeHand = true
+        freeHnad = component.eraser ? component.konvaService.erase(pos, 30) :
+          component.konvaService.brush(pos, component.brushSize, component.fillColor, component.brushOpacity);
+        component.shapes.push(freeHnad);
+        component.layer.add(freeHnad);
+        control_container?.classList.add('hide_palette');
       }
       if(e.target.hasName('shape')){
         isFreeHand = false;
         this.transformer.nodes([e.target])
-
       }
       if (!component.selectedButton['brush'] && !component.eraser) {
         return;
       }
-
-      freeHnad = component.eraser ? component.konvaService.erase(pos, 30) :
-        component.konvaService.brush(pos, component.brushSize, component.fillColor, component.brushOpacity);
-      component.shapes.push(freeHnad);
-      component.layer.add(freeHnad);
-      control_container?.classList.add('hide_palette');
     });
 
     this.stage.on('mouseup touchend', function () {
