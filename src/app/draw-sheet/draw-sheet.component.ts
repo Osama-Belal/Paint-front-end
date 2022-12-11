@@ -27,7 +27,6 @@ export class DrawSheetComponent implements OnInit{
   transformer : any;
   shapes: any = [];
   transformers: Transformer[] = [];
-  trans: Transformer = new Transformer();
   fillColor: string = '#000000';
   strokeColor: string = '#000000';
 
@@ -80,9 +79,8 @@ export class DrawSheetComponent implements OnInit{
     });
     newShape.name('shape')
 
-    // let transformer = new Transformer()
-    this.layer.add(this.trans)
-    this.trans.nodes([newShape]);
+    this.layer.add(this.transformer);
+    this.transformer.nodes([newShape]);
     
     let dto:Dto = new Dto;
     this.shapes.push(newShape);
@@ -95,7 +93,7 @@ export class DrawSheetComponent implements OnInit{
     this.reqService.undo().subscribe((data => {
       if(data.commandType == 'draw'){
         this.stage.find(data.id)[0].destroy();
-        this.trans.nodes([]);
+        this.transformer.nodes([]);
       }else if(data.commandType == 'move'){
         this.stage.find(data.id)[0]._setAttr('x', data.x);
         this.stage.find(data.id)[0]._setAttr('y', data.y);
