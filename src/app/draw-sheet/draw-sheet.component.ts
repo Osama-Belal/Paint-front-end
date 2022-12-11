@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 
 import { KonvaService } from '../konva.service';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Stage } from 'konva/lib/Stage';
 import { Layer } from 'konva/lib/Layer';
 import { Transformer } from 'konva/lib/shapes/Transformer';
+import Konva from "konva";
 
 @Component({
   selector: 'app-draw-sheet',
@@ -14,8 +15,9 @@ import { Transformer } from 'konva/lib/shapes/Transformer';
 
 
 export class DrawSheetComponent implements OnInit{
-  stage!: Stage;
-  layer!: Layer;
+  stage!: any;
+  layer!: any;
+  transformer : any;
   shapes: any = [];
   transformers: Transformer[] = [];
 
@@ -43,7 +45,18 @@ export class DrawSheetComponent implements OnInit{
       height: window.innerHeight
     });
     this.layer = new Layer();
+    this.transformer = new Transformer();
+    this.layer.add(this.transformer);
     this.stage.add(this.layer);
+
+    this.stage.on('mousedown touchstart', (e:any) => {
+      if(e.target === this.stage) {
+        this.transformer.nodes([])
+      }
+      if(e.target.hasName('shape')){
+        this.transformer.nodes([e.target])
+      }
+    });
     this.addLineListeners();
   }
 
@@ -59,11 +72,38 @@ export class DrawSheetComponent implements OnInit{
       case 'wedge': created = this.konvaService.wedge();break;
       case 'text': created = this.konvaService.text();break;
     }
-
+    created.name = 'shape';
     this.shapes.push(created);
+    this.transformer.nodes([created]);
+    // this.stage.on('mousedown touchstart', function(e){
+    //   if(!e.target.hasName('a7a')){
+    //
+    //   }
+    // });
+
     this.layer.add(created);
-    this.stage.add(this.layer)
+    // this.stage.add(this.layer)
   }
+
+  // transform
+  selectionRectangle: any = new Konva.Rect({
+    fill: 'rgba(0,0,255,0.5)',
+    visible: false,
+  });
+
+  @HostListener('mousedwon', ['$event'])
+  select(evt: MouseEvent){
+
+  }
+
+
+
+
+
+
+
+
+
 
   clearSelection(): void {
     this.selectedButton = {
@@ -123,7 +163,7 @@ export class DrawSheetComponent implements OnInit{
       control_container?.classList.remove('hide_palette');
     });
 
-    this.stage.on('mousemove touchmove', function (e) {
+    this.stage.on('mousemove touchmove', function (e:any) {
       if (!isPaint) {
         return;
       }
