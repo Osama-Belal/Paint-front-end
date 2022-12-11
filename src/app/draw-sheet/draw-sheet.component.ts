@@ -48,15 +48,6 @@ export class DrawSheetComponent implements OnInit{
     this.transformer = new Transformer();
     this.layer.add(this.transformer);
     this.stage.add(this.layer);
-
-    this.stage.on('mousedown touchstart', (e:any) => {
-      if(e.target === this.stage) {
-        this.transformer.nodes([])
-      }
-      if(e.target.hasName('shape')){
-        this.transformer.nodes([e.target])
-      }
-    });
     this.addLineListeners();
   }
 
@@ -75,14 +66,7 @@ export class DrawSheetComponent implements OnInit{
     created.name('shape')
     this.shapes.push(created);
     this.transformer.nodes([created]);
-    // this.stage.on('mousedown touchstart', function(e){
-    //   if(!e.target.hasName('a7a')){
-    //
-    //   }
-    // });
-
     this.layer.add(created);
-    // this.stage.add(this.layer)
   }
 
   // transform
@@ -90,15 +74,6 @@ export class DrawSheetComponent implements OnInit{
     fill: 'rgba(0,0,255,0.5)',
     visible: false,
   });
-
-  @HostListener('mousedwon', ['$event'])
-  select(evt: MouseEvent){
-
-  }
-
-
-
-
 
 
 
@@ -142,35 +117,48 @@ export class DrawSheetComponent implements OnInit{
 
   addLineListeners(): void {
     const component = this;
-    let lastLine: any;
-    let isPaint: boolean = false;
+    let freeHnad: any;
+    let isFreeHand: boolean = false;
     const control_container = document.getElementById('control_container');
 
-    this.stage.on('mousedown touchstart', function () {
+    this.stage.on('mousedown touchstart', (e: any) => {
+      isFreeHand = true;
+      let pos = component.stage.getPointerPosition();
+
+
+      // select this shape
+      if(e.target === this.stage) {
+        this.transformer.nodes([])
+      }
+      if(e.target.hasName('shape')){
+        isFreeHand = false;
+        this.transformer.nodes([e.target])
+
+      }
       if (!component.selectedButton['brush'] && !component.eraser) {
         return;
       }
-      isPaint = true;
-      let pos = component.stage.getPointerPosition();
-      lastLine = component.eraser ? component.konvaService.erase(pos, 30) : component.konvaService.brush(pos, component.brushSize, component.fillColor, component.brushOpacity);
-      component.shapes.push(lastLine);
-      component.layer.add(lastLine);
+
+      freeHnad = component.eraser ? component.konvaService.erase(pos, 30) :
+        component.konvaService.brush(pos, component.brushSize, component.fillColor, component.brushOpacity);
+      component.shapes.push(freeHnad);
+      component.layer.add(freeHnad);
       control_container?.classList.add('hide_palette');
     });
 
     this.stage.on('mouseup touchend', function () {
-      isPaint = false;
+      isFreeHand = false;
       control_container?.classList.remove('hide_palette');
     });
 
     this.stage.on('mousemove touchmove', function (e:any) {
-      if (!isPaint) {
+      if (!isFreeHand) {
         return;
       }
       e.evt.preventDefault();
       const position: any = component.stage.getPointerPosition();
-      const newPoints = lastLine.points().concat([position.x, position.y]);
-      lastLine.points(newPoints);
+      const newPoints = freeHnad.points().concat([position.x, position.y]);
+      freeHnad.points(newPoints);
       component.layer.batchDraw();
     });
   }
@@ -206,6 +194,7 @@ export class DrawSheetComponent implements OnInit{
     link.href = dataUrl;
     link.click();
   }
+
   getCursorClass(): string {
     if (this.selectedButton['brush'] || this.selectedButton['eraser']) {
       return 'pointer_cursor';
