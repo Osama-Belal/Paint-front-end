@@ -1,16 +1,17 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 
-import { KonvaService } from '../konva.service';
+import { KonvaService } from '../services/konva.service';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Stage } from 'konva/lib/Stage';
 import { Layer } from 'konva/lib/Layer';
 import { Transformer } from 'konva/lib/shapes/Transformer';
-import { ShapeFactory } from './ShapeFactory';
 import { Dto } from './dto';
-import { ShapesService } from '../shapes.service';
+import { ShapesService } from '../services/shapes.service';
 import { Circle } from 'konva/lib/shapes/Circle';
-import { DtoAdapterService } from '../dto-adapter.service';
+import { DtoAdapterService } from '../services/dto-adapter.service';
 import Konva from "konva";
+import { ThisReceiver } from '@angular/compiler';
+import { ShapeFactoryService } from '../services/shape-factory.service';
 
 @Component({
   selector: 'app-draw-sheet',
@@ -29,6 +30,11 @@ export class DrawSheetComponent implements OnInit{
   transformers: Transformer[] = [];
   fillColor: string = '#000000';
   strokeColor: string = '#000000';
+  selectedID: string = 's';
+  oldContainer: {
+    oldX: number,
+    oldY: number
+  } = {oldX: 2, oldY: 2}
 
   selectedButton: any = {
     'line': false,
@@ -42,7 +48,8 @@ export class DrawSheetComponent implements OnInit{
     private _bottomSheet: MatBottomSheet,
     private konvaService: KonvaService,
     private reqService: ShapesService,
-    private dtoAdapter: DtoAdapterService
+    private dtoAdapter: DtoAdapterService,
+    private shapeFactory: ShapeFactoryService
   ) { }
 
   ngOnInit(): void {
@@ -71,36 +78,101 @@ export class DrawSheetComponent implements OnInit{
   createShape(shape: string){
     this.konvaService.fillColor = this.fillColor;
     this.konvaService.strokeColor = this.strokeColor;
-    let shapeFactory: ShapeFactory = new ShapeFactory(this.konvaService, this.reqService, this.dtoAdapter);
-    let newShape = shapeFactory.createShape(shape);
-    newShape.on('mouseup', (e: any) => {
-      this.dtoAdapter.postMove(newShape.toObject(), newShape.getClassName());
-      console.log(newShape);
+    
+    let newShape = this.shapeFactory.createShape(shape);
+    // send post request
+    this.dtoAdapter.drawShape(newShape.toObject().attrs, newShape.toObject().className).subscribe(data => {
+      newShape.attrs.id = data.id;
     });
+
+    newShape.on('mouseup', (e: any) => {
+      this.dtoAdapter.putMove(newShape.toObject().attrs, newShape.getClassName());
+    });
+
+    newShape.on('mousedown', (e: any) => {
+      this.selectedID = newShape.attrs.id;
+    });
+
+    newShape.on('transformstart', (e: any) => {
+      this.oldContainer.oldX = newShape.toObject().attrs.x;
+      this.oldContainer.oldY = newShape.toObject().attrs.y;
+    })  
+
+    newShape.on('transformend', (e: any) =>{
+      this.dtoAdapter.putResize(newShape.toObject().attrs, newShape.getClassName(), this.oldContainer);
+    })
     newShape.name('shape')
 
     this.layer.add(this.transformer);
     this.transformer.nodes([newShape]);
     
-    let dto:Dto = new Dto;
     this.shapes.push(newShape);
     this.layer.add(newShape);
     this.stage.add(this.layer); 
 
   }
-  
+
+  // CONTINUE UNDO
   undo(){
     this.reqService.undo().subscribe((data => {
-      if(data.commandType == 'draw'){
-        this.stage.find(data.id)[0].destroy();
-        this.transformer.nodes([]);
-      }else if(data.commandType == 'move'){
-        this.stage.find(data.id)[0]._setAttr('x', data.x);
-        this.stage.find(data.id)[0]._setAttr('y', data.y);
-      }
-      
-      console.log("data: ", data);
+      this.setUndo(data);
+    })) 
+  }
+  // TODO HANDLE REDO
+  redo(){
+    this.reqService.redo().subscribe((data => {
+      this.setRedo(data);
     }))
+  }
+
+  setUndo(data: Dto){
+    if(data.commandType == 'draw'){
+      this.layer.find('#' + data.id)[0].destroy();
+      this.transformer.nodes([]);
+    }else if(data.commandType == 'move'){
+      this.stage.find('#'+ data.id)[0]._setAttr('x', data.x);
+      this.stage.find('#'+ data.id)[0]._setAttr('y', data.y);
+    }else if(data.commandType == 'delete'){
+      this.layer.add(this.dtoAdapter.undoDelete(data));  
+    }else if(data.commandType == 'resize'){
+      this.layer.find('#' + data.id)[0]._setAttr('scaleX', data.scaleX)
+      this.layer.find('#' + data.id)[0]._setAttr('scaleY', data.scaleY)
+      this.layer.find('#' + data.id)[0]._setAttr('x', data.x)
+      this.layer.find('#' + data.id)[0]._setAttr('y', data.y)
+      console.log(this.layer.find('#' + data.id)[0])
+    }
+  }
+
+  setRedo(data: Dto){
+    if(data.commandType == 'draw'){
+      this.layer.find('#' + data.id)[0].destroy();
+      this.transformer.nodes([]);
+    }else if(data.commandType == 'move'){
+      this.stage.find('#'+ data.id)[0]._setAttr('x', data.x);
+      this.stage.find('#'+ data.id)[0]._setAttr('y', data.y);
+    }else if(data.commandType == 'delete'){
+      //TODO test it
+      this.layer.add(this.dtoAdapter.undoDelete(data));  
+    }else if(data.commandType == 'resize'){
+
+    }
+  }
+
+  delete(){
+    this.layer.find('#' + this.selectedID)[0].destroy();
+    this.transformer.nodes([]);
+    let dto = new Dto();
+    dto.id = this.selectedID;
+    this.reqService.putDelete(dto).subscribe((data => {
+    }))
+  }
+  save(){
+    this.reqService.postSave(this.stage);
+  }
+  load(){
+    this.reqService.getLoad().subscribe(data => {
+      this.stage = Konva.Node.create(data, 'container');
+    })
   }
 
   // transform
@@ -177,6 +249,13 @@ export class DrawSheetComponent implements OnInit{
       lastLine.points(newPoints);
       component.layer.batchDraw();
     });
+
+    //TODO handle with delete
+    this.stage.on('keydown.delete', (e:any) => {
+      if(e.evt.deleteKey){
+       this.stage.find(this.selectedID)[0].destroy();
+      }
+    })
   }
 
  /*  undo(): void {

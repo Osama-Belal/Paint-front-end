@@ -22,7 +22,7 @@ export class KonvaService {
       x: 300 * Math.random() + 200,
       y: 500 * Math.random() + 300,
       draggable: true,
-      id: 's1'
+      id:'s'
     });
   }
 
