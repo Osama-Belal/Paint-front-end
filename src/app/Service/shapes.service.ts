@@ -53,5 +53,11 @@ export class ShapesService {
     return this.http.put<Dto>(`${this.configUrl}/update`, dto);
   }
 
+  putRecolor(dto: Dto){
+    dto.commandType = 'recolor'
+    this.http.put<Dto>(`${this.configUrl}/update`, dto).subscribe((data => {
+      console.log("data: ", data);
+    }))
+  }
   
 }

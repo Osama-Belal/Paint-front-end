@@ -49,4 +49,11 @@ export class DtoAdapterService {
     return myShape;
   }
 
+  putRecolor(shape: any, className: string){
+    let dto: Dto = new Dto();
+    dto = shape;
+    dto.className = className;
+    this.myService.putRecolor(dto);
+  }
+
 }

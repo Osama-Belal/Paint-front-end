@@ -9,6 +9,8 @@ import {ShapesService} from "../Service/shapes.service";
 import {DtoAdapterService} from "../Service/dto-adapter.service";
 import {Dto} from "../drawing-space/dto";
 import {toNumbers} from "@angular/compiler-cli/src/version_helpers";
+import { AppComponent } from '../app.component';
+import { EventsService } from '../Service/events.service';
 
 export interface Tile {
   color: string;
@@ -28,7 +30,7 @@ export class NavBarComponent implements OnInit {
 
   helpActive: boolean = false;
 
-  constructor() { }
+  constructor(private appComp: AppComponent, private eventService: EventsService) { }
 
   ngOnInit(): void {
   }
@@ -39,6 +41,10 @@ export class NavBarComponent implements OnInit {
 
   load(){
 
+  }
+
+  saveAsImage(): void {
+    this.eventService.saveAsImage();
   }
 
   toggleGuide(){

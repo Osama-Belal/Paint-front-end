@@ -12,6 +12,7 @@ import { DtoAdapterService } from '../Service/dto-adapter.service';
 import Konva from "konva";
 import { ThisReceiver } from '@angular/compiler';
 import { ShapeFactoryService } from '../Service/shape-factory.service';
+import { EventsService } from '../Service/events.service';
 
 @Component({
   selector: 'app-drawing-space',
@@ -46,7 +47,8 @@ export class DrawingSpaceComponent implements OnInit{
     private konvaService: KonvaService,
     private reqService: ShapesService,
     private dtoAdapter: DtoAdapterService,
-    private shapeFactory: ShapeFactoryService
+    private shapeFactory: ShapeFactoryService,
+    private eventService: EventsService
   ) { }
 
   ngOnInit(): void {
@@ -60,6 +62,7 @@ export class DrawingSpaceComponent implements OnInit{
     this.transformer = new Transformer();
     this.layer.add(this.transformer);
     this.stage.add(this.layer);
+    this.eventService.stage = this.stage;
     this.addLineListeners();
   }
 
@@ -142,10 +145,10 @@ export class DrawingSpaceComponent implements OnInit{
       //TODO test it
       this.layer.add(this.dtoAdapter.undoDelete(data));
     }else if(data.commandType == 'resize'){
-
+      
     }
   }
-
+  
   delete(){
     this.layer.find('#' + this.selectedID)[0].destroy();
     this.transformer.nodes([]);
@@ -162,7 +165,13 @@ export class DrawingSpaceComponent implements OnInit{
       this.stage = Konva.Node.create(data, 'container');
     })
   }
-
+  recolor(){
+    let myShape = this.stage.find('#'+ this.selectedID)[0];
+    myShape._setAttr('fill', this.fillColor);
+    myShape._setAttr('stroke', this.strokeColor);
+    this.dtoAdapter.putRecolor(myShape.toObject().attrs, myShape.className);
+  }
+  
   // transform
   selectionRectangle: any = new Konva.Rect({
     fill: 'rgba(0,0,255,0.5)',
@@ -274,18 +283,7 @@ export class DrawingSpaceComponent implements OnInit{
     this.layer.draw();
   }
 
-  saveAsImage(): void {
-    const dataUrl: string = this.stage.toDataURL({
-      mimeType: 'image/png',
-      quality: 1,
-      pixelRatio: 1
-    });
 
-    const link = document.createElement('a');
-    link.download = 'board_image.png';
-    link.href = dataUrl;
-    link.click();
-  }
 
   getCursorClass(): string {
     if (this.selectedButton['brush'] || this.selectedButton['eraser']) {
@@ -295,10 +293,5 @@ export class DrawingSpaceComponent implements OnInit{
     }
   }
 
-  recolor(){
-    let shape = this.shapes.find();
-    shape.fillColor(this.fillColor);
-    shape.strokeColor(this.strokeColor)
-  }
-
+  
 }
