@@ -65,7 +65,7 @@
       </svg>
     </button>
 
-    <button mat-mini-fab matTooltip="Brush Size & Opacity" matTooltipPosition="right"
+    <button [matMenuTriggerFor]="menu" mat-mini-fab matTooltip="Brush Size & Opacity" matTooltipPosition="right"
             aria-label="Brush Size & Opacity">
       <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" class="animate stroke"
            width="47px" height="47px" viewBox="0 0 45 45" [attr.stroke]="fillColor">
@@ -83,6 +83,22 @@
         <g></g><g></g><g></g><g></g><g></g><g></g><g></g>
       </svg>
     </button>
+
+    <mat-menu class="scroll-menu" #menu="matMenu" mat-mini-fab matTooltipPosition="before">
+      Stroke Width
+      <mat-slider min="0" max="100" step="1" showTickMarks discrete [displayWith]="updateStroke">
+        <input matSliderThumb 
+        [value]="strokeWidth"
+        [(ngModel)]="strokeWidth">
+      </mat-slider>
+
+      Brush Width
+      <mat-slider min="0" max="100" step="1" showTickMarks discrete [displayWith]="updateBrush">
+        <input matSliderThumb
+        [value]="brushWidth"
+        [(ngModel)]="brushWidth">
+      </mat-slider>
+    </mat-menu>
 
     <hr class="hr_divider" />
 

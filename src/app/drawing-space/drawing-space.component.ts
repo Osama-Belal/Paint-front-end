@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit, ViewEncapsulation} from '@angular/core';
 
 import { KonvaService } from '../Service/konva.service';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
@@ -17,7 +17,8 @@ import { EventsService } from '../Service/events.service';
 @Component({
   selector: 'app-drawing-space',
   templateUrl: './drawing-space.component.html',
-  styleUrls: ['./drawing-space.component.css']
+  styleUrls: ['./drawing-space.component.css'],
+  //encapsulation: ViewEncapsulation.None
 })
 
 export class DrawingSpaceComponent implements OnInit{
@@ -26,9 +27,14 @@ export class DrawingSpaceComponent implements OnInit{
   transformer!: Transformer;
   shapes: any = [];
   transformers: Transformer[] = [];
+  selectedID: string = 's';
+
   fillColor: string = '#000000';
   strokeColor: string = '#000000';
-  selectedID: string = 's';
+  strokeWidth: number = 1;
+  brushWidth: number = 3;
+  
+
   oldContainer: {
     oldX: number,
     oldY: number
@@ -39,8 +45,6 @@ export class DrawingSpaceComponent implements OnInit{
     'eraser': false
   }
   eraser: boolean = false;
-  brushSize: number = 3;
-  brushOpacity: number = 1.0;
 
   constructor(
     private _bottomSheet: MatBottomSheet,
@@ -67,9 +71,7 @@ export class DrawingSpaceComponent implements OnInit{
   }
 
   createShape(shape: string){
-    this.konvaService.fillColor = this.fillColor;
-    this.konvaService.strokeColor = this.strokeColor;
-
+    
     let newShape = this.shapeFactory.createShape(shape);
     // send post request
     this.dtoAdapter.drawShape(newShape.toObject().attrs, newShape.toObject().className).subscribe(data => {
@@ -145,10 +147,10 @@ export class DrawingSpaceComponent implements OnInit{
       //TODO test it
       this.layer.add(this.dtoAdapter.undoDelete(data));
     }else if(data.commandType == 'resize'){
-      
+
     }
   }
-  
+
   delete(){
     this.layer.find('#' + this.selectedID)[0].destroy();
     this.transformer.nodes([]);
@@ -220,21 +222,22 @@ export class DrawingSpaceComponent implements OnInit{
 
   addLineListeners(): void {
     const component = this;
-    let freeHnad: any;
+    let freeHand: any;
     let isFreeHand: boolean = false;
 
     this.stage.on('mousedown touchstart', (e: any) => {
       let pos = component.stage.getPointerPosition();
+      console.log('setBrush called ', this.brushWidth);
       this.hidePalette();
       // select this shape
       if(e.target === this.stage) {
         this.transformer.nodes([])
 
         isFreeHand = true
-        freeHnad = component.eraser ? component.konvaService.erase(pos, 30) :
-          component.konvaService.brush(pos, component.brushSize, component.fillColor, component.brushOpacity);
-        component.shapes.push(freeHnad);
-        component.layer.add(freeHnad);
+        freeHand = component.eraser ? component.konvaService.erase(pos, 30) :
+          component.konvaService.brush(pos);
+        component.shapes.push(freeHand);
+        component.layer.add(freeHand);
         this.hidePalette();
       }
       if(e.target.hasName('shape')){
@@ -254,8 +257,8 @@ export class DrawingSpaceComponent implements OnInit{
       }
       e.evt.preventDefault();
       const position: any = component.stage.getPointerPosition();
-      const newPoints = freeHnad.points().concat([position.x, position.y]);
-      freeHnad.points(newPoints);
+      const newPoints = freeHand.points().concat([position.x, position.y]);
+      freeHand.points(newPoints);
       component.layer.batchDraw();
     });
 
@@ -265,6 +268,22 @@ export class DrawingSpaceComponent implements OnInit{
        this.stage.find(this.selectedID)[0].destroy();
       }
     })
+  }
+
+  setBrush(value: number) {
+    this.brushWidth = value;
+    this.konvaService.brushWidth = this.brushWidth;
+    this.konvaService.fillColor = this.fillColor;
+  }
+  setStroke(value: number) {
+    this.strokeWidth = value;
+    this.konvaService.strokeWidth = this.strokeWidth;
+    this.konvaService.strokeColor = this.strokeColor;
+  }
+
+  setBrushAttrs(value: number){
+    this.setBrush(value);
+    this.setStroke(value);
   }
 
   hidePalette(){
@@ -283,12 +302,14 @@ export class DrawingSpaceComponent implements OnInit{
     control_container_L?.classList.remove('hide_palette');
   }
 
-  clearBoard(): void {
-    this.layer.destroyChildren();
-    this.layer.draw();
+  updateStroke(value: number): string {
+    this.setStroke(value);
+    return `${value}`;
   }
-
-
+  updateBrush(value: number): string {
+    this.setBrush(value);
+    return `${value}`;
+  }
 
   getCursorClass(): string {
     if (this.selectedButton['brush'] || this.selectedButton['eraser']) {
@@ -298,5 +319,5 @@ export class DrawingSpaceComponent implements OnInit{
     }
   }
 
-  
+
 }

@@ -1,5 +1,7 @@
 # TODO 
-- implement square
+- implement brush size
+- implement delete
+- implement redo 
 ### undo
 - undo clone
 - undo delete

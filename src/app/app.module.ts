@@ -6,7 +6,6 @@ import { DrawingSpaceComponent } from './drawing-space/drawing-space.component';
 import { HttpClientModule } from '@angular/common/http';
 
 import { KonvaService } from './Service/konva.service';
-import { ShapesService } from './Service/shapes.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
