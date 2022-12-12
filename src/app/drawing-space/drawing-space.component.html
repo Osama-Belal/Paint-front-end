@@ -1,7 +1,19 @@
-<!--<div class="sheet"></div>-->
-
 <section class="white_board--wrapper sheet">
-  <div id="control_container-left" class="white_board--controls left mat-elevation-z8">
+<!--  <button class="menu_button" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Icon-button with a menu">-->
+<!--    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">-->
+<!--      <path-->
+<!--        d="M 12 3 A 2 2 0 0 0 10 5 A 2 2 0 0 0 12 7 A 2 2 0 0 0 14 5 A 2 2 0 0 0 12 3 z M 12 10 A 2 2 0 0 0 10 12 A 2 2 0 0 0 12 14 A 2 2 0 0 0 14 12 A 2 2 0 0 0 12 10 z M 12 17 A 2 2 0 0 0 10 19 A 2 2 0 0 0 12 21 A 2 2 0 0 0 14 19 A 2 2 0 0 0 12 17 z">-->
+<!--      </path>-->
+<!--    </svg>-->
+<!--  </button>-->
+
+<!--  <mat-menu #menu="matMenu" xPosition="before" yPosition="below">-->
+<!--    <a mat-menu-item (click)="saveAsImage()" aria-label="Save as image">Save as image</a>-->
+<!--    <a mat-menu-item href="https://github.com/SujalShah3234/White-Board/issues" aria-label="Report Bug">Report bug</a>-->
+<!--    <a mat-menu-item href="https://github.com/SujalShah3234" aria-label="Developer Name">Made with ❤️by Osama Belal</a>-->
+<!--  </mat-menu>-->
+
+  <div id="control_container" class="white_board--controls mat-elevation-z8">
     <button mat-mini-fab matTooltip="Color palette" matTooltipPosition="right" aria-label="Ink Color Picker">
       <input role="button" type="color" [value]="fillColor" [style.background]="fillColor" [(ngModel)]="fillColor"
              aria-label="Color Picker" />

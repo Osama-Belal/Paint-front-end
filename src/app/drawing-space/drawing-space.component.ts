@@ -1,16 +1,17 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 
+import { KonvaService } from '../Service/konva.service';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import {KonvaService} from "../Service/konva.service";
 import { Stage } from 'konva/lib/Stage';
 import { Layer } from 'konva/lib/Layer';
 import { Transformer } from 'konva/lib/shapes/Transformer';
+import { Dto } from './dto';
+import { ShapesService } from '../Service/shapes.service';
 import { Circle } from 'konva/lib/shapes/Circle';
+import { DtoAdapterService } from '../Service/dto-adapter.service';
 import Konva from "konva";
-import {ShapesService} from "../Service/shapes.service";
-import {DtoAdapterService} from "../Service/dto-adapter.service";
-import {ShapeFactory} from "./ShapeFactory";
-import {Dto} from "./dto";
+import { ThisReceiver } from '@angular/compiler';
+import { ShapeFactoryService } from '../Service/shape-factory.service';
 
 @Component({
   selector: 'app-drawing-space',
@@ -23,10 +24,14 @@ export class DrawingSpaceComponent implements OnInit{
   layer!: Layer;
   transformer!: Transformer;
   shapes: any = [];
-
+  transformers: Transformer[] = [];
   fillColor: string = '#000000';
   strokeColor: string = '#000000';
   selectedID: string = 's';
+  oldContainer: {
+    oldX: number,
+    oldY: number
+  } = {oldX: 2, oldY: 2}
 
   selectedButton: any = {
     'line': false,
@@ -40,7 +45,8 @@ export class DrawingSpaceComponent implements OnInit{
     private _bottomSheet: MatBottomSheet,
     private konvaService: KonvaService,
     private reqService: ShapesService,
-    private dtoAdapter: DtoAdapterService
+    private dtoAdapter: DtoAdapterService,
+    private shapeFactory: ShapeFactoryService
   ) { }
 
   ngOnInit(): void {
@@ -60,43 +66,108 @@ export class DrawingSpaceComponent implements OnInit{
   createShape(shape: string){
     this.konvaService.fillColor = this.fillColor;
     this.konvaService.strokeColor = this.strokeColor;
-
-    let shapeFactory: ShapeFactory = new ShapeFactory(this.konvaService, this.reqService, this.dtoAdapter);
-    let newShape = shapeFactory.createShape(shape);
+    
+    let newShape = this.shapeFactory.createShape(shape);
+    // send post request
+    this.dtoAdapter.drawShape(newShape.toObject().attrs, newShape.toObject().className).subscribe(data => {
+      newShape.attrs.id = data.id;
+    });
 
     newShape.on('mouseup', (e: any) => {
-      this.dtoAdapter.postMove(newShape.toObject(), newShape.getClassName());
-      console.log(newShape);
+      this.dtoAdapter.putMove(newShape.toObject().attrs, newShape.getClassName());
     });
 
     newShape.on('mousedown', (e: any) => {
-      this.selectedID = newShape.id;
+      this.selectedID = newShape.attrs.id;
     });
 
+    newShape.on('transformstart', (e: any) => {
+      this.oldContainer.oldX = newShape.toObject().attrs.x;
+      this.oldContainer.oldY = newShape.toObject().attrs.y;
+    })  
+
+    newShape.on('transformend', (e: any) =>{
+      this.dtoAdapter.putResize(newShape.toObject().attrs, newShape.getClassName(), this.oldContainer);
+    })
     newShape.name('shape')
 
     this.layer.add(this.transformer);
     this.transformer.nodes([newShape]);
-    let dto:Dto = new Dto;
+    
     this.shapes.push(newShape);
     this.layer.add(newShape);
     this.stage.add(this.layer);
 
   }
 
+  // CONTINUE UNDO
   undo(){
     this.reqService.undo().subscribe((data => {
-      if(data.commandType == 'draw'){
-        this.stage.find(data.id)[0].destroy();
-        this.transformer.nodes([]);
-      }else if(data.commandType == 'move'){
-        this.stage.find(data.id)[0]._setAttr('x', data.x);
-        this.stage.find(data.id)[0]._setAttr('y', data.y);
-      }
-
-      console.log("data: ", data);
+      this.setUndo(data);
+    })) 
+  }
+  // TODO HANDLE REDO
+  redo(){
+    this.reqService.redo().subscribe((data => {
+      this.setRedo(data);
     }))
   }
+
+  setUndo(data: Dto){
+    if(data.commandType == 'draw'){
+      this.layer.find('#' + data.id)[0].destroy();
+      this.transformer.nodes([]);
+    }else if(data.commandType == 'move'){
+      this.stage.find('#'+ data.id)[0]._setAttr('x', data.x);
+      this.stage.find('#'+ data.id)[0]._setAttr('y', data.y);
+    }else if(data.commandType == 'delete'){
+      this.layer.add(this.dtoAdapter.undoDelete(data));  
+    }else if(data.commandType == 'resize'){
+      this.layer.find('#' + data.id)[0]._setAttr('scaleX', data.scaleX)
+      this.layer.find('#' + data.id)[0]._setAttr('scaleY', data.scaleY)
+      this.layer.find('#' + data.id)[0]._setAttr('x', data.x)
+      this.layer.find('#' + data.id)[0]._setAttr('y', data.y)
+      console.log(this.layer.find('#' + data.id)[0])
+    }
+  }
+
+  setRedo(data: Dto){
+    if(data.commandType == 'draw'){
+      this.layer.find('#' + data.id)[0].destroy();
+      this.transformer.nodes([]);
+    }else if(data.commandType == 'move'){
+      this.stage.find('#'+ data.id)[0]._setAttr('x', data.x);
+      this.stage.find('#'+ data.id)[0]._setAttr('y', data.y);
+    }else if(data.commandType == 'delete'){
+      //TODO test it
+      this.layer.add(this.dtoAdapter.undoDelete(data));  
+    }else if(data.commandType == 'resize'){
+
+    }
+  }
+
+  delete(){
+    this.layer.find('#' + this.selectedID)[0].destroy();
+    this.transformer.nodes([]);
+    let dto = new Dto();
+    dto.id = this.selectedID;
+    this.reqService.putDelete(dto).subscribe((data => {
+    }))
+  }
+  save(){
+    this.reqService.postSave(this.stage);
+  }
+  load(){
+    this.reqService.getLoad().subscribe(data => {
+      this.stage = Konva.Node.create(data, 'container');
+    })
+  }
+
+  // transform
+  selectionRectangle: any = new Konva.Rect({
+    fill: 'rgba(0,0,255,0.5)',
+    visible: false,
+  });
 
   clearSelection(): void {
     this.selectedButton = {
@@ -143,7 +214,6 @@ export class DrawingSpaceComponent implements OnInit{
       // isFreeHand = true;
       let pos = component.stage.getPointerPosition();
 
-
       // select this shape
       if(e.target === this.stage) {
         this.transformer.nodes([])
@@ -156,7 +226,6 @@ export class DrawingSpaceComponent implements OnInit{
         control_container?.classList.add('hide_palette');
       }
       if(e.target.hasName('shape')){
-        console.log(this.selectedID);
         isFreeHand = false;
         this.transformer.nodes([e.target])
       }
@@ -180,6 +249,13 @@ export class DrawingSpaceComponent implements OnInit{
       freeHnad.points(newPoints);
       component.layer.batchDraw();
     });
+
+    //TODO handle with delete
+    this.stage.on('keydown.delete', (e:any) => {
+      if(e.evt.deleteKey){
+       this.stage.find(this.selectedID)[0].destroy();
+      }
+    })
   }
 
   clearBoard(): void {
@@ -191,7 +267,7 @@ export class DrawingSpaceComponent implements OnInit{
     const dataUrl: string = this.stage.toDataURL({
       mimeType: 'image/png',
       quality: 1,
-      pixelRatio: 1,
+      pixelRatio: 1
     });
 
     const link = document.createElement('a');

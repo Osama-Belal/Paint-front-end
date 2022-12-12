@@ -22,7 +22,7 @@ export class KonvaService {
       x: window.innerHeight / 2,
       y: window.innerHeight / 2,
       draggable: true,
-      id: 's1'
+      id:'s'
     });
   }
 
