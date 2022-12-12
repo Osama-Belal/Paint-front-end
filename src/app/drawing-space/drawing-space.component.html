@@ -16,9 +16,8 @@
 
     <button mat-mini-fab [ngClass]='selectedButton["brush"] ? "primary_border":"no_border"'
             (click)='undo()' matTooltip="Delete" matTooltipPosition="right" aria-label="Brush">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="animate stroke" viewBox="0 0 16 16">
-        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+      <svg class="animate stroke" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 6H21M5 6V20C5 21.1046 5.89543 22 7 22H17C18.1046 22 19 21.1046 19 20V6M8 6V4C8 2.89543 8.89543 2 10 2H14C15.1046 2 16 2.89543 16 4V6" stroke-linecap="round" stroke-linejoin="round"></path>
       </svg>
     </button>
 
@@ -40,9 +39,19 @@
 
     <button mat-mini-fab [ngClass]='selectedButton["eraser"] ? "primary_border":"no_border"'
             (click)='recolor()' matTooltip="Recolor" matTooltipPosition="right" aria-label="Eraser">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="animate rotate" viewBox="0 0 16 16">
-        <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
-        <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+      <svg class="animate stroke" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+      <g class="ColorScheme-Text" fill="currentColor">
+        <path d="m11 2v2h-6a3 3 0 0 0 -3 3v1h1v-1a2 2 0 0 1 2-2h6v2l3.33398438-2.5z"></path>
+        <path d="m5 14v-2h6a3 3 0 0 0 3-3v-1h-1v1a2 2 0 0 1 -2 2h-6v-2l-3.33398438 2.5z"></path>
+      </g>
+    </svg>
+    </button>
+
+    <button mat-mini-fab [ngClass]='selectedButton["eraser"] ? "primary_border":"no_border"'
+            (click)='recolor()' matTooltip="Clone" matTooltipPosition="right" aria-label="Clone">
+      <svg class="animate stroke" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="9" y="9" width="13" height="13" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect>
+        <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke-linecap="round" stroke-linejoin="round"></path>
       </svg>
     </button>
 

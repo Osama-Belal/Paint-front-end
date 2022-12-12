@@ -19,8 +19,8 @@ export class KonvaService {
       stroke: this.strokeColor,
       strokeWidth: 5,
       fill: this.fillColor,
-      x: 300 * Math.random() + 200,
-      y: 500 * Math.random() + 300,
+      x: window.innerHeight / 2,
+      y: window.innerHeight / 2,
       draggable: true,
       id: 's1'
     });
@@ -32,8 +32,21 @@ export class KonvaService {
       height: 50 * Math.random() + 40,
       stroke: this.strokeColor,
       fill: this.fillColor,
-      x: 300 * Math.random() + 200 * Math.random(),
-      y: 500 * Math.random() + 300 * Math.random(),
+      x: window.innerHeight / 2,
+      y: window.innerHeight / 2,
+      draggable: true
+    });
+  }
+
+  square(){
+    let w = Math.random();
+    return new Konva.Rect({
+      width: 50 * w + 40,
+      height: 50 * w + 40,
+      stroke: this.strokeColor,
+      fill: this.fillColor,
+      x: window.innerHeight / 2,
+      y: window.innerHeight / 2,
       draggable: true
     });
   }
@@ -45,8 +58,8 @@ export class KonvaService {
       stroke: this.strokeColor,
       strokeWidth: 5,
       closed: true,
-      x: 300 * Math.random() + 200 * Math.random(),
-      y: 500 * Math.random() + 300 * Math.random(),
+      x: window.innerHeight / 2,
+      y: window.innerHeight / 2,
       draggable: true
     });
   }
@@ -58,22 +71,8 @@ export class KonvaService {
       fill: this.fillColor,
       stroke: this.strokeColor,
       strokeWidth: 4,
-      x: 300 * Math.random() + 200 * Math.random(),
-      y: 500 * Math.random() + 300 * Math.random(),
-      draggable: true
-    });
-  }
-
-  wedge(){
-    return new Konva.Wedge({
-      radius: 70,
-      angle: 60,
-      fill: this.fillColor,
-      stroke: this.strokeColor,
-      strokeWidth: 4,
-      rotation: -120,
-      x: 300 * Math.random() + 200 * Math.random(),
-      y: 500 * Math.random() + 300 * Math.random(),
+      x: window.innerHeight / 2,
+      y: window.innerHeight / 2,
       draggable: true
     });
   }
@@ -84,8 +83,8 @@ export class KonvaService {
       fontSize: 30,
       fontFamily: 'Calibri',
       fill: this.fillColor,
-      x: 300 * Math.random() + 200 * Math.random(),
-      y: 500 * Math.random() + 300 * Math.random(),
+      x: window.innerHeight / 2,
+      y: window.innerHeight / 2,
       draggable: true
     });
   }

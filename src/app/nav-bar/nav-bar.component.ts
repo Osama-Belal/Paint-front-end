@@ -1,5 +1,14 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
+import {Stage} from "konva/lib/Stage";
+import {Layer} from "konva/lib/Layer";
+import {Transformer} from "konva/lib/shapes/Transformer";
+import {MatBottomSheet} from "@angular/material/bottom-sheet";
+import {KonvaService} from "../Service/konva.service";
+import {ShapesService} from "../Service/shapes.service";
+import {DtoAdapterService} from "../Service/dto-adapter.service";
+import {ShapeFactory} from "../drawing-space/ShapeFactory";
+import {Dto} from "../drawing-space/dto";
 
 export interface Tile {
   color: string;
@@ -17,40 +26,17 @@ export interface Tile {
 
 export class NavBarComponent implements OnInit {
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
   }
 
-  // one: boolean = true
-  // toggle_one(){
-  //   this.one = !this.one;
-  //   this.two = this.three = this.four = this.five = false
-  // }
-  // two: boolean = false
-  // toggle_two(){
-  //   this.two = !this.two;
-  //   this.one = this.three = this.four = this.five = false
-  // }
-  // three: boolean = false
-  // toggle_three(){
-  //   this.three = !this.three;
-  //   this.two = this.one = this.four = this.five = false
-  // }
-  // four: boolean = false
-  // toggle_four(){
-  //   this.four = !this.four;
-  //   this.two = this.three = this.one = this.five = false
-  // }
-  // five: boolean = false
-  // toggle_five(){
-  //   this.five = !this.five;
-  //   this.two = this.three = this.four = this.one = false
-  // }
+  save(){
 
-
-  active: boolean = false
-  toggleClass(){
-    this.active = !this.active;
   }
+
+  load(){
+
+  }
+
 }

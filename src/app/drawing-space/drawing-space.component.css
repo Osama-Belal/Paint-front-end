@@ -43,7 +43,10 @@ svg{
   stroke-dasharray: 75;
   transition: .3s ease-in-out;
 }
-
+.left svg{
+  width: 2em;
+  height: 2em;
+}
 
 button:hover{
   box-shadow:

@@ -23,8 +23,8 @@ export class ShapeFactory {
             case 'ellipse':
             created = this.myKonvaService.ellipse();
             break;
-            case 'wedge':
-            created = this.myKonvaService.wedge();
+            case 'square':
+            created = this.myKonvaService.square();
             break;
             case 'text': created = this.myKonvaService.text();
             break;
