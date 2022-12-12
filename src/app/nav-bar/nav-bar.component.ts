@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {MatDialog} from "@angular/material/dialog";
 
 export interface Tile {
   color: string;
@@ -16,16 +17,40 @@ export interface Tile {
 
 export class NavBarComponent implements OnInit {
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
   }
 
-  tiles: Tile[] = [
-    {text: 'One', cols: 3, rows: 1, color: 'lightblue'},
-    {text: 'Two', cols: 1, rows: 2, color: 'lightgreen'},
-    {text: 'Three', cols: 1, rows: 1, color: 'lightpink'},
-    {text: 'Four', cols: 2, rows: 1, color: '#DDBDF1'},
-  ];
+  // one: boolean = true
+  // toggle_one(){
+  //   this.one = !this.one;
+  //   this.two = this.three = this.four = this.five = false
+  // }
+  // two: boolean = false
+  // toggle_two(){
+  //   this.two = !this.two;
+  //   this.one = this.three = this.four = this.five = false
+  // }
+  // three: boolean = false
+  // toggle_three(){
+  //   this.three = !this.three;
+  //   this.two = this.one = this.four = this.five = false
+  // }
+  // four: boolean = false
+  // toggle_four(){
+  //   this.four = !this.four;
+  //   this.two = this.three = this.one = this.five = false
+  // }
+  // five: boolean = false
+  // toggle_five(){
+  //   this.five = !this.five;
+  //   this.two = this.three = this.four = this.one = false
+  // }
 
+
+  active: boolean = false
+  toggleClass(){
+    this.active = !this.active;
+  }
 }

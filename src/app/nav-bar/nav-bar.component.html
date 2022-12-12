@@ -1,267 +1,335 @@
-<mat-tab-group fitinkbartocontent="SS" class="navbar"
-               animationDuration="500ms"
-               [backgroundColor]="" [color]="">
-  <mat-tab label="View">
-    <div class="block select">
-      <i class="menu fa fa-arrows fa-4x"></i>
-      <div class="grid">
-        <i class="fa fa-scissors fa-2x"><span>Cut</span></i>
-        <i class="fa fa-clone fa-2x"><span>Clone</span></i>
+<div class="navbar">
+  <div class="gooey-menu">
+    <input type="checkbox" style="display:none;" id="chc"/>
+    <label for="chc">
+      <div class="button">
+        <div class="burger"></div>
       </div>
-      <div class="grid">
-        <i class="fa fa-trash-o fa-2x"><span>Delete</span></i>
-        <i class="fa fa-clone fa-2x"><span>Duplicate</span></i>
-      </div>
-    </div>
-  </mat-tab>
+    </label>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="button press" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+      <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="button press" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+      <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="'red'" class="button press" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+      <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+    </svg>
+  </div>
+  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display:none;">
+    <defs>
+      <filter id="goo">
+        <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="10" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+        <feComposite in2="goo" in="SourceGraphic" result="mix" />
+      </filter>
+    </defs>
+  </svg>
+</div>
+<!--<mat-tab-group fitinkbartocontent="SS" class="navbar"-->
+<!--               animationDuration="500ms" [selectedIndex]="1"-->
+<!--               [backgroundColor]="'primary'" [color]="'primary'" dynamicHeight>-->
 
-  <mat-tab class="tab" label="Shapes">
-    <div class="block shapes">
-      <i class="menu fa fa-paint-brush fa-2x"></i>
-      <div class="grid">
-        <i class="one fa fa-circle fa-2x"></i>
-        <i class="one fa fa-flash fa-2x"></i>
-        <i class="one fa fa-moon-o fa-2x"></i>
-        <i class="one fa fa-moon-o fa-2x"></i>
-        <i class="two fa fa-arrow-up fa-2x"></i>
-        <i class="two fa fa-arrow-down fa-2x"></i>
-        <i class="two fa fa-square fa-2x"></i>
-        <i class="two fa fa-square fa-2x"></i>
-        <i class="three fa fa-arrow-up fa-2x"></i>
-        <i class="three fa fa-arrow-down fa-2x"></i>
-        <i class="three fa fa-square fa-2x"></i>
-        <i class="three fa fa-square fa-2x"></i><i class="one fa fa-circle fa-2x"></i>
-        <i class="one fa fa-flash fa-2x"></i>
-        <i class="one fa fa-moon-o fa-2x"></i>
-        <i class="one fa fa-moon-o fa-2x"></i>
-        <i class="two fa fa-arrow-up fa-2x"></i>
-        <i class="two fa fa-arrow-down fa-2x"></i>
-        <i class="two fa fa-square fa-2x"></i>
-        <i class="two fa fa-square fa-2x"></i>
-        <i class="three fa fa-arrow-up fa-2x"></i>
-        <i class="three fa fa-arrow-down fa-2x"></i>
-        <i class="three fa fa-square fa-2x"></i>
-        <i class="three fa fa-square fa-2x"></i>
-      </div>
-    </div>
-  </mat-tab>
+<!--  <mat-tab label="File <i>osos</i>">-->
+<!--&lt;!&ndash;    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Decide what to do with your file">&ndash;&gt;-->
+<!--&lt;!&ndash;    </button>&ndash;&gt;-->
+<!--&lt;!&ndash;    <mat-menu #menu="matMenu">&ndash;&gt;-->
 
-  <mat-tab label="Style">
-    <div class="block style">
-      <i class="menu fa fa-eyedropper fa-2x"></i>
-      <div class="grid">
-        <input type="color" value="#C0EEE4">
-        <input type="color" value="#F8F988">
-        <input type="color" value="#FFCAC8">
-        <input type="color" value="#FF9E9E">
-        <input type="color" value="#453C67">
-        <input type="color" value="#6D67E4">
-        <input type="color" value="#46C2CB">
-        <input type="color" value="#F2F7A1">
-        <input type="color" value="#CE7777">
-        <input type="color" value="#CE7777">
-        <input type="color" value="#68B984">
-        <input type="color" value="#3D5656">
-        <input type="color" value="#CFFDE1">
-        <input type="color" value="#FED049">
-        <input type="color" value="#C0EEE4">
-        <input type="color" value="#F8F988">
-        <input type="color" value="#FFCAC8">
-        <input type="color" value="#FF9E9E">
-        <input type="color" value="#453C67">
-        <input type="color" value="#6D67E4">
-        <input type="color" value="#46C2CB">
-        <input type="color" value="#F2F7A1">
-        <input type="color" value="#CE7777">
-        <input type="color" value="#CE7777">
-        <input type="color" value="#68B984">
-        <input type="color" value="#3D5656">
-        <input type="color" value="#CFFDE1">
-        <input type="color" value="#FED049">
-        <i class="three fa fa-plus fa-2x"></i>
-      </div>
-    </div>
+<!--&lt;!&ndash;      <button mat-menu-item>&ndash;&gt;-->
+<!--&lt;!&ndash;        <mat-icon>dialpad</mat-icon>&ndash;&gt;-->
+<!--&lt;!&ndash;        <span>Redial</span>&ndash;&gt;-->
+<!--&lt;!&ndash;      </button>&ndash;&gt;-->
 
-    <div class="block style">
-      <i class="menu fa fa-eyedropper fa-2x"></i>
-      <div class="grid">
-        <input type="color" value="#C0EEE4">
-        <input type="color" value="#F8F988">
-        <input type="color" value="#FFCAC8">
-        <input type="color" value="#FF9E9E">
-        <input type="color" value="#453C67">
-        <input type="color" value="#6D67E4">
-        <input type="color" value="#46C2CB">
-        <input type="color" value="#F2F7A1">
-        <input type="color" value="#CE7777">
-        <input type="color" value="#CE7777">
-        <input type="color" value="#68B984">
-        <input type="color" value="#3D5656">
-        <input type="color" value="#CFFDE1">
-        <input type="color" value="#FED049">
-        <input type="color" value="#C0EEE4">
-        <input type="color" value="#F8F988">
-        <input type="color" value="#FFCAC8">
-        <input type="color" value="#FF9E9E">
-        <input type="color" value="#453C67">
-        <input type="color" value="#6D67E4">
-        <input type="color" value="#46C2CB">
-        <input type="color" value="#F2F7A1">
-        <input type="color" value="#CE7777">
-        <input type="color" value="#CE7777">
-        <input type="color" value="#68B984">
-        <input type="color" value="#3D5656">
-        <input type="color" value="#CFFDE1">
-        <input type="color" value="#FED049">
-        <i class="three fa fa-plus fa-2x"></i>
-      </div>
-    </div>
-  </mat-tab>
+<!--&lt;!&ndash;      <button mat-menu-item>&ndash;&gt;-->
+<!--&lt;!&ndash;        <mat-icon>voicemail</mat-icon>&ndash;&gt;-->
+<!--&lt;!&ndash;        <span>Check voice mail</span>&ndash;&gt;-->
+<!--&lt;!&ndash;      </button>&ndash;&gt;-->
 
-  <mat-tab label="Help">
-    <div class="block style">
-      <i class="menu fa fa-eyedropper fa-2x"></i>
-      <div class="grid">
-        <p>This Tab is useless i just added it on my teammates demand<br></p>
-        <p>This Tab is useless i just added it on my teammates demand<br></p>
-        <p>This Tab is useless i just added it on my teammates demand<br></p>
-        <p>This Tab is useless i just added it on my teammates demand<br></p>
-        <p>This Tab is useless i just added it on my teammates demand<br></p>
-        <p>This Tab is useless i just added it on my teammates demand<br></p>
-        <p>This Tab is useless i just added it on my teammates demand<br></p>
-      </div>
-    </div>
-  </mat-tab>
+<!--&lt;!&ndash;      <button mat-menu-item>&ndash;&gt;-->
+<!--&lt;!&ndash;        <mat-icon>notifications_off</mat-icon>&ndash;&gt;-->
+<!--&lt;!&ndash;        <span>Disable alerts</span>&ndash;&gt;-->
+<!--&lt;!&ndash;      </button>&ndash;&gt;-->
+<!--&lt;!&ndash;    </mat-menu>&ndash;&gt;-->
 
-  <mat-tab label="Disabled" disabled>
-    <div class="block style">
-      <i class="menu fa fa-eyedropper fa-2x"></i>
-      <div class="grid">
-        <input type="color" value="#C0EEE4">
-        <input type="color" value="#F8F988">
-        <input type="color" value="#FFCAC8">
-        <input type="color" value="#FF9E9E">
-        <input type="color" value="#453C67">
-        <input type="color" value="#6D67E4">
-        <input type="color" value="#46C2CB">
-        <input type="color" value="#F2F7A1">
-        <input type="color" value="#CE7777">
-        <input type="color" value="#CE7777">
-        <input type="color" value="#68B984">
-        <input type="color" value="#3D5656">
-        <input type="color" value="#CFFDE1">
-        <input type="color" value="#FED049">
-        <i class="three fa fa-plus fa-2x"></i>
-      </div>
-    </div>
-  </mat-tab>
-</mat-tab-group>
+<!--&lt;!&ndash;    <div class="block file">&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="menu fa fa-arrows fa-4x" (click)="toggleClass()" [ngClass]=" active ? 'active' : ''"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="grid">&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="fa fa-floppy-o fa-2x"><span>Save</span></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="fa fa-download fa-2x"><span>Save as</span></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="fa fa-upload fa-2x"><span>Load</span></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--  </mat-tab>-->
 
 
+<!--  <mat-tab label="Home">-->
+<!--&lt;!&ndash;    <div class="block home">&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="menu fa fa-arrows fa-4x" (click)="toggleClass()" [ngClass]=" active ? 'active' : ''"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="grid">&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="fa fa-scissors fa-2x"><span>Cut</span></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="fa fa-undo fa-2x"><span>Undo</span></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="fa fa-expand fa-2x" (click)="toggleClass()" [ngClass]=" active ? 'active' : ''">&ndash;&gt;-->
+<!--&lt;!&ndash;          <span>Resize</span></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;      <div class="grid">&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="fa fa-clone fa-2x"><span>Clone</span></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="fa fa-repeat fa-2x"><span>Redo</span></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="fa fa-trash-o fa-2x"><span>Delete</span></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--  </mat-tab>-->
+
+
+<!--  <mat-tab label="Home">-->
+<!--&lt;!&ndash;    <div class="block home">&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="menu fa fa-arrows fa-4x" (click)="toggleClass()" [ngClass]=" active ? 'active' : ''"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="grid">&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="fa fa-scissors fa-2x"><span>Cut</span></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="fa fa-undo fa-2x"><span>Undo</span></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="fa fa-expand fa-2x" (click)="toggleClass()" [ngClass]=" active ? 'active' : ''">&ndash;&gt;-->
+<!--&lt;!&ndash;          <span>Resize</span></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;      <div class="grid">&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="fa fa-clone fa-2x"><span>Clone</span></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="fa fa-repeat fa-2x"><span>Redo</span></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="fa fa-trash-o fa-2x"><span>Delete</span></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--  </mat-tab>-->
+
+
+<!--  <mat-tab class="tab" label="Draw">-->
+<!--&lt;!&ndash;    <div class="block draw">&ndash;&gt;-->
+<!--&lt;!&ndash;      <mat-slide-toggle>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="menu fa fa-paint-brush fa-2x" (click)="toggleClass()" [ngClass]=" active ? 'active' : ''"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      </mat-slide-toggle>&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="grid">&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="one fa fa-circle fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="one fa fa-flash fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="one fa fa-moon-o fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="one fa fa-moon-o fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="two fa fa-arrow-up fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="two fa fa-arrow-down fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="two fa fa-square fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="two fa fa-square fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="three fa fa-arrow-up fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="three fa fa-arrow-down fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="three fa fa-square fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="three fa fa-square fa-2x"></i><i class="one fa fa-circle fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="one fa fa-flash fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="one fa fa-moon-o fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="one fa fa-moon-o fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="two fa fa-arrow-up fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="two fa fa-arrow-down fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="two fa fa-square fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="two fa fa-square fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="three fa fa-arrow-up fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="three fa fa-arrow-down fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="three fa fa-square fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="three fa fa-square fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--  </mat-tab>-->
+
+<!--  <mat-tab label="Style">-->
+<!--&lt;!&ndash;    <div class="block style">&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="menu fa fa-eyedropper fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="grid">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#C0EEE4">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#F8F988">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#FFCAC8">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#FF9E9E">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#453C67">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#6D67E4">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#46C2CB">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#F2F7A1">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#CE7777">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#CE7777">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#68B984">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#3D5656">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#CFFDE1">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#FED049">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#C0EEE4">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#F8F988">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#FFCAC8">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#FF9E9E">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#453C67">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#6D67E4">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#46C2CB">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#F2F7A1">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#CE7777">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#CE7777">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#68B984">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#3D5656">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#CFFDE1">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#FED049">&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="three fa fa-plus fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <div class="block style">&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="menu fa fa-eyedropper fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="grid">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#C0EEE4">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#F8F988">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#FFCAC8">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#FF9E9E">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#453C67">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#6D67E4">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#46C2CB">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#F2F7A1">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#CE7777">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#CE7777">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#68B984">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#3D5656">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#CFFDE1">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#FED049">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#C0EEE4">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#F8F988">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#FFCAC8">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#FF9E9E">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#453C67">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#6D67E4">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#46C2CB">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#F2F7A1">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#CE7777">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#CE7777">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#68B984">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#3D5656">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#CFFDE1">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="color" value="#FED049">&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="three fa fa-plus fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--  </mat-tab>-->
+
+<!--  <mat-tab label="Help">-->
+<!--&lt;!&ndash;    <div class="block style">&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="menu fa fa-eyedropper fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="grid">&ndash;&gt;-->
+<!--&lt;!&ndash;        <p>This Tab is useless i just added it on my teammates demand<br></p>&ndash;&gt;-->
+<!--&lt;!&ndash;        <p>This Tab is useless i just added it on my teammates demand<br></p>&ndash;&gt;-->
+<!--&lt;!&ndash;        <p>This Tab is useless i just added it on my teammates demand<br></p>&ndash;&gt;-->
+<!--&lt;!&ndash;        <p>This Tab is useless i just added it on my teammates demand<br></p>&ndash;&gt;-->
+<!--&lt;!&ndash;        <p>This Tab is useless i just added it on my teammates demand<br></p>&ndash;&gt;-->
+<!--&lt;!&ndash;        <p>This Tab is useless i just added it on my teammates demand<br></p>&ndash;&gt;-->
+<!--&lt;!&ndash;        <p>This Tab is useless i just added it on my teammates demand<br></p>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--  </mat-tab>-->
+
+<!--</mat-tab-group>-->
 
 
 
 
 
-<!--Start Navbar-->
-
-<!--<div class="navbar">-->
-
-<!--  <div class="block select">-->
-<!--    <i class="menu fa fa-arrows fa-4x"></i>-->
-<!--    <div class="grid">-->
-<!--      <i class="fa fa-scissors fa-2x"><span>Cut</span></i>-->
-<!--      <i class="fa fa-clone fa-2x"><span>Copy</span></i>-->
-<!--    </div>-->
-<!--  </div>-->
-
-<!--  <div class="block shapes">-->
-<!--    <i class="menu fa fa-paint-brush fa-2x"></i>-->
-<!--    <div class="grid">-->
-<!--      <i class="one fa fa-circle fa-2x"></i>-->
-<!--      <i class="one fa fa-flash fa-2x"></i>-->
-<!--      <i class="one fa fa-moon-o fa-2x"></i>-->
-<!--      <i class="one fa fa-moon-o fa-2x"></i>-->
-<!--      <i class="two fa fa-arrow-up fa-2x"></i>-->
-<!--      <i class="two fa fa-arrow-down fa-2x"></i>-->
-<!--      <i class="two fa fa-square fa-2x"></i>-->
-<!--      <i class="two fa fa-square fa-2x"></i>-->
-<!--      <i class="three fa fa-arrow-up fa-2x"></i>-->
-<!--      <i class="three fa fa-arrow-down fa-2x"></i>-->
-<!--      <i class="three fa fa-square fa-2x"></i>-->
-<!--      <i class="three fa fa-square fa-2x"></i><i class="one fa fa-circle fa-2x"></i>-->
-<!--      <i class="one fa fa-flash fa-2x"></i>-->
-<!--      <i class="one fa fa-moon-o fa-2x"></i>-->
-<!--      <i class="one fa fa-moon-o fa-2x"></i>-->
-<!--      <i class="two fa fa-arrow-up fa-2x"></i>-->
-<!--      <i class="two fa fa-arrow-down fa-2x"></i>-->
-<!--      <i class="two fa fa-square fa-2x"></i>-->
-<!--      <i class="two fa fa-square fa-2x"></i>-->
-<!--      <i class="three fa fa-arrow-up fa-2x"></i>-->
-<!--      <i class="three fa fa-arrow-down fa-2x"></i>-->
-<!--      <i class="three fa fa-square fa-2x"></i>-->
-<!--      <i class="three fa fa-square fa-2x"></i>-->
-<!--    </div>-->
-<!--  </div>-->
-
-<!--  <div class="block style">-->
-<!--    <i class="menu fa fa-eyedropper fa-2x"></i>-->
-<!--    <div class="grid">-->
-<!--      <input type="color" value="#C0EEE4">-->
-<!--      <input type="color" value="#F8F988">-->
-<!--      <input type="color" value="#FFCAC8">-->
-<!--      <input type="color" value="#FF9E9E">-->
-<!--      <input type="color" value="#453C67">-->
-<!--      <input type="color" value="#6D67E4">-->
-<!--      <input type="color" value="#46C2CB">-->
-<!--      <input type="color" value="#F2F7A1">-->
-<!--      <input type="color" value="#CE7777">-->
-<!--      <input type="color" value="#CE7777">-->
-<!--      <input type="color" value="#68B984">-->
-<!--      <input type="color" value="#3D5656">-->
-<!--      <input type="color" value="#CFFDE1">-->
-<!--      <input type="color" value="#FED049">-->
-<!--      <input type="color" value="#C0EEE4">-->
-<!--      <input type="color" value="#F8F988">-->
-<!--      <input type="color" value="#FFCAC8">-->
-<!--      <input type="color" value="#FF9E9E">-->
-<!--      <input type="color" value="#453C67">-->
-<!--      <input type="color" value="#6D67E4">-->
-<!--      <input type="color" value="#46C2CB">-->
-<!--      <input type="color" value="#F2F7A1">-->
-<!--      <input type="color" value="#CE7777">-->
-<!--      <input type="color" value="#CE7777">-->
-<!--      <input type="color" value="#68B984">-->
-<!--      <input type="color" value="#3D5656">-->
-<!--      <input type="color" value="#CFFDE1">-->
-<!--      <input type="color" value="#FED049">-->
-<!--      <i class="three fa fa-plus fa-2x"></i>-->
-<!--    </div>-->
-<!--  </div>-->
-
-<!--  <div class="block style">-->
-<!--    <i class="menu fa fa-eyedropper fa-2x"></i>-->
-<!--    <div class="grid">-->
-<!--      <input type="color" value="#C0EEE4">-->
-<!--      <input type="color" value="#F8F988">-->
-<!--      <input type="color" value="#FFCAC8">-->
-<!--      <input type="color" value="#FF9E9E">-->
-<!--      <input type="color" value="#453C67">-->
-<!--      <input type="color" value="#6D67E4">-->
-<!--      <input type="color" value="#46C2CB">-->
-<!--      <input type="color" value="#F2F7A1">-->
-<!--      <input type="color" value="#CE7777">-->
-<!--      <input type="color" value="#CE7777">-->
-<!--      <input type="color" value="#68B984">-->
-<!--      <input type="color" value="#3D5656">-->
-<!--      <input type="color" value="#CFFDE1">-->
-<!--      <input type="color" value="#FED049">-->
-<!--      <i class="three fa fa-plus fa-2x"></i>-->
-<!--    </div>-->
-<!--  </div>-->
 
 
-<!--</div>-->
+<!--&lt;!&ndash;Start Navbar&ndash;&gt;-->
 
-<!--End Navbar-->
+<!--&lt;!&ndash;<div class="navbar">&ndash;&gt;-->
+
+<!--&lt;!&ndash;  <div class="block select">&ndash;&gt;-->
+<!--&lt;!&ndash;    <i class="menu fa fa-arrows fa-4x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="grid">&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="fa fa-scissors fa-2x"><span>Cut</span></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="fa fa-clone fa-2x"><span>Copy</span></i>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;  <div class="block shapes">&ndash;&gt;-->
+<!--&lt;!&ndash;    <i class="menu fa fa-paint-brush fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="grid">&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="one fa fa-circle fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="one fa fa-flash fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="one fa fa-moon-o fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="one fa fa-moon-o fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="two fa fa-arrow-up fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="two fa fa-arrow-down fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="two fa fa-square fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="two fa fa-square fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="three fa fa-arrow-up fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="three fa fa-arrow-down fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="three fa fa-square fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="three fa fa-square fa-2x"></i><i class="one fa fa-circle fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="one fa fa-flash fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="one fa fa-moon-o fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="one fa fa-moon-o fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="two fa fa-arrow-up fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="two fa fa-arrow-down fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="two fa fa-square fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="two fa fa-square fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="three fa fa-arrow-up fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="three fa fa-arrow-down fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="three fa fa-square fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="three fa fa-square fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;  <div class="block style">&ndash;&gt;-->
+<!--&lt;!&ndash;    <i class="menu fa fa-eyedropper fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="grid">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#C0EEE4">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#F8F988">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#FFCAC8">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#FF9E9E">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#453C67">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#6D67E4">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#46C2CB">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#F2F7A1">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#CE7777">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#CE7777">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#68B984">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#3D5656">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#CFFDE1">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#FED049">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#C0EEE4">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#F8F988">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#FFCAC8">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#FF9E9E">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#453C67">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#6D67E4">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#46C2CB">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#F2F7A1">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#CE7777">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#CE7777">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#68B984">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#3D5656">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#CFFDE1">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#FED049">&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="three fa fa-plus fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;  <div class="block style">&ndash;&gt;-->
+<!--&lt;!&ndash;    <i class="menu fa fa-eyedropper fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="grid">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#C0EEE4">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#F8F988">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#FFCAC8">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#FF9E9E">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#453C67">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#6D67E4">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#46C2CB">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#F2F7A1">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#CE7777">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#CE7777">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#68B984">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#3D5656">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#CFFDE1">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="color" value="#FED049">&ndash;&gt;-->
+<!--&lt;!&ndash;      <i class="three fa fa-plus fa-2x"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;End Navbar&ndash;&gt;-->
 
