@@ -1,4 +1,6 @@
 <section class="white_board--wrapper sheet">
+  <app-nav-bar></app-nav-bar>
+
   <div id="control_container_L" class="white_board--controls left mat-elevation-z8">
     <button class="noAnimate" mat-mini-fab matTooltip="Fill Color" matTooltipPosition="right" aria-label="Ink Color Picker">
       <input role="button" type="color" [value]="fillColor" [style.background]="fillColor" [(ngModel)]="fillColor"
