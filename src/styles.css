@@ -6,6 +6,14 @@
 @import '../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-inputs/styles/material.css';
 
+html {
+  box-sizing: border-box;
+  --bgColorMenu : #1d1d27;
+  --bgColorItem : #d34040;
+  --duration: .7s;
+  --timeOut: .3s;
+}
+
 html,
 body{
   padding:0;margin:0;

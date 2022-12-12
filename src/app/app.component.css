@@ -1,15 +1,11 @@
 
-app-nav-bar{
-  width: 100%;
-  height: 30%;
-}
 .flex{
-  height: 70%;
+  height: 92%;
   display: flex;
   flex-wrap: nowrap;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
-app-drawing-space{width: 80%}
-app-side-bar{width: 20%}
+app-drawing-space{width: 100%;height: 108%}
+app-side-bar{width: 10%;padding: 5em 0}

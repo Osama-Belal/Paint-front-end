@@ -5,11 +5,19 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatRippleModule} from '@angular/material/core';
-
+import {MatMenuModule} from '@angular/material/menu';
+import {MatIconModule} from '@angular/material/icon';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
-import { ColorPickerComponent } from '@syncfusion/ej2-angular-inputs';
-import { enableRipple } from '@syncfusion/ej2-base';
+import {KonvaService} from "./Service/konva.service";
 
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { ColorPickerComponent } from '@syncfusion/ej2-angular-inputs';
+
+import { enableRipple } from '@syncfusion/ej2-base';
 import {HttpClientModule} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
@@ -38,11 +46,23 @@ enableRipple(true);
     MatRippleModule,
     ReactiveFormsModule,
     HttpClientModule,
+    BrowserModule,
+    // AppRoutingModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatMenuModule,
+    MatSliderModule,
+    MatBottomSheetModule,
     ColorPickerModule,
     BrowserModule,
+    MatIconModule,
+    MatMenuModule,
+    MatSlideToggleModule,
     FormsModule
   ],
-  providers: [],
+  providers: [KonvaService],
   bootstrap: [AppComponent]
 })
 
