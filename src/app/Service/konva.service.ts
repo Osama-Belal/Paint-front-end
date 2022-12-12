@@ -40,7 +40,7 @@ export class KonvaService {
 
   triangle(){
     return new Konva.Line({
-      points: [10, 10, 100, 100, 500, 0],
+      points: [0, 0, -50 * Math.sqrt(3),100, 50 * Math.sqrt(3), 100],
       fill: this.fillColor,
       stroke: this.strokeColor,
       strokeWidth: 5,

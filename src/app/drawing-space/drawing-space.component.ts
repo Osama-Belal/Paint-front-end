@@ -11,16 +11,13 @@ import { Circle } from 'konva/lib/shapes/Circle';
 import { DtoAdapterService } from '../Service/dto-adapter.service';
 import Konva from "konva";
 import { ThisReceiver } from '@angular/compiler';
-import { ShapeFactoryService } from '../service/shape-factory.service';
+import { ShapeFactoryService } from '../Service/shape-factory.service';
 
 @Component({
   selector: 'app-drawing-space',
   templateUrl: './drawing-space.component.html',
   styleUrls: ['./drawing-space.component.css']
 })
-
-
-
 
 export class DrawingSpaceComponent implements OnInit{
   stage!: Stage;
@@ -285,6 +282,12 @@ export class DrawingSpaceComponent implements OnInit{
     } else {
       return 'default';
     }
+  }
+
+  recolor(){
+    let shape = this.shapes.find();
+    shape.fillColor(this.fillColor);
+    shape.strokeColor(this.strokeColor)
   }
 
 }
