@@ -172,6 +172,11 @@ export class DrawingSpaceComponent implements OnInit{
     this.dtoAdapter.putRecolor(myShape.toObject().attrs, myShape.className);
   }
   
+  clone(){
+    let myShape = this.dtoAdapter.getClone(this.selectedID);
+    this.layer.add(myShape);
+  }
+
   // transform
   selectionRectangle: any = new Konva.Rect({
     fill: 'rgba(0,0,255,0.5)',
