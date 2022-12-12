@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import Konva from 'konva';
 import { Circle } from 'konva/lib/shapes/Circle';
-import { Dto } from '../draw-sheet/dto';
+import { Dto } from '../drawing-space/dto';
 import { KonvaService } from './konva.service';
 import { ShapeFactoryService } from './shape-factory.service';
 import { ShapesService } from './shapes.service';

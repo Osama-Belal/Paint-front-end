@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Dto } from '../draw-sheet/dto';
+import { Dto } from '../drawing-space/dto';
 import { Layer } from 'konva/lib/Layer';
 import { Stage, stages } from 'konva/lib/Stage';
 

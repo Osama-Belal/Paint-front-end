@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Dto } from '../draw-sheet/dto';
+import { Dto } from '../drawing-space/dto';
 import { DtoAdapterService } from './dto-adapter.service';
 import { KonvaService } from './konva.service';
 import { ShapesService } from './shapes.service';

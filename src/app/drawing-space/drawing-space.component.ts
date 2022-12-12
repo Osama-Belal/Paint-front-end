@@ -1,28 +1,28 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 
-import { KonvaService } from '../services/konva.service';
+import { KonvaService } from '../Service/konva.service';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Stage } from 'konva/lib/Stage';
 import { Layer } from 'konva/lib/Layer';
 import { Transformer } from 'konva/lib/shapes/Transformer';
 import { Dto } from './dto';
-import { ShapesService } from '../services/shapes.service';
+import { ShapesService } from '../Service/shapes.service';
 import { Circle } from 'konva/lib/shapes/Circle';
-import { DtoAdapterService } from '../services/dto-adapter.service';
+import { DtoAdapterService } from '../Service/dto-adapter.service';
 import Konva from "konva";
 import { ThisReceiver } from '@angular/compiler';
-import { ShapeFactoryService } from '../services/shape-factory.service';
+import { ShapeFactoryService } from '../service/shape-factory.service';
 
 @Component({
-  selector: 'app-draw-sheet',
-  templateUrl: './draw-sheet.component.html',
-  styleUrls: ['./draw-sheet.component.css']
+  selector: 'app-drawing-space',
+  templateUrl: './drawing-space.component.html',
+  styleUrls: ['./drawing-space.component.css']
 })
 
 
 
 
-export class DrawSheetComponent implements OnInit{
+export class DrawingSpaceComponent implements OnInit{
   stage!: Stage;
   layer!: Layer;
   transformer!: Transformer;

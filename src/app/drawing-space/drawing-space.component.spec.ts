@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DrawSheetComponent } from './draw-sheet.component';
+import { DrawingSpaceComponent } from './drawing-space.component';
 
-describe('DrawSheetComponent', () => {
-  let component: DrawSheetComponent;
-  let fixture: ComponentFixture<DrawSheetComponent>;
+describe('DrawingSpaceComponent', () => {
+  let component: DrawingSpaceComponent;
+  let fixture: ComponentFixture<DrawingSpaceComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DrawSheetComponent ]
+      declarations: [ DrawingSpaceComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DrawSheetComponent);
+    fixture = TestBed.createComponent(DrawingSpaceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
