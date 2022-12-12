@@ -16,14 +16,16 @@
 
 
 .gooey-menu svg{
-  width: 3em;
-  height: 3em;
-  stroke: #DDD;
-  stroke-width: 1pt;
-  stroke-miterlimit: 10;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 75;
+  width: 2em;
+  height: 2em;
+  fill: #DDD;
+  transition: .3s ease-in-out;
+}
+
+gooey-menu svg{
+  width: 2em;
+  height: 2em;
+  fill: #DDD;
   transition: .3s ease-in-out;
 }
 
@@ -388,3 +390,15 @@
 }
 
 /*--------------------------------- Start Header -----------------------------------*/
+
+
+#help{
+  position:absolute;
+  top: 0;left: 0;
+  bottom: 0;right: 0;
+  width: 100%;height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  color: #FFF;
+  visibility: hidden;
+  transition: .3s ease-in-out;
+}

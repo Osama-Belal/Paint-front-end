@@ -6,7 +6,6 @@ import Konva from "konva";
   providedIn: 'root'
 })
 
-
 export class KonvaService {
   brushSize!: number;
   brushOpacity!: number;
@@ -19,8 +18,8 @@ export class KonvaService {
       stroke: this.strokeColor,
       strokeWidth: 5,
       fill: this.fillColor,
-      x: window.innerHeight / 2,
-      y: window.innerHeight / 2,
+      x: window.innerHeight * Math.random(),
+      y: window.innerHeight * Math.random(),
       draggable: true,
       id:'s'
     });
@@ -32,8 +31,8 @@ export class KonvaService {
       height: 50 * Math.random() + 40,
       stroke: this.strokeColor,
       fill: this.fillColor,
-      x: window.innerHeight / 2,
-      y: window.innerHeight / 2,
+      x: window.innerHeight * Math.random(),
+      y: window.innerHeight * Math.random(),
       draggable: true
     });
   }
@@ -45,8 +44,8 @@ export class KonvaService {
       height: 50 * w + 40,
       stroke: this.strokeColor,
       fill: this.fillColor,
-      x: window.innerHeight / 2,
-      y: window.innerHeight / 2,
+      x: window.innerHeight * Math.random(),
+      y: window.innerHeight * Math.random(),
       draggable: true
     });
   }
@@ -58,8 +57,8 @@ export class KonvaService {
       stroke: this.strokeColor,
       strokeWidth: 5,
       closed: true,
-      x: window.innerHeight / 2,
-      y: window.innerHeight / 2,
+      x: window.innerHeight * Math.random(),
+      y: window.innerHeight * Math.random(),
       draggable: true
     });
   }
@@ -71,8 +70,8 @@ export class KonvaService {
       fill: this.fillColor,
       stroke: this.strokeColor,
       strokeWidth: 4,
-      x: window.innerHeight / 2,
-      y: window.innerHeight / 2,
+      x: window.innerHeight * Math.random(),
+      y: window.innerHeight * Math.random(),
       draggable: true
     });
   }
@@ -83,8 +82,8 @@ export class KonvaService {
       fontSize: 30,
       fontFamily: 'Calibri',
       fill: this.fillColor,
-      x: window.innerHeight / 2,
-      y: window.innerHeight / 2,
+      x: window.innerHeight * Math.random(),
+      y: window.innerHeight * Math.random(),
       draggable: true
     });
   }

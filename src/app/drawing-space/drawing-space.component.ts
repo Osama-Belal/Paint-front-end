@@ -66,7 +66,7 @@ export class DrawingSpaceComponent implements OnInit{
   createShape(shape: string){
     this.konvaService.fillColor = this.fillColor;
     this.konvaService.strokeColor = this.strokeColor;
-    
+
     let newShape = this.shapeFactory.createShape(shape);
     // send post request
     this.dtoAdapter.drawShape(newShape.toObject().attrs, newShape.toObject().className).subscribe(data => {
@@ -84,7 +84,7 @@ export class DrawingSpaceComponent implements OnInit{
     newShape.on('transformstart', (e: any) => {
       this.oldContainer.oldX = newShape.toObject().attrs.x;
       this.oldContainer.oldY = newShape.toObject().attrs.y;
-    })  
+    })
 
     newShape.on('transformend', (e: any) =>{
       this.dtoAdapter.putResize(newShape.toObject().attrs, newShape.getClassName(), this.oldContainer);
@@ -93,7 +93,7 @@ export class DrawingSpaceComponent implements OnInit{
 
     this.layer.add(this.transformer);
     this.transformer.nodes([newShape]);
-    
+
     this.shapes.push(newShape);
     this.layer.add(newShape);
     this.stage.add(this.layer);
@@ -104,7 +104,7 @@ export class DrawingSpaceComponent implements OnInit{
   undo(){
     this.reqService.undo().subscribe((data => {
       this.setUndo(data);
-    })) 
+    }))
   }
   // TODO HANDLE REDO
   redo(){
@@ -121,7 +121,7 @@ export class DrawingSpaceComponent implements OnInit{
       this.stage.find('#'+ data.id)[0]._setAttr('x', data.x);
       this.stage.find('#'+ data.id)[0]._setAttr('y', data.y);
     }else if(data.commandType == 'delete'){
-      this.layer.add(this.dtoAdapter.undoDelete(data));  
+      this.layer.add(this.dtoAdapter.undoDelete(data));
     }else if(data.commandType == 'resize'){
       this.layer.find('#' + data.id)[0]._setAttr('scaleX', data.scaleX)
       this.layer.find('#' + data.id)[0]._setAttr('scaleY', data.scaleY)
@@ -140,7 +140,7 @@ export class DrawingSpaceComponent implements OnInit{
       this.stage.find('#'+ data.id)[0]._setAttr('y', data.y);
     }else if(data.commandType == 'delete'){
       //TODO test it
-      this.layer.add(this.dtoAdapter.undoDelete(data));  
+      this.layer.add(this.dtoAdapter.undoDelete(data));
     }else if(data.commandType == 'resize'){
 
     }
@@ -208,12 +208,10 @@ export class DrawingSpaceComponent implements OnInit{
     const component = this;
     let freeHnad: any;
     let isFreeHand: boolean = false;
-    const control_container = document.getElementById('control_container');
 
     this.stage.on('mousedown touchstart', (e: any) => {
-      // isFreeHand = true;
       let pos = component.stage.getPointerPosition();
-
+      this.hidePalette();
       // select this shape
       if(e.target === this.stage) {
         this.transformer.nodes([])
@@ -223,23 +221,20 @@ export class DrawingSpaceComponent implements OnInit{
           component.konvaService.brush(pos, component.brushSize, component.fillColor, component.brushOpacity);
         component.shapes.push(freeHnad);
         component.layer.add(freeHnad);
-        control_container?.classList.add('hide_palette');
+        this.hidePalette();
       }
       if(e.target.hasName('shape')){
         isFreeHand = false;
         this.transformer.nodes([e.target])
       }
-      if (!component.selectedButton['brush'] && !component.eraser) {
-        return;
-      }
     });
 
-    this.stage.on('mouseup touchend', function () {
+    this.stage.on('mouseup touchend', (e: any) => {
       isFreeHand = false;
-      control_container?.classList.remove('hide_palette');
+      this.showPalette();
     });
 
-    this.stage.on('mousemove touchmove', function (e:any) {
+    this.stage.on('mousemove touchmove',  (e:any) => {
       if (!isFreeHand) {
         return;
       }
@@ -256,6 +251,22 @@ export class DrawingSpaceComponent implements OnInit{
        this.stage.find(this.selectedID)[0].destroy();
       }
     })
+  }
+
+  hidePalette(){
+    const control_container_R = document.getElementById('control_container_R');
+    const control_container_L = document.getElementById('control_container_L');
+
+    control_container_R?.classList.add('hide_palette');
+    control_container_L?.classList.add('hide_palette');
+  }
+
+  showPalette(){
+    const control_container_R = document.getElementById('control_container_R');
+    const control_container_L = document.getElementById('control_container_L');
+
+    control_container_R?.classList.remove('hide_palette');
+    control_container_L?.classList.remove('hide_palette');
   }
 
   clearBoard(): void {

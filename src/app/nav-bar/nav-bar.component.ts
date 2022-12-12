@@ -7,8 +7,8 @@ import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {KonvaService} from "../Service/konva.service";
 import {ShapesService} from "../Service/shapes.service";
 import {DtoAdapterService} from "../Service/dto-adapter.service";
-import {ShapeFactory} from "../drawing-space/ShapeFactory";
 import {Dto} from "../drawing-space/dto";
+import {toNumbers} from "@angular/compiler-cli/src/version_helpers";
 
 export interface Tile {
   color: string;
@@ -26,6 +26,8 @@ export interface Tile {
 
 export class NavBarComponent implements OnInit {
 
+  helpActive: boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
@@ -37,6 +39,22 @@ export class NavBarComponent implements OnInit {
 
   load(){
 
+  }
+
+  toggleGuide(){
+    const help = document.getElementById('help');
+    // const w = String(window.innerWidth / 2);
+    // const h = String(window.innerHeight / 2);
+
+    if(this.helpActive && help) {
+      help.style.visibility = 'hidden';
+    }
+
+    if(!this.helpActive && help) {
+      help.style.visibility = 'visible';
+    }
+
+    this.helpActive = !this.helpActive
   }
 
 }

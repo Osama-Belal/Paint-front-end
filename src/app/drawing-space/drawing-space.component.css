@@ -116,6 +116,9 @@ button:hover svg.R{
   border-radius: 50px;
   z-index: 1;
 }
+.white_board--controls{
+  transition: .5s ease-in-out;
+}
 .white_board--controls.right{
   right:2%
 }
@@ -123,16 +126,23 @@ button:hover svg.R{
   left:2%
 }
 
-#control_container.hide_palette {
+#control_container_L.hide_palette {
   opacity: 0.2;
   pointer-events: none;
-  animation: hide_palette_animation 0.5s forwards;
+  animation: hide_palette_left_animation 0.5s forwards;
 }
 
-@keyframes hide_palette_animation {
-  to {
-    transform: translate(-50px);
-  }
+#control_container_R.hide_palette {
+  opacity: 0.2;
+  pointer-events: none;
+  animation: hide_palette_right_animation 0.5s forwards;
+}
+
+@keyframes hide_palette_left_animation {
+  to {transform: translate(-100px)}
+}
+@keyframes hide_palette_right_animation {
+  to {transform: translate(100px)}
 }
 
 input[type="color"] {

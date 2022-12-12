@@ -13,13 +13,13 @@
 <!--    <a mat-menu-item href="https://github.com/SujalShah3234" aria-label="Developer Name">Made with ❤️by Osama Belal</a>-->
 <!--  </mat-menu>-->
 
-  <div id="control_container" class="white_board--controls mat-elevation-z8">
-    <button mat-mini-fab matTooltip="Color palette" matTooltipPosition="right" aria-label="Ink Color Picker">
+  <div id="control_container_L" class="white_board--controls left mat-elevation-z8">
+    <button mat-mini-fab matTooltip="Fill Color" matTooltipPosition="right" aria-label="Ink Color Picker">
       <input role="button" type="color" [value]="fillColor" [style.background]="fillColor" [(ngModel)]="fillColor"
              aria-label="Color Picker" />
     </button>
 
-    <button mat-mini-fab matTooltip="Color palette" matTooltipPosition="right" aria-label="Ink Color Picker">
+    <button mat-mini-fab matTooltip="Stroke Color" matTooltipPosition="right" aria-label="Ink Color Picker">
       <input role="button" type="color" [value]="strokeColor" [style.background]="strokeColor" [(ngModel)]="strokeColor"
              aria-label="Color Picker" />
     </button>
@@ -69,7 +69,7 @@
 
   </div>
 
-  <div id="control_container-" class="white_board--controls right mat-elevation-z8">
+  <div id="control_container_R" class="white_board--controls right mat-elevation-z8">
 
     <button mat-mini-fab [ngClass]='selectedButton["brush"] ? "primary_border":"no_border"'
             (click)='setSelection("brush")' matTooltip="Brush" matTooltipPosition="right" aria-label="Brush">
