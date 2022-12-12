@@ -65,7 +65,7 @@ enableRipple(true);
     MatSlideToggleModule,
     FormsModule
   ],
-  providers: [KonvaService],
+  providers: [KonvaService, DrawingSpaceComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -52,7 +52,7 @@ export class DrawingSpaceComponent implements OnInit{
     private reqService: ShapesService,
     private dtoAdapter: DtoAdapterService,
     private shapeFactory: ShapeFactoryService,
-    private eventService: EventsService
+   /*  private eventService: EventsService */
   ) { }
 
   ngOnInit(): void {
@@ -66,10 +66,25 @@ export class DrawingSpaceComponent implements OnInit{
     this.transformer = new Transformer();
     this.layer.add(this.transformer);
     this.stage.add(this.layer);
-    this.eventService.stage = this.stage;
+  /*   this.eventService.stage = this.stage; */
     this.addLineListeners();
   }
 
+  save(){
+    let myObj = {
+      stage: this.stage,
+      path: 'saved.json',
+      fileType: 'json',
+    }
+    console.log(this.stage);
+    this.reqService.postSave(this.stage, myObj);
+  }
+  load(){
+    this.reqService.getLoad('saved.json').subscribe((data => {
+      this.stage = Konva.Node.create(data, 'container');;
+      console.log('load called ', this.stage);
+    }));;
+  }
   createShape(shape: string){
     
     let newShape = this.shapeFactory.createShape(shape);
@@ -104,6 +119,7 @@ export class DrawingSpaceComponent implements OnInit{
 
   setUndo(data: Dto){
     if(data == null) return;
+
     if(data.commandType == 'draw'){
       this.layer.find('#' + data.id)[0].destroy();
       this.transformer.nodes([]);
@@ -128,6 +144,7 @@ export class DrawingSpaceComponent implements OnInit{
     }else if(data.commandType == 'clone'){
       this.layer.find('#' + data.id)[0].destroy();
       this.transformer.nodes([]);
+      
     }
   }
   
@@ -153,7 +170,9 @@ export class DrawingSpaceComponent implements OnInit{
       this.layer.find('#' + data.id)[0]._setAttr('fill', data.fill);
       this.layer.find('#' + data.id)[0]._setAttr('stroke', data.stroke);
     }else if(data.commandType == 'clone'){
-      this.layer.add(this.dtoAdapter.fromDtoToKonva(data));
+      let myShape = this.dtoAdapter.fromDtoToKonva(data);
+      this.layer.add(myShape);
+      this.setShapeEvent(myShape)
     }
   }
   
@@ -185,6 +204,8 @@ export class DrawingSpaceComponent implements OnInit{
       let myShape = this.shapeFactory.createShape(<string>dto.className);
       myShape.attrs = dto;
       myShape.className = <string>dto.className;
+      this.selectedID = <string>data.id;
+      this.setShapeEvent(myShape);
       this.layer.add(myShape)
     })); 
   }

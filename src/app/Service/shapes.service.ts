@@ -40,7 +40,7 @@ export class ShapesService {
   }  
   
   getLoad(fileLocation: string){
-    return this.http.get<Dto>(`${this.configUrl}/load/${fileLocation}`);
+    return this.http.get<Stage>(`${this.configUrl}/load/${fileLocation}`);
   }
   
   putDelete(dto: Dto){

@@ -6,6 +6,7 @@ export class Dto {
     public y?: number
     public scaleX: number = 1
     public scaleY: number = 1
+    public name = "shape"
     public radius?: number
     public radiusX?: number
     public radiusY?: number

@@ -1,9 +1,8 @@
 # TODO 
-- implement brush size
-- implement triangle
-- resize stroke width
-- transformer goes away with redo and load
-- redo x and y set ya 7omaar
+- redo x and y set ya 7omaar resize
+- clone shape with different x and y
+- after load transformer doesnt load.
+-delete clone in adapter
 ### Save and load
 - dialog box for file name and path location
 - Load a certain file from path
@@ -12,9 +11,6 @@
 - remove transformer when save as image
 
 # Testing
-- delete with all the colors
-- move with all the shapes
-- test resize with all the shapes
-- undo move will all shapes
 - test recolor with stroke
 - Test clone
+- implement triangle
