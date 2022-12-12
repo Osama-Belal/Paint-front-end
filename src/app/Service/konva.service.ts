@@ -7,16 +7,17 @@ import Konva from "konva";
 })
 
 export class KonvaService {
-  brushSize!: number;
-  brushOpacity!: number;
   fillColor: string = 'red'
   strokeColor: string = 'green'
+
+  strokeWidth: string = '10';
+  brushWidth: string = '10';
 
   circle(){
     return new Konva.Circle({
       radius: 50 * Math.random() + 40,
       stroke: this.strokeColor,
-      strokeWidth: 5,
+      strokeWidth: Number(this.strokeWidth),
       fill: this.fillColor,
       x: window.innerHeight * Math.random(),
       y: window.innerHeight * Math.random(),
@@ -30,6 +31,7 @@ export class KonvaService {
       width: 50 * Math.random() + 40,
       height: 50 * Math.random() + 40,
       stroke: this.strokeColor,
+      strokeWidth: Number(this.strokeWidth),
       fill: this.fillColor,
       x: window.innerHeight * Math.random(),
       y: window.innerHeight * Math.random(),
@@ -43,6 +45,7 @@ export class KonvaService {
       width: 50 * w + 40,
       height: 50 * w + 40,
       stroke: this.strokeColor,
+      strokeWidth: Number(this.strokeWidth),
       fill: this.fillColor,
       x: window.innerHeight * Math.random(),
       y: window.innerHeight * Math.random(),
@@ -55,7 +58,7 @@ export class KonvaService {
       points: [0, 0, -50 * Math.sqrt(3),100, 50 * Math.sqrt(3), 100],
       fill: this.fillColor,
       stroke: this.strokeColor,
-      strokeWidth: 5,
+      strokeWidth: Number(this.strokeWidth),
       closed: true,
       x: window.innerHeight * Math.random(),
       y: window.innerHeight * Math.random(),
@@ -69,7 +72,7 @@ export class KonvaService {
       radiusY: 50,
       fill: this.fillColor,
       stroke: this.strokeColor,
-      strokeWidth: 4,
+      strokeWidth: Number(this.strokeWidth),
       x: window.innerHeight * Math.random(),
       y: window.innerHeight * Math.random(),
       draggable: true
@@ -88,17 +91,14 @@ export class KonvaService {
     });
   }
 
-  brush(pos: any, size: any, color: string, opacity: number) {
-    this.brushSize = size;
-    this.brushOpacity = opacity;
+  brush(pos: any) {
     return new Line({
-      stroke: color,
-      strokeWidth: size,
+      stroke: this.fillColor,
+      strokeWidth: Number(this.brushWidth),
       globalCompositeOperation: 'source-over',
       points: [pos.x, pos.y, pos.x, pos.y],
       lineCap: 'round',
       lineJoin: 'round',
-      opacity: opacity,
       tension: 0
     });
   }

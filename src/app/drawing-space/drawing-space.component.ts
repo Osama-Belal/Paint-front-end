@@ -25,10 +25,14 @@ export class DrawingSpaceComponent implements OnInit{
   layer!: Layer;
   transformer!: Transformer;
   shapes: any = [];
-  transformers: Transformer[] = [];
-  fillColor: string = '#000000';
-  strokeColor: string = '#000000';
   selectedID: string = 's';
+
+  fillColor: string = '#1792e0';
+  strokeColor: string = '#e1c019';
+
+  public strokeWidth = 10;
+  public brushWidth = 10;
+
   oldContainer: {
     oldX: number,
     oldY: number
@@ -39,8 +43,6 @@ export class DrawingSpaceComponent implements OnInit{
     'eraser': false
   }
   eraser: boolean = false;
-  brushSize: number = 3;
-  brushOpacity: number = 1.0;
 
   constructor(
     private _bottomSheet: MatBottomSheet,
@@ -67,10 +69,9 @@ export class DrawingSpaceComponent implements OnInit{
   }
 
   createShape(shape: string){
-    this.konvaService.fillColor = this.fillColor;
-    this.konvaService.strokeColor = this.strokeColor;
-
+    this.setColors();
     let newShape = this.shapeFactory.createShape(shape);
+
     // send post request
     this.dtoAdapter.drawShape(newShape.toObject().attrs, newShape.toObject().className).subscribe(data => {
       newShape.attrs.id = data.id;
@@ -172,11 +173,10 @@ export class DrawingSpaceComponent implements OnInit{
     this.dtoAdapter.putRecolor(myShape.toObject().attrs, myShape.className);
   }
 
-  // transform
-  selectionRectangle: any = new Konva.Rect({
-    fill: 'rgba(0,0,255,0.5)',
-    visible: false,
-  });
+  clone(){
+    let myShape = this.dtoAdapter.getClone(this.selectedID);
+    this.layer.add(myShape);
+  }
 
   clearSelection(): void {
     this.selectedButton = {
@@ -184,16 +184,6 @@ export class DrawingSpaceComponent implements OnInit{
       'eraser': false
     }
   }
-  // openBottomSheet(): void {
-  //   const bottomSheetRef = this._bottomSheet.open(BottomSheet);
-  //   bottomSheetRef.afterDismissed().subscribe((result: any) => {
-  //     if (result) {
-  //       this.brushSize = result.brushSize;
-  //       this.brushOpacity = result.brushOpacity;
-  //     }
-  //   });
-
-  // }
 
   setSelection(type: string) {
     this.clearSelection();
@@ -215,23 +205,26 @@ export class DrawingSpaceComponent implements OnInit{
 
   addLineListeners(): void {
     const component = this;
-    let freeHnad: any;
+    let freeHand: any;
     let isFreeHand: boolean = false;
 
     this.stage.on('mousedown touchstart', (e: any) => {
       let pos = component.stage.getPointerPosition();
       this.hidePalette();
-      // select this shape
+
       if(e.target === this.stage) {
         this.transformer.nodes([])
 
         isFreeHand = true
-        freeHnad = component.eraser ? component.konvaService.erase(pos, 30) :
-          component.konvaService.brush(pos, component.brushSize, component.fillColor, component.brushOpacity);
-        component.shapes.push(freeHnad);
-        component.layer.add(freeHnad);
+        this.setColors();
+        freeHand = component.eraser ? component.konvaService.erase(pos, 30) :
+          component.konvaService.brush(pos);
+        component.shapes.push(freeHand);
+        component.layer.add(freeHand);
         this.hidePalette();
       }
+
+      // select this shape
       if(e.target.hasName('shape')){
         isFreeHand = false;
         this.transformer.nodes([e.target])
@@ -249,8 +242,8 @@ export class DrawingSpaceComponent implements OnInit{
       }
       e.evt.preventDefault();
       const position: any = component.stage.getPointerPosition();
-      const newPoints = freeHnad.points().concat([position.x, position.y]);
-      freeHnad.points(newPoints);
+      const newPoints = freeHand.points().concat([position.x, position.y]);
+      freeHand.points(newPoints);
       component.layer.batchDraw();
     });
 
@@ -262,6 +255,13 @@ export class DrawingSpaceComponent implements OnInit{
     })
   }
 
+  setColors() {
+    this.konvaService.fillColor = this.fillColor;
+    this.konvaService.strokeColor = this.strokeColor;
+    this.konvaService.strokeWidth = this.strokeWidth > 100 ? '100' : String(this.strokeWidth);
+    this.konvaService.brushWidth = this.brushWidth > 100 ? '100' : String(this.brushWidth);
+  }
+
   hidePalette(){
     const control_container_R = document.getElementById('control_container_R');
     const control_container_L = document.getElementById('control_container_L');
@@ -269,7 +269,6 @@ export class DrawingSpaceComponent implements OnInit{
     control_container_R?.classList.add('hide_palette');
     control_container_L?.classList.add('hide_palette');
   }
-
   showPalette(){
     const control_container_R = document.getElementById('control_container_R');
     const control_container_L = document.getElementById('control_container_L');
@@ -277,13 +276,6 @@ export class DrawingSpaceComponent implements OnInit{
     control_container_R?.classList.remove('hide_palette');
     control_container_L?.classList.remove('hide_palette');
   }
-
-  formatLabel(value: number): string {
-    console.log(value)
-    return `${value}`;
-  }
-
-
 
   getCursorClass(): string {
     if (this.selectedButton['brush'] || this.selectedButton['eraser']) {

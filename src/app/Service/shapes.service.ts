@@ -52,12 +52,16 @@ export class ShapesService {
     dto.commandType = 'delete';
     return this.http.put<Dto>(`${this.configUrl}/update`, dto);
   }
-
+  
   putRecolor(dto: Dto){
     dto.commandType = 'recolor'
     this.http.put<Dto>(`${this.configUrl}/update`, dto).subscribe((data => {
       console.log("data: ", data);
     }))
+  }
+  
+  getClone(id: string){
+    return this.http.get<Dto>(`${this.configUrl}/clone/${id}`);
   }
   
 }

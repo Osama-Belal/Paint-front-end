@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MATERIAL_SANITY_CHECKS_FACTORY } from '@angular/material/core/common-behaviors/common-module';
 import Konva from 'konva';
 import { Circle } from 'konva/lib/shapes/Circle';
 import { Dto } from '../drawing-space/dto';
@@ -40,6 +41,14 @@ export class DtoAdapterService {
     this.myService.putUpdate(dto);
   }
 
+  
+  putRecolor(shape: any, className: string){
+    let dto: Dto = new Dto();
+    dto = shape;
+    dto.className = className;
+    this.myService.putRecolor(dto);
+  }
+  
   undoDelete(dto: Dto){
     let myShape = this.shapeFactory.createShape(<string>dto.className);
     console.log(myShape);
@@ -49,11 +58,15 @@ export class DtoAdapterService {
     return myShape;
   }
 
-  putRecolor(shape: any, className: string){
-    let dto: Dto = new Dto();
-    dto = shape;
-    dto.className = className;
-    this.myService.putRecolor(dto);
+  getClone(id: string){
+    let dto: any;
+    this.myService.getClone(id).subscribe((data => {
+      dto = data;
+    }));
+    let myShape = this.shapeFactory.createShape(<string>dto.className);
+    myShape.attrs = dto;
+    myShape.className = dto.className;
+    return myShape;
   }
-
+  
 }
