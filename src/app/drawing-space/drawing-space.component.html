@@ -84,9 +84,16 @@
       </svg>
     </button>
 
-    <mat-menu #menu="matMenu" mat-mini-fab matTooltipPosition="left">
-      <a mat-menu-item>Save as XML</a>
-      <a mat-menu-item>Save as JSon</a>
+    <mat-menu class="scroll-menu" #menu="matMenu" mat-mini-fab matTooltipPosition="before">
+      Stroke Width
+      <mat-slider min="0" max="100" step="1" showTickMarks discrete [displayWith]="formatLabel">
+        <input matSliderThumb>
+      </mat-slider>
+
+      Brush Width
+      <mat-slider min="0" max="100" step="1" showTickMarks discrete [displayWith]="formatLabel">
+        <input matSliderThumb>
+      </mat-slider>
     </mat-menu>
 
     <hr class="hr_divider" />

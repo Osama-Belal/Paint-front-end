@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit, ViewEncapsulation} from '@angular/core';
 
 import { KonvaService } from '../Service/konva.service';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
@@ -17,7 +17,8 @@ import { EventsService } from '../Service/events.service';
 @Component({
   selector: 'app-drawing-space',
   templateUrl: './drawing-space.component.html',
-  styleUrls: ['./drawing-space.component.css']
+  styleUrls: ['./drawing-space.component.css'],
+  // encapsulation: ViewEncapsulation.None
 })
 
 export class DrawingSpaceComponent implements OnInit{
@@ -145,10 +146,10 @@ export class DrawingSpaceComponent implements OnInit{
       //TODO test it
       this.layer.add(this.dtoAdapter.undoDelete(data));
     }else if(data.commandType == 'resize'){
-      
+
     }
   }
-  
+
   delete(){
     this.layer.find('#' + this.selectedID)[0].destroy();
     this.transformer.nodes([]);
@@ -171,7 +172,7 @@ export class DrawingSpaceComponent implements OnInit{
     myShape._setAttr('stroke', this.strokeColor);
     this.dtoAdapter.putRecolor(myShape.toObject().attrs, myShape.className);
   }
-  
+
   // transform
   selectionRectangle: any = new Konva.Rect({
     fill: 'rgba(0,0,255,0.5)',
@@ -278,9 +279,9 @@ export class DrawingSpaceComponent implements OnInit{
     control_container_L?.classList.remove('hide_palette');
   }
 
-  clearBoard(): void {
-    this.layer.destroyChildren();
-    this.layer.draw();
+  formatLabel(value: number): string {
+    console.log(value)
+    return `${value}`;
   }
 
 
@@ -293,5 +294,5 @@ export class DrawingSpaceComponent implements OnInit{
     }
   }
 
-  
+
 }
