@@ -18,7 +18,6 @@ import { EventsService } from '../Service/events.service';
   selector: 'app-drawing-space',
   templateUrl: './drawing-space.component.html',
   styleUrls: ['./drawing-space.component.css'],
-  // encapsulation: ViewEncapsulation.None
 })
 
 export class DrawingSpaceComponent implements OnInit{
