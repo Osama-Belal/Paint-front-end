@@ -14,21 +14,17 @@
   -webkit-filter: url("#goo");
 }
 
-
 .gooey-menu svg{
   width: 2em;
   height: 2em;
   fill: #DDD;
-  transition: .3s ease-in-out;
+  stroke-width: 1pt;
+  stroke-miterlimit: 10;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 75;
+  transition: box-shadow .3s ease-in-out;
 }
-
-gooey-menu svg{
-  width: 2em;
-  height: 2em;
-  fill: #DDD;
-  transition: .3s ease-in-out;
-}
-
 
 .gooey-menu .button {
   position: relative;
@@ -38,7 +34,6 @@ gooey-menu svg{
   padding: 5px;
   width: 60px;
   border-radius: 100%;
-  /*border:2px solid #08c;*/
   background: rgb(20,20,20);
   background: linear-gradient(0deg, rgba(20,20,20,1) 0%, rgba(34,34,34,1) 47%, rgb(44, 44, 44) 100%);
   cursor: pointer;
@@ -394,11 +389,18 @@ gooey-menu svg{
 
 #help{
   position:absolute;
-  top: 0;left: 0;
+  top: 0;left: -490vh;
   bottom: 0;right: 0;
-  width: 100%;height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1000vh;height: 100vh;
   background: rgba(0, 0, 0, 0.5);
   color: #FFF;
   visibility: hidden;
   transition: .3s ease-in-out;
+}
+
+#help h2{
+
 }

@@ -1,18 +1,4 @@
 <section class="white_board--wrapper sheet">
-<!--  <button class="menu_button" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Icon-button with a menu">-->
-<!--    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">-->
-<!--      <path-->
-<!--        d="M 12 3 A 2 2 0 0 0 10 5 A 2 2 0 0 0 12 7 A 2 2 0 0 0 14 5 A 2 2 0 0 0 12 3 z M 12 10 A 2 2 0 0 0 10 12 A 2 2 0 0 0 12 14 A 2 2 0 0 0 14 12 A 2 2 0 0 0 12 10 z M 12 17 A 2 2 0 0 0 10 19 A 2 2 0 0 0 12 21 A 2 2 0 0 0 14 19 A 2 2 0 0 0 12 17 z">-->
-<!--      </path>-->
-<!--    </svg>-->
-<!--  </button>-->
-
-<!--  <mat-menu #menu="matMenu" xPosition="before" yPosition="below">-->
-<!--    <a mat-menu-item (click)="saveAsImage()" aria-label="Save as image">Save as image</a>-->
-<!--    <a mat-menu-item href="https://github.com/SujalShah3234/White-Board/issues" aria-label="Report Bug">Report bug</a>-->
-<!--    <a mat-menu-item href="https://github.com/SujalShah3234" aria-label="Developer Name">Made with ❤️by Osama Belal</a>-->
-<!--  </mat-menu>-->
-
   <div id="control_container_L" class="white_board--controls left mat-elevation-z8">
     <button mat-mini-fab matTooltip="Fill Color" matTooltipPosition="right" aria-label="Ink Color Picker">
       <input role="button" type="color" [value]="fillColor" [style.background]="fillColor" [(ngModel)]="fillColor"
@@ -51,7 +37,7 @@
 
     <button mat-mini-fab [ngClass]='selectedButton["eraser"] ? "primary_border":"no_border"'
             (click)='recolor()' matTooltip="Recolor" matTooltipPosition="right" aria-label="Eraser">
-      <svg class="animate stroke" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+      <svg class="animate rotate" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
       <g class="ColorScheme-Text" fill="currentColor">
         <path d="m11 2v2h-6a3 3 0 0 0 -3 3v1h1v-1a2 2 0 0 1 2-2h6v2l3.33398438-2.5z"></path>
         <path d="m5 14v-2h6a3 3 0 0 0 3-3v-1h-1v1a2 2 0 0 1 -2 2h-6v-2l-3.33398438 2.5z"></path>

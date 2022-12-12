@@ -57,4 +57,11 @@ export class NavBarComponent implements OnInit {
     this.helpActive = !this.helpActive
   }
 
+  hide(){
+    const help = document.getElementById('help');
+    if(help)
+      help.style.visibility = 'hidden';
+    this.helpActive = false;
+  }
+
 }
