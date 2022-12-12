@@ -17,17 +17,16 @@ export class ShapeFactoryService {
         case 'circle':
           created = this.myKonvaService.circle();
           break;
-          case 'rect': 
-          console.log('rec made')
+          case 'rect':
           created = this.myKonvaService.rect();
           break;
-          case 'triangle': 
+          case 'triangle':
           created = this.myKonvaService.triangle();
           break;
-          case 'ellipse': 
+          case 'ellipse':
           created = this.myKonvaService.ellipse();
           break;
-          case 'square': 
+          case 'square':
           created = this.myKonvaService.square();
           break;
           case 'text': created = this.myKonvaService.text();

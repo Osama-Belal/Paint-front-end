@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSliderModule } from '@angular/material/slider';
+import {MatInputModule} from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import {MatGridListModule} from '@angular/material/grid-list';
@@ -49,7 +50,7 @@ enableRipple(true);
     ReactiveFormsModule,
     HttpClientModule,
     BrowserModule,
-    // AppRoutingModule,
+    MatInputModule,
     BrowserAnimationsModule,
     FormsModule,
     MatButtonModule,

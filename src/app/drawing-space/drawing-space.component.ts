@@ -18,7 +18,6 @@ import { EventsService } from '../Service/events.service';
   selector: 'app-drawing-space',
   templateUrl: './drawing-space.component.html',
   styleUrls: ['./drawing-space.component.css'],
-  //encapsulation: ViewEncapsulation.None
 })
 
 export class DrawingSpaceComponent implements OnInit{
@@ -26,14 +25,13 @@ export class DrawingSpaceComponent implements OnInit{
   layer!: Layer;
   transformer!: Transformer;
   shapes: any = [];
-  transformers: Transformer[] = [];
   selectedID: string = 's';
 
-  fillColor: string = '#000000';
-  strokeColor: string = '#000000';
-  strokeWidth: number = 1;
-  brushWidth: number = 3;
-  
+  fillColor: string = '#1792e0';
+  strokeColor: string = '#e1c019';
+
+  public strokeWidth = 5;
+  public brushWidth = 10;
 
   oldContainer: {
     oldX: number,
@@ -86,8 +84,9 @@ export class DrawingSpaceComponent implements OnInit{
     }));;
   }
   createShape(shape: string){
-    
+    this.setColors();
     let newShape = this.shapeFactory.createShape(shape);
+
     // send post request
     this.dtoAdapter.drawShape(newShape.toObject().attrs, newShape.toObject().className).subscribe(data => {
       newShape.attrs.id = data.id;
@@ -196,7 +195,7 @@ export class DrawingSpaceComponent implements OnInit{
     myShape._setAttr('stroke', this.strokeColor);
     this.dtoAdapter.putRecolor(myShape.toObject().attrs, myShape.className);
   }
-  
+
   clone(){
     console.log(this.selectedID);
     this.dtoAdapter.getClone(this.selectedID).subscribe((data => {
@@ -210,28 +209,12 @@ export class DrawingSpaceComponent implements OnInit{
     })); 
   }
 
-  // transform
-  selectionRectangle: any = new Konva.Rect({
-    fill: 'rgba(0,0,255,0.5)',
-    visible: false,
-  });
-
   clearSelection(): void {
     this.selectedButton = {
       'brush': false,
       'eraser': false
     }
   }
-  // openBottomSheet(): void {
-  //   const bottomSheetRef = this._bottomSheet.open(BottomSheet);
-  //   bottomSheetRef.afterDismissed().subscribe((result: any) => {
-  //     if (result) {
-  //       this.brushSize = result.brushSize;
-  //       this.brushOpacity = result.brushOpacity;
-  //     }
-  //   });
-
-  // }
 
   setSelection(type: string) {
     this.clearSelection();
@@ -259,11 +242,12 @@ export class DrawingSpaceComponent implements OnInit{
     this.stage.on('mousedown touchstart', (e: any) => {
       let pos = component.stage.getPointerPosition();
       this.hidePalette();
-      // select this shape
+
       if(e.target === this.stage) {
         this.transformer.nodes([])
 
         isFreeHand = true
+        this.setColors();
         freeHand = component.eraser ? component.konvaService.erase(pos, 30) :
           component.konvaService.brush(pos);
         component.shapes.push(freeHand);
@@ -300,20 +284,11 @@ export class DrawingSpaceComponent implements OnInit{
     })
   }
 
-  setBrush(value: number) {
-    this.brushWidth = value;
-    this.konvaService.brushWidth = this.brushWidth;
+  setColors() {
     this.konvaService.fillColor = this.fillColor;
-  }
-  setStroke(value: number) {
-    this.strokeWidth = value;
-    this.konvaService.strokeWidth = this.strokeWidth;
     this.konvaService.strokeColor = this.strokeColor;
-  }
-
-  setBrushAttrs(value: number){
-    this.setBrush(value);
-    this.setStroke(value);
+    this.konvaService.strokeWidth = this.strokeWidth > 100 ? '100' : String(this.strokeWidth);
+    this.konvaService.brushWidth = this.brushWidth > 100 ? '100' : String(this.brushWidth);
   }
 
   hidePalette(){
@@ -323,22 +298,12 @@ export class DrawingSpaceComponent implements OnInit{
     control_container_R?.classList.add('hide_palette');
     control_container_L?.classList.add('hide_palette');
   }
-
   showPalette(){
     const control_container_R = document.getElementById('control_container_R');
     const control_container_L = document.getElementById('control_container_L');
 
     control_container_R?.classList.remove('hide_palette');
     control_container_L?.classList.remove('hide_palette');
-  }
-
-  updateStroke(value: number): string {
-    this.setStroke(value);
-    return `${value}`;
-  }
-  updateBrush(value: number): string {
-    this.setBrush(value);
-    return `${value}`;
   }
 
   getCursorClass(): string {

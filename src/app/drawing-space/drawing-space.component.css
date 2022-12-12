@@ -60,7 +60,12 @@ button:hover{
     10px 0 80px #0ff !important;
   transform: translate3d(0, -.6em , 0);
 }
+button.noAnimate:hover{
+  box-shadow: none !important;
+  transform: translate3d(0, -.2em , 0);
+}
 
+.in{padding: 10px 20px}
 
 button:hover svg.animate{
   stroke: #2b4f60;
@@ -92,10 +97,6 @@ button:hover svg.R{
   0% {transform: rotate(0deg);}
   80% {transform: rotate(1440deg);}
   100% {transform: rotate(1440deg);}
-}
-
-.mat-menu-content:not(:empty){
-  padding: 10px 20px;
 }
 
 .white_board--wrapper {
@@ -210,14 +211,6 @@ mat-slider {
   border: 0.5px solid #c7c7c782;
   margin: 0.5rem;
   width: 100%;
-}
-
-.primary_border {
-  /*border: 2px solid #673ab7;*/
-}
-
-.no_border {
-  border: 0;
 }
 
 svg {
