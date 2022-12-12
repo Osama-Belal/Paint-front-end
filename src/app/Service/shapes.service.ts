@@ -32,19 +32,14 @@ export class ShapesService {
     }))
   }
   
-  postSave(myStage: Stage){
-    let myObj = {
-      stage: myStage,
-      path: 'saved.json',
-      fileType: 'json',
-    }
+  postSave(myStage: Stage, myObj: Object){
+
     this.http.post<any>(`${this.configUrl}/save`, myObj).subscribe((data => {
       console.log("data: ", data);
     }))
   }  
   
-  getLoad(){
-    let fileLocation = 'saved.json'
+  getLoad(fileLocation: string){
     return this.http.get<Dto>(`${this.configUrl}/load/${fileLocation}`);
   }
   

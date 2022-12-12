@@ -13,7 +13,7 @@
     <hr class="hr_divider" />
 
     <button mat-mini-fab [ngClass]='selectedButton["brush"] ? "primary_border":"no_border"'
-            (click)='undo()' matTooltip="Delete" matTooltipPosition="right" aria-label="Brush">
+            (click)='delete()' matTooltip="Delete" matTooltipPosition="right" aria-label="Delete">
       <svg class="animate stroke" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M3 6H21M5 6V20C5 21.1046 5.89543 22 7 22H17C18.1046 22 19 21.1046 19 20V6M8 6V4C8 2.89543 8.89543 2 10 2H14C15.1046 2 16 2.89543 16 4V6" stroke-linecap="round" stroke-linejoin="round"></path>
       </svg>
@@ -28,7 +28,7 @@
     </button>
 
     <button mat-mini-fab [ngClass]='selectedButton["brush"] ? "primary_border":"no_border"'
-            (click)='undo()' matTooltip="Redo" matTooltipPosition="right" aria-label="Brush">
+            (click)='redo()' matTooltip="Redo" matTooltipPosition="right" aria-label="Brush">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="animate R" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
         <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
@@ -46,7 +46,8 @@
     </button>
 
     <button mat-mini-fab [ngClass]='selectedButton["eraser"] ? "primary_border":"no_border"'
-            (click)='recolor()' matTooltip="Clone" matTooltipPosition="right" aria-label="Clone" (click)="clone()">
+          matTooltip="Clone" matTooltipPosition="right" aria-label="Clone" 
+          (click)="clone()">
       <svg class="animate stroke" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="9" y="9" width="13" height="13" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect>
         <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -86,14 +87,14 @@
 
     <mat-menu class="scroll-menu" #menu="matMenu" mat-mini-fab matTooltipPosition="before">
       Stroke Width
-      <mat-slider min="0" max="100" step="1" showTickMarks discrete [displayWith]="updateStroke">
+      <mat-slider min="0" max="100" step="1" showTickMarks discrete >
         <input matSliderThumb 
         [value]="strokeWidth"
         [(ngModel)]="strokeWidth">
       </mat-slider>
 
       Brush Width
-      <mat-slider min="0" max="100" step="1" showTickMarks discrete [displayWith]="updateBrush">
+      <mat-slider min="0" max="100" step="1" showTickMarks discrete >
         <input matSliderThumb
         [value]="brushWidth"
         [(ngModel)]="brushWidth">

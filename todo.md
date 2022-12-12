@@ -1,27 +1,16 @@
 # TODO 
 - implement brush size
-- implement delete
-- implement redo 
-### undo
-- undo clone
-- undo delete
-- undo draw
-- undo recolor
-- null undo
-### Redo
-- draw
-- Move
-- clone
-- delete
-- resize
-- recolor
-- null redo
+- implement triangle
+- resize stroke width
+- transformer goes away with redo and load
+- redo x and y set ya 7omaar
 ### Save and load
 - dialog box for file name and path location
 - Load a certain file from path
 - save free hand drawing
 - make background jpg
 - remove transformer when save as image
+
 # Testing
 - delete with all the colors
 - move with all the shapes

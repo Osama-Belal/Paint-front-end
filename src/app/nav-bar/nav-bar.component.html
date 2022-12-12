@@ -28,8 +28,8 @@
     </svg>
 
     <mat-menu #menu="matMenu" mat-mini-fab matTooltipPosition="below">
-      <a mat-menu-item>Save as XML</a>
-      <a mat-menu-item>Save as JSon</a>
+      <a mat-menu-item (click)="saveXML()">Save as XML</a>
+      <a mat-menu-item (click)="saveJSON()">Save as JSon</a>
     </mat-menu>
 
   </div>

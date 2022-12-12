@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Shape } from 'konva/lib/Shape';
 import { Stage } from 'konva/lib/Stage';
+import { ShapesService } from './shapes.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +9,31 @@ import { Stage } from 'konva/lib/Stage';
 export class EventsService {
   stage!:Stage;
 
-  constructor() { }
+  constructor(private shapeService: ShapesService) { }
+
+  saveXML(){
+    let myObj = {
+      stage: this.stage,
+      path: 'saved.xml',
+      fileType: 'xml',
+    }
+    this.shapeService.postSave(this.stage, myObj)
+  }
+  
+  saveJSON(){
+    let myObj = {
+      stage: this.stage,
+      path: 'saved.json',
+      fileType: 'json',
+    }
+    this.shapeService.postSave(this.stage, myObj);
+  }
+
+  load(){
+    this.shapeService.getLoad('saved.json').subscribe((data => {
+      console.log(data);
+    }));;
+  }
 
   saveAsImage(): void {
     console.log('saveAsImage called')

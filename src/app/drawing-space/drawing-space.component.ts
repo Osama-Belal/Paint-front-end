@@ -76,26 +76,11 @@ export class DrawingSpaceComponent implements OnInit{
     // send post request
     this.dtoAdapter.drawShape(newShape.toObject().attrs, newShape.toObject().className).subscribe(data => {
       newShape.attrs.id = data.id;
+      this.selectedID = <string>data.id;
     });
-
-    newShape.on('mouseup', (e: any) => {
-      this.dtoAdapter.putMove(newShape.toObject().attrs, newShape.getClassName());
-    });
-
-    newShape.on('mousedown', (e: any) => {
-      this.selectedID = newShape.attrs.id;
-    });
-
-    newShape.on('transformstart', (e: any) => {
-      this.oldContainer.oldX = newShape.toObject().attrs.x;
-      this.oldContainer.oldY = newShape.toObject().attrs.y;
-    })
-
-    newShape.on('transformend', (e: any) =>{
-      this.dtoAdapter.putResize(newShape.toObject().attrs, newShape.getClassName(), this.oldContainer);
-    })
-    newShape.name('shape')
-
+    
+    this.setShapeEvent(newShape);
+   
     this.layer.add(this.transformer);
     this.transformer.nodes([newShape]);
 
@@ -105,13 +90,12 @@ export class DrawingSpaceComponent implements OnInit{
 
   }
 
-  // CONTINUE UNDO
   undo(){
     this.reqService.undo().subscribe((data => {
       this.setUndo(data);
     }))
   }
-  // TODO HANDLE REDO
+
   redo(){
     this.reqService.redo().subscribe((data => {
       this.setRedo(data);
@@ -119,6 +103,7 @@ export class DrawingSpaceComponent implements OnInit{
   }
 
   setUndo(data: Dto){
+    if(data == null) return;
     if(data.commandType == 'draw'){
       this.layer.find('#' + data.id)[0].destroy();
       this.transformer.nodes([]);
@@ -126,47 +111,66 @@ export class DrawingSpaceComponent implements OnInit{
       this.stage.find('#'+ data.id)[0]._setAttr('x', data.x);
       this.stage.find('#'+ data.id)[0]._setAttr('y', data.y);
     }else if(data.commandType == 'delete'){
-      this.layer.add(this.dtoAdapter.undoDelete(data));
+     /*  console.log('undo Delete' + data); */
+     let myShape = this.dtoAdapter.fromDtoToKonva(data);
+     console.log('delete undo shape', myShape);
+     this.setShapeEvent(myShape);
+    this.layer.add(myShape);
     }else if(data.commandType == 'resize'){
       this.layer.find('#' + data.id)[0]._setAttr('scaleX', data.scaleX)
       this.layer.find('#' + data.id)[0]._setAttr('scaleY', data.scaleY)
       this.layer.find('#' + data.id)[0]._setAttr('x', data.x)
       this.layer.find('#' + data.id)[0]._setAttr('y', data.y)
-      console.log(this.layer.find('#' + data.id)[0])
-    }
-  }
-
-  setRedo(data: Dto){
-    if(data.commandType == 'draw'){
+      /* console.log(this.layer.find('#' + data.id)[0]) */
+    }else if(data.commandType == 'recolor'){
+      this.layer.find('#' + data.id)[0]._setAttr('fill', data.fill);
+      this.layer.find('#' + data.id)[0]._setAttr('stroke', data.stroke);
+    }else if(data.commandType == 'clone'){
       this.layer.find('#' + data.id)[0].destroy();
       this.transformer.nodes([]);
+    }
+  }
+  
+  setRedo(data: Dto){
+    if(data == null) return;
+
+    if(data.commandType == 'draw'){
+      let myShape = this.dtoAdapter.fromDtoToKonva(data);
+      this.setShapeEvent(myShape);
+      this.layer.add(myShape);
     }else if(data.commandType == 'move'){
       this.stage.find('#'+ data.id)[0]._setAttr('x', data.x);
       this.stage.find('#'+ data.id)[0]._setAttr('y', data.y);
     }else if(data.commandType == 'delete'){
-      //TODO test it
-      this.layer.add(this.dtoAdapter.undoDelete(data));
+      this.layer.find('#' + data.id)[0].destroy();
+      this.transformer.nodes([]);
     }else if(data.commandType == 'resize'){
-
+      this.layer.find('#' + data.id)[0]._setAttr('scaleX', data.scaleX)
+      this.layer.find('#' + data.id)[0]._setAttr('scaleY', data.scaleY)
+      this.layer.find('#' + data.id)[0]._setAttr('x', data.x)
+      this.layer.find('#' + data.id)[0]._setAttr('y', data.y)
+    }else if(data.commandType == 'recolor'){
+      this.layer.find('#' + data.id)[0]._setAttr('fill', data.fill);
+      this.layer.find('#' + data.id)[0]._setAttr('stroke', data.stroke);
+    }else if(data.commandType == 'clone'){
+      this.layer.add(this.dtoAdapter.fromDtoToKonva(data));
     }
   }
-
+  
   delete(){
-    this.layer.find('#' + this.selectedID)[0].destroy();
+    let myShape = this.layer.find('#' + this.selectedID)[0];
+   /*  console.log(myShape); */
+    if(myShape == null)
+      return;
+
+    myShape.destroy();
     this.transformer.nodes([]);
     let dto = new Dto();
     dto.id = this.selectedID;
     this.reqService.putDelete(dto).subscribe((data => {
     }))
   }
-  save(){
-    this.reqService.postSave(this.stage);
-  }
-  load(){
-    this.reqService.getLoad().subscribe(data => {
-      this.stage = Konva.Node.create(data, 'container');
-    })
-  }
+ 
   recolor(){
     let myShape = this.stage.find('#'+ this.selectedID)[0];
     myShape._setAttr('fill', this.fillColor);
@@ -175,8 +179,14 @@ export class DrawingSpaceComponent implements OnInit{
   }
   
   clone(){
-    let myShape = this.dtoAdapter.getClone(this.selectedID);
-    this.layer.add(myShape);
+    console.log(this.selectedID);
+    this.dtoAdapter.getClone(this.selectedID).subscribe((data => {
+      let dto:Dto = data;
+      let myShape = this.shapeFactory.createShape(<string>dto.className);
+      myShape.attrs = dto;
+      myShape.className = <string>dto.className;
+      this.layer.add(myShape)
+    })); 
   }
 
   // transform
@@ -227,7 +237,6 @@ export class DrawingSpaceComponent implements OnInit{
 
     this.stage.on('mousedown touchstart', (e: any) => {
       let pos = component.stage.getPointerPosition();
-      console.log('setBrush called ', this.brushWidth);
       this.hidePalette();
       // select this shape
       if(e.target === this.stage) {
@@ -240,7 +249,7 @@ export class DrawingSpaceComponent implements OnInit{
         component.layer.add(freeHand);
         this.hidePalette();
       }
-      if(e.target.hasName('shape')){
+      if(e.target.name === 'shape'){
         isFreeHand = false;
         this.transformer.nodes([e.target])
       }
@@ -319,5 +328,27 @@ export class DrawingSpaceComponent implements OnInit{
     }
   }
 
+  setShapeEvent(newShape : any){
+    newShape.on('mouseup', (e: any) => {
+      this.dtoAdapter.putMove(newShape.toObject().attrs, newShape.getClassName());
+    });
+
+    newShape.on('mousedown', (e: any) => {
+      this.selectedID = newShape.attrs.id;
+      console.log('id set: ', this.selectedID);
+    });
+
+    newShape.on('transformstart', (e: any) => {
+      this.oldContainer.oldX = newShape.toObject().attrs.x;
+      this.oldContainer.oldY = newShape.toObject().attrs.y;
+    })
+
+    newShape.on('transformend', (e: any) =>{
+      this.dtoAdapter.putResize(newShape.toObject().attrs, newShape.getClassName(), this.oldContainer);
+    })
+    newShape.name = 'shape';
+    this.transformer.nodes([newShape])
+    console.log('setShape', newShape);
+  }
 
 }

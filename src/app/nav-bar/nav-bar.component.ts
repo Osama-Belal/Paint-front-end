@@ -35,18 +35,22 @@ export class NavBarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  save(){
 
-  }
-
-  load(){
-
-  }
-
+  
   saveAsImage(): void {
     this.eventService.saveAsImage();
   }
-
+  
+  saveXML(){
+    this.eventService.saveXML();
+  }
+  saveJSON(){
+    this.eventService.saveJSON();
+  }
+  load(){
+    this.eventService.load();
+  }
+  
   toggleGuide(){
     const help = document.getElementById('help');
     // const w = String(window.innerWidth / 2);

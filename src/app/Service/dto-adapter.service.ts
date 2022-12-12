@@ -49,24 +49,25 @@ export class DtoAdapterService {
     this.myService.putRecolor(dto);
   }
   
-  undoDelete(dto: Dto){
+  fromDtoToKonva(dto: Dto){
     let myShape = this.shapeFactory.createShape(<string>dto.className);
     console.log(myShape);
-    console.log(dto);
     myShape.attrs = dto;
     myShape.className = dto.className;
+    myShape.name = 'shape';
     return myShape;
   }
 
   getClone(id: string){
     let dto: any;
-    this.myService.getClone(id).subscribe((data => {
+    return this.myService.getClone(id)
+    /* .subscribe((data => {
       dto = data;
-    }));
-    let myShape = this.shapeFactory.createShape(<string>dto.className);
-    myShape.attrs = dto;
-    myShape.className = dto.className;
-    return myShape;
+      let myShape = this.shapeFactory.createShape(<string>dto.className);
+      myShape.attrs = dto;
+      myShape.className = <string>dto.className;
+    })); 
+    return myShape; */
   }
   
 }

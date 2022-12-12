@@ -22,6 +22,7 @@ export class KonvaService {
       x: window.innerHeight * Math.random(),
       y: window.innerHeight * Math.random(),
       draggable: true,
+      name: 'shape',
       id:'s'
     });
   }
@@ -35,6 +36,7 @@ export class KonvaService {
       fill: this.fillColor,
       x: window.innerHeight * Math.random(),
       y: window.innerHeight * Math.random(),
+      name: 'shape',
       draggable: true
     });
   }
@@ -49,6 +51,7 @@ export class KonvaService {
       fill: this.fillColor,
       x: window.innerHeight * Math.random(),
       y: window.innerHeight * Math.random(),
+      name: 'shape',
       draggable: true
     });
   }
@@ -62,6 +65,7 @@ export class KonvaService {
       closed: true,
       x: window.innerHeight * Math.random(),
       y: window.innerHeight * Math.random(),
+      name: 'shape',
       draggable: true
     });
   }
@@ -75,6 +79,7 @@ export class KonvaService {
       strokeWidth: this.strokeWidth,
       x: window.innerHeight * Math.random(),
       y: window.innerHeight * Math.random(),
+      name: 'shape',
       draggable: true
     });
   }
@@ -87,6 +92,7 @@ export class KonvaService {
       fill: this.fillColor,
       x: window.innerHeight * Math.random(),
       y: window.innerHeight * Math.random(),
+      name: 'shape',
       draggable: true
     });
   }
@@ -99,6 +105,7 @@ export class KonvaService {
       points: [pos.x, pos.y, pos.x, pos.y],
       lineCap: 'round',
       lineJoin: 'round',
+      name: 'shape',
       tension: 0
     });
   }
@@ -110,6 +117,7 @@ export class KonvaService {
       globalCompositeOperation: 'destination-out',
       points: [pos.x, pos.y, pos.x, pos.y],
       lineCap: 'round',
+      name: 'shape',
       lineJoin: 'round'
     });
   }

@@ -13,11 +13,12 @@ export class ShapeFactoryService {
 
   createShape(shape: string){
       let created: any;
-      switch (shape){
+      switch (shape.toLowerCase()){
         case 'circle':
           created = this.myKonvaService.circle();
           break;
           case 'rect': 
+          console.log('rec made')
           created = this.myKonvaService.rect();
           break;
           case 'triangle': 
@@ -31,8 +32,10 @@ export class ShapeFactoryService {
           break;
           case 'text': created = this.myKonvaService.text();
           break;
-      }
-
+          default:
+            console.log('ERROR shape not defined');
+        }
+        
       return created;
     }
 }
