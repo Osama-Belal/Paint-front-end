@@ -54,6 +54,7 @@ export class DrawingSpaceComponent implements OnInit{
     'brush': false,
     'eraser': false
   }
+  selectionRectangle!: any
 
   constructor(
     private _bottomSheet: MatBottomSheet,
@@ -73,6 +74,7 @@ export class DrawingSpaceComponent implements OnInit{
     });
     this.layer = new Layer();
     this.transformer = new Transformer();
+    this.dynamicShape();
     this.layer.add(this.transformer);
     this.stage.add(this.layer);
     this.eventService.stage = this.stage
@@ -298,6 +300,7 @@ export class DrawingSpaceComponent implements OnInit{
       let position = component.stage.getPointerPosition();
       isFreeHand = this.selectedButton['brush']
                    || this.selectedButton['eraser'];
+      isCreateShape = !isFreeHand
       this.hidePalette();
 
       if(e.target.name === 'shape'){
@@ -309,7 +312,6 @@ export class DrawingSpaceComponent implements OnInit{
       if(e.target === this.stage) {
         this.transformer.nodes([])
 
-        isCreateShape = true;
         this.konvaService.x1 = this.x1 = position?.x
         this.konvaService.y1 = this.y1 = position?.y
         // console.log("started at x: " + this.x1 + "and y: " + this.y1)
@@ -323,16 +325,41 @@ export class DrawingSpaceComponent implements OnInit{
           component.shapes.push(freeHand);
           component.layer.add(freeHand);
         }
+
+        // faded shape
+        if(isCreateShape){
+          e.evt.preventDefault();
+          console.log("I'm Visislbeadlsld")
+          this.selectionRectangle.visible(true);
+          this.selectionRectangle.width(0);
+          this.selectionRectangle.height(0);
+        }
+
       }
     });
 
     this.stage.on('mousemove touchmove',  (e:any) => {
+      let position = this.stage.getPointerPosition()
+      this.konvaService.x2 = this.x2 = position?.x
+      this.konvaService.y2 = this.y2 = position?.y
+
       if (isFreeHand) {
         e.evt.preventDefault();
         const position: any = component.stage.getPointerPosition();
         const newPoints = freeHand.points().concat([position.x, position.y]);
         freeHand.points(newPoints);
         component.layer.batchDraw();
+      }
+
+      // faded shape
+      if(isCreateShape){
+        console.log("I'm moving")
+        this.selectionRectangle.setAttrs({
+          x: Math.min(this.x1, this.x2),
+          y: Math.min(this.y1, this.y2),
+          width: Math.abs(this.x2 - this.x1),
+          height: Math.abs(this.y2 - this.y1),
+        });
       }
     });
 
@@ -341,8 +368,13 @@ export class DrawingSpaceComponent implements OnInit{
       this.konvaService.x2 = this.x2 = position?.x
       this.konvaService.y2 = this.y2 = position?.y
 
-      if(!this.selectedButton['brush'] && !this.selectedButton['eraser'] && isCreateShape)
+      if(!this.selectedButton['brush'] && !this.selectedButton['eraser'] && isCreateShape) {
+        // update visibility in timeout, so we can check it in click event
+        console.log("GoodBye!!!!!!!!")
+        e.evt.preventDefault();
+        setTimeout(() => {this.selectionRectangle.visible(false);});
         this.createShape(this.activeShape)
+      }
 
       // console.log("ended at x: " + this.x2 + "and y: " + this.y2)
       isFreeHand = false;
@@ -401,5 +433,31 @@ export class DrawingSpaceComponent implements OnInit{
     this.transformer.nodes([newShape])
     console.log('setShape', newShape);
   }
+
+  dynamicShape() {
+    // let's try faded shape
+    switch (this.activeShape) {
+      case 'rect':
+        this.selectionRectangle = new Konva.Rect({
+          fill: this.fillColor,
+          stroke: this.strokeColor,
+          strokeWidth: this.strokeWidth,
+          opacity: 0.5,
+          visible: false,
+        });break;
+
+      case 'circle':
+        this.selectionRectangle = new Konva.Circle({
+          fill: this.fillColor,
+          stroke: this.strokeColor,
+          strokeWidth: this.strokeWidth,
+          opacity: 0.5,
+          visible: false,
+        });break;
+    }
+    this.selectionRectangle.setAttrs({});
+    this.layer.add(this.selectionRectangle)
+  }
+
 
 }

@@ -26,8 +26,8 @@ export class KonvaService {
       stroke: this.strokeColor,
       strokeWidth: Number(this.strokeWidth),
       fill: this.fillColor,
-      x: this.x1,
-      y: this.y1,
+      x: (this.x1 + this.x2) / 2,
+      y: (this.y1 + this.y2) / 2,
       draggable: true,
       name: 'shape',
       id:'s'
@@ -79,13 +79,13 @@ export class KonvaService {
 
   ellipse(){
     return new Konva.Ellipse({
-      radiusX: Math.abs(this.x1 - this.x2),
-      radiusY: Math.abs(this.y1 - this.y2),
+      radiusX: Math.abs(this.x1 - this.x2) / 2,
+      radiusY: Math.abs(this.y1 - this.y2) / 2,
       fill: this.fillColor,
       stroke: this.strokeColor,
       strokeWidth: Number(this.strokeWidth),
-      x: this.x1,
-      y: this.y1,
+      x: (this.x1 + this.x2) / 2,
+      y: (this.y1 + this.y2) / 2,
       name: 'shape',
       draggable: true
     });
