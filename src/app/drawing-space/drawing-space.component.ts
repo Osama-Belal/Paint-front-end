@@ -95,21 +95,21 @@ export class DrawingSpaceComponent implements OnInit{
     this.stage.add(this.layer);
     this.addLineListeners();
 
-    this.stage = Konva.Node.create(this.testSave, 'container');
+    let tempStage = Konva.Node.create(this.testSave, 'container');
     console.log('before', this.stage);
-    this.stage?.children?.forEach(element => {
+    tempStage?.children?.forEach((element: { children: any[]; }) => {
       element.children?.forEach(shapes => {
         if(!(shapes instanceof Transformer)){
-         /*  let newShape = this.shapeFactory.createShape(<string>shapes.toObject().className);
-          newShape.attrs = shapes.toObject().attrs; */
-          this.setShapeEvent(shapes);
+          let newShape = this.shapeFactory.createShape(<string>shapes.toObject().className);
+          newShape.attrs = shapes.toObject().attrs;
+          this.setShapeEvent(newShape);
           
           this.layer.add(this.transformer);
-          this.transformer.nodes([shapes]);
+          this.transformer.nodes([newShape]);
           
-          this.shapes.push(shapes);
-          this.layer.add(shapes);
-          console.log(shapes);
+          this.shapes.push(newShape);
+          this.layer.add(newShape);
+          console.log(newShape);
           this.stage.add(this.layer);
         }
       });
