@@ -436,26 +436,18 @@ export class DrawingSpaceComponent implements OnInit{
 
   dynamicShape() {
     // let's try faded shape
-    switch (this.activeShape) {
-      case 'rect':
-        this.selectionRectangle = new Konva.Rect({
-          fill: this.fillColor,
-          stroke: this.strokeColor,
-          strokeWidth: this.strokeWidth,
-          opacity: 0.5,
-          visible: false,
-        });break;
+    // if(this.selectedButton['rect']){
+      console.log("ASDADASD");
+      this.selectionRectangle = new Konva.Rect({
+        fill: this.fillColor,
+        stroke: this.strokeColor,
+        strokeWidth: this.strokeWidth,
+        opacity: 0.5,
+        visible: false,
+      });
+    // }
 
-      case 'circle':
-        this.selectionRectangle = new Konva.Circle({
-          fill: this.fillColor,
-          stroke: this.strokeColor,
-          strokeWidth: this.strokeWidth,
-          opacity: 0.5,
-          visible: false,
-        });break;
-    }
-    this.selectionRectangle.setAttrs({});
+    // this.selectionRectangle.setAttrs({});
     this.layer.add(this.selectionRectangle)
   }
 
