@@ -38,11 +38,6 @@ export class DrawingSpaceComponent implements OnInit{
   x1: any; y1: any
   x2: any; y2: any
 
-  oldContainer: {
-    oldX: number,
-    oldY: number
-  } = {oldX: 2, oldY: 2}
-
   activeShape!: string
   selectedButton: any = {
     'circle': false,
@@ -159,31 +154,31 @@ export class DrawingSpaceComponent implements OnInit{
   createShape(shape: string){
     this.Update();
     let newShape = this.shapeFactory.createShape(shape);
-
+    
     // send post request
     this.dtoAdapter.drawShape(newShape.toObject().attrs, newShape.toObject().className).subscribe(data => {
       newShape.attrs.id = data.id;
       this.selectedID = <string>data.id;
-      if(newShape.className == 'Triangle' && newShape.closed === true)
-        newShape.className = 'Line';
-    });
-
-    this.setShapeEvent(newShape);
-
-    this.layer.add(this.transformer);
-    this.transformer.nodes([newShape]);
-
-    this.shapes.push(newShape);
-    this.layer.add(newShape);
-    this.stage.add(this.layer);
-    console.log(this.stage);
-  }
-
-  undo(){
-    this.reqService.undo().subscribe((data => {
-      this.setUndo(data);
-    }))
-  }
+      if(newShape.toObject().className == 'Triangle' && newShape.closed === true)
+        newShape.toObject().className = 'Line';
+      });
+      
+      this.setShapeEvent(newShape);
+      
+      this.layer.add(this.transformer);
+      this.transformer.nodes([newShape]);
+      
+      this.shapes.push(newShape);
+      this.layer.add(newShape);
+      this.stage.add(this.layer);
+      console.log('creation done', newShape.className);
+    }
+    
+    undo(){
+      this.reqService.undo().subscribe((data => {
+        this.setUndo(data);
+      }))
+    }
 
   redo(){
     this.reqService.redo().subscribe((data => {
@@ -209,17 +204,17 @@ export class DrawingSpaceComponent implements OnInit{
       this.setShapeEvent(myShape);
       this.layer.add(myShape);
     }else if(data.commandType == 'resize'){
-      this.layer.find('#' + data.id)[0]._setAttr('scaleX', data.scaleX)
-      this.layer.find('#' + data.id)[0]._setAttr('scaleY', data.scaleY)
-      this.layer.find('#' + data.id)[0]._setAttr('x', data.x)
-      this.layer.find('#' + data.id)[0]._setAttr('y', data.y)
-      this.layer.find('#' + data.id)[0]._setAttr('rotation', data.rotation)
+      this.stage.find('#' + data.id)[0]._setAttr('scaleX', data.scaleX)
+      this.stage.find('#' + data.id)[0]._setAttr('scaleY', data.scaleY)
+      this.stage.find('#' + data.id)[0]._setAttr('x', data.x)
+      this.stage.find('#' + data.id)[0]._setAttr('y', data.y)
+      this.stage.find('#' + data.id)[0]._setAttr('rotation', data.rotation)
       /* console.log(this.layer.find('#' + data.id)[0]) */
     }else if(data.commandType == 'recolor'){
-      this.layer.find('#' + data.id)[0]._setAttr('fill', data.fill);
-      this.layer.find('#' + data.id)[0]._setAttr('stroke', data.stroke);
+      this.stage.find('#' + data.id)[0]._setAttr('fill', data.fill);
+      this.stage.find('#' + data.id)[0]._setAttr('stroke', data.stroke);
     }else if(data.commandType == 'clone'){
-      this.layer.find('#' + data.id)[0].destroy();
+      this.stage.find('#' + data.id)[0].destroy();
       this.transformer.nodes([]);
 
     }
@@ -236,17 +231,17 @@ export class DrawingSpaceComponent implements OnInit{
       this.stage.find('#'+ data.id)[0]._setAttr('x', data.x);
       this.stage.find('#'+ data.id)[0]._setAttr('y', data.y);
     }else if(data.commandType == 'delete'){
-      this.layer.find('#' + data.id)[0].destroy();
+      this.stage.find('#' + data.id)[0].destroy();
       this.transformer.nodes([]);
     }else if(data.commandType == 'resize'){
-      this.layer.find('#' + data.id)[0]._setAttr('scaleX', data.scaleX)
-      this.layer.find('#' + data.id)[0]._setAttr('scaleY', data.scaleY)
-      this.layer.find('#' + data.id)[0]._setAttr('x', data.x)
-      this.layer.find('#' + data.id)[0]._setAttr('y', data.y)
-      this.layer.find('#' + data.id)[0]._setAttr('rotation', data.rotation)
+      this.stage.find('#' + data.id)[0]._setAttr('scaleX', data.scaleX)
+      this.stage.find('#' + data.id)[0]._setAttr('scaleY', data.scaleY)
+      this.stage.find('#' + data.id)[0]._setAttr('x', data.x)
+      this.stage.find('#' + data.id)[0]._setAttr('y', data.y)
+      this.stage.find('#' + data.id)[0]._setAttr('rotation', data.rotation)
     }else if(data.commandType == 'recolor'){
-      this.layer.find('#' + data.id)[0]._setAttr('fill', data.fill);
-      this.layer.find('#' + data.id)[0]._setAttr('stroke', data.stroke);
+      this.stage.find('#' + data.id)[0]._setAttr('fill', data.fill);
+      this.stage.find('#' + data.id)[0]._setAttr('stroke', data.stroke);
     }else if(data.commandType == 'clone'){
       let myShape = this.dtoAdapter.fromDtoToKonva(data);
       this.layer.add(myShape);
@@ -256,7 +251,7 @@ export class DrawingSpaceComponent implements OnInit{
 
   @HostListener('keydown.delete')
   delete(){
-    let myShape = this.layer.find('#' + this.selectedID)[0];
+    let myShape = this.stage.find('#' + this.selectedID)[0];
     console.log("delete called");
     if(myShape == null)
     return;
@@ -288,6 +283,8 @@ export class DrawingSpaceComponent implements OnInit{
         myShape.className = 'Line'
         /* myShape.attrs.closed = true; */
       }
+      if(myShape.toObject().className == 'Rectangle')
+        myShape.toObject().className = 'Rect';
 
       this.selectedID = <string>data.id;
       this.setShapeEvent(myShape);
@@ -394,13 +391,8 @@ export class DrawingSpaceComponent implements OnInit{
       console.log('id set: ', this.selectedID);
     });
 
-    newShape.on('transformstart', (e: any) => {
-      this.oldContainer.oldX = newShape.toObject().attrs.x;
-      this.oldContainer.oldY = newShape.toObject().attrs.y;
-    })
-
     newShape.on('transformend', (e: any) =>{
-      this.dtoAdapter.putResize(newShape.toObject().attrs, newShape.getClassName(), this.oldContainer);
+      this.dtoAdapter.putResize(newShape.toObject().attrs, newShape.getClassName());
     })
 
     newShape.on('')

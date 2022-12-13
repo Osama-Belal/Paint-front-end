@@ -34,13 +34,11 @@ export class DtoAdapterService {
     this.myService.putUpdate(dto);
   }
 
-  putResize(shape: any, className: string, oldContainer: any){
+  putResize(shape: any, className: string){
     let dto: Dto = new Dto();
     dto = shape;
     dto.className = className;
     dto.commandType = 'resize';
-    dto.x = oldContainer.oldX;
-    dto.y = oldContainer.oldY;
     this.myService.putUpdate(dto);
   }
 

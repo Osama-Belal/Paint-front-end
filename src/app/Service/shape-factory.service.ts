@@ -26,6 +26,10 @@ export class ShapeFactoryService {
             created = this.myKonvaService.rect();
             break;
 
+          case 'rectangle':
+            created = this.myKonvaService.rect();
+            break;
+
           case 'triangle':
             created = this.myKonvaService.triangle();
             break;
@@ -37,6 +41,10 @@ export class ShapeFactoryService {
           case 'line':
             created = this.myKonvaService.line();
             break;
+          case 'segmentline':
+            created = this.myKonvaService.line();
+            break;
+            
 /*           created = this.myKonvaService.circle();
           break;
           case 'rect':
