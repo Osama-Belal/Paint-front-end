@@ -387,7 +387,7 @@ export class DrawingSpaceComponent implements OnInit{
     })
 
     newShape.on('transformend', (e: any) =>{
-      this.dtoAdapter.putResize(newShape.toObject().attrs, newShape.getClassName(), this.oldContainer);
+      this.dtoAdapter.putResize(newShape.toObject().attrs, newShape.getClassName());
     })
 
     newShape.on('')
