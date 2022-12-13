@@ -5,6 +5,8 @@
 -delete clone in adapter
 - add rotation
 - undo save
+- recolor with different stroke width not working
+- clone square shape not defined
 ### Save and load
 - dialog box for file name and path location
 - Load a certain file from path

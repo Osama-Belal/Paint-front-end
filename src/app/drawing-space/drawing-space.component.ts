@@ -65,86 +65,62 @@ export class DrawingSpaceComponent implements OnInit{
     this.transformer = new Transformer();
     this.layer.add(this.transformer); 
     this.stage.add(this.layer);
-    /*   this.eventService.stage = this.stage; */
     this.addLineListeners();
   }
   
   save(){
-    /* let myObj = {
+    let myObj = {
       stage: this.stage,
       path: 'saved.json',
       fileType: 'json',
     }
-    console.log(this.stage);
-    this.reqService.postSave(this.stage, myObj); */
-    console.log(this.stage.toJSON())
-    this.testSave = this.stage.toJSON();
+    this.reqService.postSave(this.stage, myObj);
   }
   load(){
-    this.stage.destroy()
-    this.layer.destroy()
-    this.shapes = [];
-    
-    this.stage = new Stage({
-      container: 'container',
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
-
-    this.stage = Konva.Node.create(this.testSave, 'container');
-    console.log('before', this.stage);
-    this.layer = new Layer();
-    this.transformer = new Transformer();
-    this.layer.add(this.transformer);
-    this.stage.add(this.layer);
-    this.addLineListeners();
-
-    this.stage?.children?.forEach(element => {
-      this.layer = element
-      element.children?.forEach(shapes => {
-        if(!(shapes instanceof Transformer)){
-         /*  let newShape = this.shapeFactory.createShape(<string>shapes.toObject().className);
-          newShape.attrs = shapes.toObject().attrs; */
-          this.setShapeEvent(shapes);
-          
-          this.layer.add(this.transformer);
-          this.transformer.nodes([shapes]);
-          
-          this.shapes.push(shapes);
-          this.layer.add(shapes);
-          /* console.log(shapes); */
-          this.stage.add(this.layer);
-        }
-      });
-    });
-/*     this.layer.batchDraw();
-    this.stage.batchDraw(); */
-   /*  console.log(this.stage); */
-    /* this.reqService.getLoad('saved.json').subscribe((data => {
-      this.stage.destroy();
+    this.reqService.getLoad('saved.json').subscribe((data => {
+      this.stage.destroy()
+      this.layer.destroy()
+      this.shapes = [];
+      
       this.stage = new Stage({
         container: 'container',
         width: window.innerWidth,
         height: window.innerHeight
       });
-      
+  
       this.stage = Konva.Node.create(data, 'container');
+      console.log('before', this.stage);
+      this.layer = new Layer();
+      this.transformer = new Transformer();
+      this.layer.add(this.transformer);
+      this.stage.add(this.layer);
       this.addLineListeners();
-      console.log(this.stage);
+  
+      this.stage?.children?.forEach(element => {
+        this.layer = element
+        element.children?.forEach(shapes => {
+          if(!(shapes instanceof Transformer)){
+            this.setShapeEvent(shapes);
+            
+            this.layer.add(this.transformer);
+            this.transformer.nodes([shapes]);
+            
+            this.shapes.push(shapes);
+            this.layer.add(shapes);
+            /* console.log(shapes); */
+            this.stage.add(this.layer);
+          }
+        });
+      });
 
-      /* let i = this.stage.children
-      if(i != null && this.stage.children != null){
-        for( i of this.stage?.children){
-
-        }
-
-      } */
-      /* let blob:any = new Blob([data], { type: 'text/json; charset=utf-8' });
-      const url =window.URL.createObjectURL(data);
-      console.log('load called ', this.stage);
-    }));; */
+    }))
   }
   download(){
+    
+          /* let blob:any = new Blob([data], { type: 'text/json; charset=utf-8' });
+          const url =window.URL.createObjectURL(data);
+          console.log('load called ', this.stage);
+        }));; */
     
   }
 
