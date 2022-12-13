@@ -12,6 +12,8 @@ export class KonvaService {
 
   strokeWidth: string = '5';
   brushWidth: string = '10';
+  brushOp: string = '1';
+  eraserWidth: string = '10';
 
   circle(){
     return new Konva.Circle({
@@ -101,6 +103,7 @@ export class KonvaService {
     return new Line({
       stroke: this.fillColor,
       strokeWidth: Number(this.brushWidth),
+      opacity: Number(this.brushOp),
       globalCompositeOperation: 'source-over',
       points: [pos.x, pos.y, pos.x, pos.y],
       lineCap: 'round',
@@ -110,10 +113,10 @@ export class KonvaService {
     });
   }
 
-  erase(pos: any, size: any) {
+  erase(pos: any) {
     return new Line({
       stroke: '#ffffff',
-      strokeWidth: size,
+      strokeWidth: Number(this.eraserWidth),
       globalCompositeOperation: 'destination-out',
       points: [pos.x, pos.y, pos.x, pos.y],
       lineCap: 'round',

@@ -46,7 +46,7 @@
     </button>
 
     <button mat-mini-fab [ngClass]='selectedButton["eraser"] ? "primary_border":"no_border"'
-          matTooltip="Clone" matTooltipPosition="right" aria-label="Clone" 
+          matTooltip="Clone" matTooltipPosition="right" aria-label="Clone"
           (click)="clone()">
       <svg class="animate stroke" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="9" y="9" width="13" height="13" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect>
@@ -54,7 +54,7 @@
       </svg>
     </button>
     <button mat-mini-fab [ngClass]='selectedButton["eraser"] ? "primary_border":"no_border"'
-          matTooltip="Clone" matTooltipPosition="right" aria-label="Clone" 
+          matTooltip="Clone" matTooltipPosition="right" aria-label="Clone"
           (click)="save()">
       <svg class="animate stroke" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="9" y="9" width="13" height="13" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect>
@@ -62,7 +62,7 @@
       </svg>
     </button>
     <button mat-mini-fab [ngClass]='selectedButton["eraser"] ? "primary_border":"no_border"'
-          matTooltip="Clone" matTooltipPosition="right" aria-label="Clone" 
+          matTooltip="Clone" matTooltipPosition="right" aria-label="Clone"
           (click)="load()">
       <svg class="animate stroke" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="9" y="9" width="13" height="13" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect>
@@ -106,7 +106,7 @@
       <mat-form-field (click)="$event.stopPropagation();" class="in">
         <mat-label>Stroke Width</mat-label>
         <input matInput type="number" [(ngModel)]="strokeWidth" min="0" max="100" maxlength="3">
-        <button class="noAnimate" *ngIf="strokeWidth > 10" matSuffix mat-icon-button aria-label="Clear" (click)="strokeWidth=0">
+        <button class="noAnimate" *ngIf="strokeWidth > 5" matSuffix mat-icon-button aria-label="Clear" (click)="strokeWidth=0">
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>
@@ -115,6 +115,14 @@
         <mat-label>Brush Width</mat-label>
         <input matInput type="number" [(ngModel)]="brushWidth" min="0" max="100" maxlength="3">
         <button class="noAnimate" *ngIf="brushWidth > 10" matSuffix mat-icon-button aria-label="Clear" (click)="brushWidth=0">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <mat-form-field (click)="$event.stopPropagation()" class="in">
+        <mat-label>Brush Opacity</mat-label>
+        <input matInput type="number" [(ngModel)]="brushOp" min="0" max="1" step="0.001" maxlength="1">
+        <button class="noAnimate" *ngIf="brushOp" matSuffix mat-icon-button aria-label="Clear" (click)="brushOp=1">
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>
@@ -161,47 +169,29 @@
       </svg>
     </button>
 
-    <button mat-mini-fab [ngClass]='selectedButton["brush"] ? "primary_border":"no_border"'
-            (click)='createShape("text")' matTooltip="Text" matTooltipPosition="right" aria-label="Text">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="animate stroke" viewBox="0 0 16 16">
-        <path [attr.fill]="fillColor" d="M12.258 3h-8.51l-.083 2.46h.479c.26-1.544.758-1.783 2.693-1.845l.424-.013v7.827c0 .663-.144.82-1.3.923v.52h4.082v-.52c-1.162-.103-1.306-.26-1.306-.923V3.602l.431.013c1.934.062 2.434.301 2.693 1.846h.479L12.258 3z"/>
-      </svg>
-    </button>
-
-    <button mat-mini-fab [ngClass]='selectedButton["eraser"] ? "primary_border":"no_border"'
-            (click)='setSelection("eraser")' matTooltip="Eraser" matTooltipPosition="right" aria-label="Eraser">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="animate stroke" viewBox="0 0 16 16">
+    <button [matMenuTriggerFor]="menuEr" mat-mini-fab (click)='setSelection("eraser")'
+            matTooltip="Eraser" matTooltipPosition="right" aria-label="Eraser">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+           class="animate stroke" viewBox="0 0 16 16">
         <g>
           <path [attr.fill]="fillColor" d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm2.121.707a1 1 0 0 0-1.414 0L4.16 7.547l5.293 5.293 4.633-4.633a1 1 0 0 0 0-1.414l-3.879-3.879zM8.746 13.547 3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
         </g>
       </svg>
     </button>
 
-<!--    <button mat-mini-fab [ngClass]='selectedButton["eraser"] ? "primary_border":"no_border"'-->
-<!--            (click)='undo()' matTooltip="Eraser" matTooltipPosition="right" aria-label="Undo">-->
-<!--      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser" viewBox="0 0 16 16">-->
-<!--        <path [attr.fill]="fillColor" d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm2.121.707a1 1 0 0 0-1.414 0L4.16 7.547l5.293 5.293 4.633-4.633a1 1 0 0 0 0-1.414l-3.879-3.879zM8.746 13.547 3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>-->
-<!--      </svg>-->
-<!--    </button>-->
+    <mat-menu #menuEr="matMenu" mat-mini-fab matTooltipPosition="before">
 
+      <mat-form-field (click)="$event.stopPropagation()" class="in">
+        <mat-label>Eraser Width</mat-label>
+        <input matInput type="number" [(ngModel)]="eraserWidth" min="0" max="100" maxlength="3">
+        <button class="noAnimate" *ngIf="eraserWidth > 10" matSuffix mat-icon-button aria-label="Clear" (click)="eraserWidth=0">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
 
-    <!--    <button mat-mini-fab (click)='undo()' matTooltip="Undo" matTooltipPosition="right" aria-label="Undo">-->
-    <!--      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">-->
-    <!--        <path-->
-    <!--          d="M 2 7 L 2 16 L 11 16 L 7.3789062 12.378906 C 8.7653195 11.211569 10.5449 10.5 12.5 10.5 C 16.034 10.5 19.024984 12.794656 20.083984 15.972656 L 22.451172 15.183594 C 21.062172 11.012594 17.138 8 12.5 8 C 9.8543339 8 7.4570807 8.9979817 5.6152344 10.615234 L 2 7 z">-->
-    <!--        </path>-->
-    <!--      </svg>-->
-    <!--    </button>-->
+      <button class="noAnimate" mat-menu-item [disabled]="strokeWidth > 100 || brushWidth > 100">PERFECT!</button>
 
-    <!--    <button mat-mini-fab (click)='clearBoard()' matTooltip="Clear" matTooltipPosition="right" aria-label="Clear Canvas">-->
-    <!--      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">-->
-    <!--        <path d="M17,22H7c-1.657,0-3-1.343-3-3V6h16v13C20,20.657,18.657,22,17,22z" opacity=".35"></path>-->
-    <!--        <path d="M16,4H8V3c0-0.552,0.448-1,1-1h6c0.552,0,1,0.448,1,1V4z"></path>-->
-    <!--        <path-->
-    <!--          d="M19,3C18.399,3,5.601,3,5,3C3.895,3,3,3.895,3,5c0,1.105,0.895,2,2,2c0.601,0,13.399,0,14,0c1.105,0,2-0.895,2-2	C21,3.895,20.105,3,19,3z">-->
-    <!--        </path>-->
-    <!--      </svg>-->
-    <!--    </button>-->
+    </mat-menu>
   </div>
 
   <div id="container" [ngClass]="getCursorClass()"></div>
