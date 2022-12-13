@@ -77,6 +77,7 @@ export class DrawingSpaceComponent implements OnInit{
     }
     console.log(this.stage);
     this.reqService.postSave(this.stage, myObj); */
+    console.log(this.stage.toJSON())
     this.testSave = this.stage.toJSON();
   }
   load(){
@@ -89,34 +90,36 @@ export class DrawingSpaceComponent implements OnInit{
       width: window.innerWidth,
       height: window.innerHeight
     });
+
+    this.stage = Konva.Node.create(this.testSave, 'container');
+    console.log('before', this.stage);
     this.layer = new Layer();
     this.transformer = new Transformer();
     this.layer.add(this.transformer);
     this.stage.add(this.layer);
     this.addLineListeners();
 
-    let tempStage = Konva.Node.create(this.testSave, 'container');
-    console.log('before', this.stage);
-    tempStage?.children?.forEach((element: { children: any[]; }) => {
+    this.stage?.children?.forEach(element => {
+      this.layer = element
       element.children?.forEach(shapes => {
         if(!(shapes instanceof Transformer)){
-          let newShape = this.shapeFactory.createShape(<string>shapes.toObject().className);
-          newShape.attrs = shapes.toObject().attrs;
-          this.setShapeEvent(newShape);
+         /*  let newShape = this.shapeFactory.createShape(<string>shapes.toObject().className);
+          newShape.attrs = shapes.toObject().attrs; */
+          this.setShapeEvent(shapes);
           
           this.layer.add(this.transformer);
-          this.transformer.nodes([newShape]);
+          this.transformer.nodes([shapes]);
           
-          this.shapes.push(newShape);
-          this.layer.add(newShape);
-          console.log(newShape);
+          this.shapes.push(shapes);
+          this.layer.add(shapes);
+          /* console.log(shapes); */
           this.stage.add(this.layer);
         }
       });
     });
-    this.layer.batchDraw();
-    this.stage.batchDraw();
-    console.log(this.stage);
+/*     this.layer.batchDraw();
+    this.stage.batchDraw(); */
+   /*  console.log(this.stage); */
     /* this.reqService.getLoad('saved.json').subscribe((data => {
       this.stage.destroy();
       this.stage = new Stage({
