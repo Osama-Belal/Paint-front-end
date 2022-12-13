@@ -5,7 +5,7 @@ export class Dto {
     public x?: number
     public y?: number
     public points?: number[]
-    public closed?: boolean;
+    public closed: boolean = false;
     public scaleX: number = 1
     public scaleY: number = 1
     public name = "shape"
