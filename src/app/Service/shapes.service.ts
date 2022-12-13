@@ -33,14 +33,13 @@ export class ShapesService {
   }
   
   postSave(myStage: Stage, myObj: Object){
-
     this.http.post<any>(`${this.configUrl}/save`, myObj).subscribe((data => {
       console.log("data: ", data);
     }))
   }  
   
   getLoad(fileLocation: string){
-    return this.http.get<Stage>(`${this.configUrl}/load/${fileLocation}`);
+    return this.http.get<Stage>(`${this.configUrl}/load/${fileLocation}`)
   }
   
   putDelete(dto: Dto){

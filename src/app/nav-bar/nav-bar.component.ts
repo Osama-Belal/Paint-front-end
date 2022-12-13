@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {Stage} from "konva/lib/Stage";
 import {Layer} from "konva/lib/Layer";
@@ -27,28 +27,44 @@ export interface Tile {
 })
 
 export class NavBarComponent implements OnInit {
-
+  @Input() stage!:Stage;
+  @Output() stageChange = new EventEmitter<any>();
   helpActive: boolean = false;
 
   constructor(private appComp: AppComponent, private eventService: EventsService) { }
 
   ngOnInit(): void {
+  
   }
 
 
   
   saveAsImage(): void {
-    this.eventService.saveAsImage();
+    this.eventService.saveAsImage(this.stage);
   }
   
   saveXML(){
-    this.eventService.saveXML();
+    let obj ={
+      stage: this.stage,
+      path: 'saved.xml',
+      fileType: 'xml'
+    }
+    this.eventService.saveXML(obj);
   }
   saveJSON(){
-    this.eventService.saveJSON();
+    let obj ={
+      stage: this.stage,
+      path: 'saved.json',
+      fileType: 'json'
+    }
+    console.log(this.stage);
+    this.eventService.saveJSON(obj);
   }
   load(){
-    this.eventService.load();
+    this.eventService.load().subscribe((data => {
+      console.log('data in nav component ', data);
+      this.stageChange.emit(data);
+    }));
   }
   
   toggleGuide(){

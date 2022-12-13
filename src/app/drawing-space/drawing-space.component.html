@@ -1,5 +1,5 @@
 <section class="white_board--wrapper sheet">
-  <app-nav-bar></app-nav-bar>
+  <app-nav-bar [stage]="stage" (stageChange)="load($event)"></app-nav-bar>
 
   <div id="control_container_L" class="white_board--controls left mat-elevation-z8">
     <button class="noAnimate" mat-mini-fab matTooltip="Fill Color" matTooltipPosition="right" aria-label="Ink Color Picker">
@@ -55,22 +55,22 @@
         <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke-linecap="round" stroke-linejoin="round"></path>
       </svg>
     </button>
-    <button mat-mini-fab [ngClass]='selectedButton["eraser"] ? "primary_border":"no_border"'
+    <!-- <button mat-mini-fab [ngClass]='selectedButton["eraser"] ? "primary_border":"no_border"'
           matTooltip="Clone" matTooltipPosition="right" aria-label="Clone"
           (click)="save()">
       <svg class="animate stroke" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="9" y="9" width="13" height="13" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect>
         <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke-linecap="round" stroke-linejoin="round"></path>
       </svg>
-    </button>
-    <button mat-mini-fab [ngClass]='selectedButton["eraser"] ? "primary_border":"no_border"'
+    </button> -->
+   <!--  <button mat-mini-fab [ngClass]='selectedButton["eraser"] ? "primary_border":"no_border"'
           matTooltip="Clone" matTooltipPosition="right" aria-label="Clone"
           (click)="load()">
       <svg class="animate stroke" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="9" y="9" width="13" height="13" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect>
         <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke-linecap="round" stroke-linejoin="round"></path>
       </svg>
-    </button>
+    </button> -->
 
   </div>
 
@@ -158,7 +158,7 @@
     </button>
 
     <button mat-mini-fab [ngClass]='selectedButton["brush"] ? "primary_border":"no_border"'
-            (click)='createShape("triangle")' matTooltip="Triangle" matTooltipPosition="right" aria-label="Triangle">
+            (click)='createShape("line")' matTooltip="Triangle" matTooltipPosition="right" aria-label="Triangle">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="animate stroke" viewBox="0 0 16 16">
         <path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/>
       </svg>

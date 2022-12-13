@@ -22,6 +22,7 @@ import { EventsService } from '../Service/events.service';
 
 export class DrawingSpaceComponent implements OnInit{
   stage!: Stage;
+  stageLoad!: Stage;
   layer!: Layer;
   transformer!: Transformer;
   shapes: any = [];
@@ -36,10 +37,10 @@ export class DrawingSpaceComponent implements OnInit{
   public brushOp = 1;
   public eraserWidth = 10;
 
-  oldContainer: {
+/*   oldContainer: {
     oldX: number,
     oldY: number
-  } = {oldX: 2, oldY: 2}
+  } = {oldX: 2, oldY: 2} */
 
   selectedButton: any = {
     'line': false,
@@ -67,7 +68,6 @@ export class DrawingSpaceComponent implements OnInit{
     this.transformer = new Transformer();
     this.layer.add(this.transformer); 
     this.stage.add(this.layer);
-    this.eventService.stage = this.stage
     this.addLineListeners();
   }
   
@@ -80,8 +80,8 @@ export class DrawingSpaceComponent implements OnInit{
     this.reqService.postSave(this.stage, myObj);
   }
 
-  load(){
-    this.reqService.getLoad('saved.json').subscribe((data => {
+  load(data: any){
+    console.log(data)
       this.stage.destroy()
       this.layer.destroy()
       this.shapes = [];
@@ -117,7 +117,7 @@ export class DrawingSpaceComponent implements OnInit{
         });
       });
 
-    }))
+    
   }
   download(){
     
@@ -131,6 +131,7 @@ export class DrawingSpaceComponent implements OnInit{
   
   
   createShape(shape: string){
+    
     this.Update();
     let newShape = this.shapeFactory.createShape(shape);
     
@@ -228,8 +229,7 @@ export class DrawingSpaceComponent implements OnInit{
   delete(){
     let myShape = this.layer.find('#' + this.selectedID)[0];
     /*  console.log(myShape); */
-    if(myShape == null)
-    return;
+    if(myShape == null) return;
     
     myShape.destroy();
     this.transformer.nodes([]);
@@ -268,6 +268,7 @@ export class DrawingSpaceComponent implements OnInit{
   }
   
   setSelection(type: string) {
+    
     this.clearSelection();
     this.selectedButton[type] = true;
     if (!(type === 'brush')) this.selectedButton['brush'] = false;
@@ -286,6 +287,7 @@ export class DrawingSpaceComponent implements OnInit{
   }
 
   addLineListeners(): void {
+    
     const component = this;
     let freeHand: any;
     let isFreeHand: boolean = false;
@@ -305,10 +307,10 @@ export class DrawingSpaceComponent implements OnInit{
         component.layer.add(freeHand);
         this.hidePalette();
       }
-      // if(e.target.name === 'shape'){
+       if(e.target.name === 'shape'){
         isFreeHand = false;
         this.transformer.nodes([e.target])
-      // }
+       }
     });
 
     this.stage.on('mouseup touchend', (e: any) => {
@@ -328,11 +330,11 @@ export class DrawingSpaceComponent implements OnInit{
     });
 
     //TODO handle with delete
-    this.stage.on('keydown.delete', (e:any) => {
+   /*  this.stage.on('keydown.delete', (e:any) => {
       if(e.evt.deleteKey){
        this.stage.find(this.selectedID)[0].destroy();
       }
-    })
+    }) */
   }
 
   Update() {
@@ -342,6 +344,7 @@ export class DrawingSpaceComponent implements OnInit{
     this.konvaService.brushWidth = this.brushWidth > 100 ? '100' : String(this.brushWidth);
     this.konvaService.brushOp = this.brushOp > 100 ? '100' : String(this.brushOp);
     this.konvaService.eraserWidth = this.eraserWidth > 100 ? '100' : String(this.eraserWidth);
+    
   }
 
   hidePalette(){
@@ -369,6 +372,7 @@ export class DrawingSpaceComponent implements OnInit{
 
   setShapeEvent(newShape : any){
     newShape.on('mouseup', (e: any) => {
+      console.log('triangle ', newShape);
       this.dtoAdapter.putMove(newShape.toObject().attrs, newShape.getClassName());
     });
 
@@ -377,16 +381,14 @@ export class DrawingSpaceComponent implements OnInit{
       console.log('id set: ', this.selectedID);
     });
 
-    newShape.on('transformstart', (e: any) => {
+   /*  newShape.on('transformstart', (e: any) => {
       this.oldContainer.oldX = newShape.toObject().attrs.x;
       this.oldContainer.oldY = newShape.toObject().attrs.y;
-    })
+    }) */
 
     newShape.on('transformend', (e: any) =>{
-      this.dtoAdapter.putResize(newShape.toObject().attrs, newShape.getClassName(), this.oldContainer);
+      this.dtoAdapter.putResize(newShape.toObject().attrs, newShape.getClassName()/* , this.oldContainer */);
     })
-
-    newShape.on('')
 
     newShape.name = 'shape';
     this.transformer.nodes([newShape])

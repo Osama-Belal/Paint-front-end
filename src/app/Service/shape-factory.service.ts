@@ -25,7 +25,7 @@ export class ShapeFactoryService {
           created = this.myKonvaService.rect();
           break;
 
-          case 'triangle':
+          case 'line':
           created = this.myKonvaService.triangle();
           break;
           case 'ellipse':
