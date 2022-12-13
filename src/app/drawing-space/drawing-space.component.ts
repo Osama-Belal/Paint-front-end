@@ -26,6 +26,7 @@ export class DrawingSpaceComponent implements OnInit{
   transformer!: Transformer;
   shapes: any = [];
   selectedID: string = 's';
+  testSave!: string;
 
   fillColor: string = '#1792e0';
   strokeColor: string = '#e1c019';
@@ -62,31 +63,94 @@ export class DrawingSpaceComponent implements OnInit{
     });
     this.layer = new Layer();
     this.transformer = new Transformer();
-    this.layer.add(this.transformer);
+    this.layer.add(this.transformer); 
     this.stage.add(this.layer);
-  /*   this.eventService.stage = this.stage; */
+    /*   this.eventService.stage = this.stage; */
     this.addLineListeners();
   }
-
+  
   save(){
-    let myObj = {
+    /* let myObj = {
       stage: this.stage,
       path: 'saved.json',
       fileType: 'json',
     }
     console.log(this.stage);
-    this.reqService.postSave(this.stage, myObj);
+    this.reqService.postSave(this.stage, myObj); */
+    this.testSave = this.stage.toJSON();
   }
   load(){
-    this.reqService.getLoad('saved.json').subscribe((data => {
-      this.stage = Konva.Node.create(data, 'container');;
+    this.stage.destroy()
+    this.layer.destroy()
+    this.shapes = [];
+    
+    this.stage = new Stage({
+      container: 'container',
+      width: window.innerWidth,
+      height: window.innerHeight
+    });
+    this.layer = new Layer();
+    this.transformer = new Transformer();
+    this.layer.add(this.transformer);
+    this.stage.add(this.layer);
+    this.addLineListeners();
+
+    let tempStage = Konva.Node.create(this.testSave, 'container');
+    console.log('before', this.stage);
+    tempStage?.children?.forEach((element: { children: any[]; }) => {
+      element.children?.forEach(shapes => {
+        if(!(shapes instanceof Transformer)){
+          let newShape = this.shapeFactory.createShape(<string>shapes.toObject().className);
+          newShape.attrs = shapes.toObject().attrs;
+          this.setShapeEvent(newShape);
+          
+          this.layer.add(this.transformer);
+          this.transformer.nodes([newShape]);
+          
+          this.shapes.push(newShape);
+          this.layer.add(newShape);
+          console.log(newShape);
+          this.stage.add(this.layer);
+        }
+      });
+    });
+    this.layer.batchDraw();
+    this.stage.batchDraw();
+    console.log(this.stage);
+    /* this.reqService.getLoad('saved.json').subscribe((data => {
+      this.stage.destroy();
+      this.stage = new Stage({
+        container: 'container',
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+      
+      this.stage = Konva.Node.create(data, 'container');
+      this.addLineListeners();
+      console.log(this.stage);
+
+      /* let i = this.stage.children
+      if(i != null && this.stage.children != null){
+        for( i of this.stage?.children){
+
+        }
+
+      } */
+      /* let blob:any = new Blob([data], { type: 'text/json; charset=utf-8' });
+      const url =window.URL.createObjectURL(data);
       console.log('load called ', this.stage);
-    }));;
+    }));; */
   }
+  download(){
+    
+  }
+
+  
+  
   createShape(shape: string){
     this.setColors();
     let newShape = this.shapeFactory.createShape(shape);
-
+    
     // send post request
     this.dtoAdapter.drawShape(newShape.toObject().attrs, newShape.toObject().className).subscribe(data => {
       newShape.attrs.id = data.id;
@@ -94,31 +158,31 @@ export class DrawingSpaceComponent implements OnInit{
     });
     
     this.setShapeEvent(newShape);
-   
+    
     this.layer.add(this.transformer);
     this.transformer.nodes([newShape]);
-
+    
     this.shapes.push(newShape);
     this.layer.add(newShape);
     this.stage.add(this.layer);
-
+    console.log(this.stage);
   }
-
+  
   undo(){
     this.reqService.undo().subscribe((data => {
       this.setUndo(data);
     }))
   }
-
+  
   redo(){
     this.reqService.redo().subscribe((data => {
       this.setRedo(data);
     }))
   }
-
+  
   setUndo(data: Dto){
     if(data == null) return;
-
+    
     if(data.commandType == 'draw'){
       this.layer.find('#' + data.id)[0].destroy();
       this.transformer.nodes([]);
@@ -126,11 +190,12 @@ export class DrawingSpaceComponent implements OnInit{
       this.stage.find('#'+ data.id)[0]._setAttr('x', data.x);
       this.stage.find('#'+ data.id)[0]._setAttr('y', data.y);
     }else if(data.commandType == 'delete'){
-     /*  console.log('undo Delete' + data); */
-     let myShape = this.dtoAdapter.fromDtoToKonva(data);
-     console.log('delete undo shape', myShape);
-     this.setShapeEvent(myShape);
-    this.layer.add(myShape);
+      /*  console.log('undo Delete' + data); */
+      let myShape = this.dtoAdapter.fromDtoToKonva(data);
+      console.log(data);
+      console.log('delete undo shape', myShape);
+      this.setShapeEvent(myShape);
+      this.layer.add(myShape);
     }else if(data.commandType == 'resize'){
       this.layer.find('#' + data.id)[0]._setAttr('scaleX', data.scaleX)
       this.layer.find('#' + data.id)[0]._setAttr('scaleY', data.scaleY)
@@ -149,7 +214,7 @@ export class DrawingSpaceComponent implements OnInit{
   
   setRedo(data: Dto){
     if(data == null) return;
-
+    
     if(data.commandType == 'draw'){
       let myShape = this.dtoAdapter.fromDtoToKonva(data);
       this.setShapeEvent(myShape);
@@ -177,10 +242,10 @@ export class DrawingSpaceComponent implements OnInit{
   
   delete(){
     let myShape = this.layer.find('#' + this.selectedID)[0];
-   /*  console.log(myShape); */
+    /*  console.log(myShape); */
     if(myShape == null)
-      return;
-
+    return;
+    
     myShape.destroy();
     this.transformer.nodes([]);
     let dto = new Dto();
@@ -188,14 +253,14 @@ export class DrawingSpaceComponent implements OnInit{
     this.reqService.putDelete(dto).subscribe((data => {
     }))
   }
- 
+  
   recolor(){
     let myShape = this.stage.find('#'+ this.selectedID)[0];
     myShape._setAttr('fill', this.fillColor);
     myShape._setAttr('stroke', this.strokeColor);
     this.dtoAdapter.putRecolor(myShape.toObject().attrs, myShape.className);
   }
-
+  
   clone(){
     console.log(this.selectedID);
     this.dtoAdapter.getClone(this.selectedID).subscribe((data => {
@@ -208,14 +273,14 @@ export class DrawingSpaceComponent implements OnInit{
       this.layer.add(myShape)
     })); 
   }
-
+  
   clearSelection(): void {
     this.selectedButton = {
       'brush': false,
       'eraser': false
     }
   }
-
+  
   setSelection(type: string) {
     this.clearSelection();
     this.selectedButton[type] = true;
@@ -336,5 +401,6 @@ export class DrawingSpaceComponent implements OnInit{
     this.transformer.nodes([newShape])
     console.log('setShape', newShape);
   }
+
 
 }

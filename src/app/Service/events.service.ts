@@ -14,29 +14,29 @@ export class EventsService {
    }
 
   saveXML(){
-    let myObj = {
+   /*  let myObj = {
       stage: this.drawingComp.stage,
       path: 'saved.xml',
       fileType: 'xml',
     }
-    this.shapeService.postSave(this.drawingComp.stage, myObj)
+    this.shapeService.postSave(this.drawingComp.stage, myObj) */
   }
   
   saveJSON(){
-    let myObj = {
-      stage: this.drawingComp.stage,
+    /* let myObj = {
+      stage: this.stage,
       path: 'saved.json',
       fileType: 'json',
     }
     console.log(this.drawingComp.stage);
-    this.shapeService.postSave(this.drawingComp.stage, myObj);
+    this.shapeService.postSave(this.drawingComp.stage, myObj); */
   }
 
   load(){
-    this.shapeService.getLoad('saved.json').subscribe((data => {
+   /*  this.shapeService.getLoad('saved.json').subscribe((data => {
       this.drawingComp.stage = <Stage>data;
       console.log('load called ', this.drawingComp.stage);
-    }));;
+    }));; */
   }
 
   saveAsImage(): void {

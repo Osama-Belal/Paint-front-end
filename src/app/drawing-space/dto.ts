@@ -10,8 +10,9 @@ export class Dto {
     public radius?: number
     public radiusX?: number
     public radiusY?: number
-    public stroke?: string
-    public strokeWidth?: number;
+    public stroke: string = 'yellow'
+    public strokeWidth: number = 5;
+    public rotation: number = 0
     public fill?: string
     public stage?: Stage
     public className?: string
