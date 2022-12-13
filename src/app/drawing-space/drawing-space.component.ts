@@ -141,6 +141,7 @@ export class DrawingSpaceComponent implements OnInit{
   setSelection(type: string) {
     this.clearSelection();
     this.selectedButton[type] = true;
+    console.log(this.selectedButton)
   }
 
   clearSelection(){
