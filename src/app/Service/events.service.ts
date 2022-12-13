@@ -10,38 +10,38 @@ import { ShapesService } from './shapes.service';
 export class EventsService {
   stage!:Stage;
 
-  constructor(private shapeService: ShapesService, private drawingComp: DrawingSpaceComponent) {
+  constructor(private shapeService: ShapesService) {
    }
 
   saveXML(){
-    let myObj = {
+   /*  let myObj = {
       stage: this.drawingComp.stage,
       path: 'saved.xml',
       fileType: 'xml',
     }
-    this.shapeService.postSave(this.drawingComp.stage, myObj)
+    this.shapeService.postSave(this.drawingComp.stage, myObj) */
   }
   
   saveJSON(){
-    let myObj = {
-      stage: this.drawingComp.stage,
+    /* let myObj = {
+      stage: this.stage,
       path: 'saved.json',
       fileType: 'json',
     }
     console.log(this.drawingComp.stage);
-    this.shapeService.postSave(this.drawingComp.stage, myObj);
+    this.shapeService.postSave(this.drawingComp.stage, myObj); */
   }
 
   load(){
-    this.shapeService.getLoad('saved.json').subscribe((data => {
+   /*  this.shapeService.getLoad('saved.json').subscribe((data => {
       this.drawingComp.stage = <Stage>data;
       console.log('load called ', this.drawingComp.stage);
-    }));;
+    }));; */
   }
 
   saveAsImage(): void {
     console.log('saveAsImage called')
-    const dataUrl: string = this.drawingComp.stage.toDataURL({
+    const dataUrl: string = this.stage.toDataURL({
       mimeType: 'image/png',
       quality: 1,
       pixelRatio: 1

@@ -1,8 +1,7 @@
 # TODO 
-- redo x and y set ya 7omaar resize
-- clone shape with different x and y
-- after load transformer doesnt load.
--delete clone in adapter
+- redo x and y set ya 7omaar resize -> backend
+- change save and load location
+- segment line
 ### Save and load
 - dialog box for file name and path location
 - Load a certain file from path

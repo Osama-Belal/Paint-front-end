@@ -20,6 +20,11 @@ export class ShapeFactoryService {
           case 'rect':
           created = this.myKonvaService.rect();
           break;
+
+          case 'rectangle':
+          created = this.myKonvaService.rect();
+          break;
+
           case 'triangle':
           created = this.myKonvaService.triangle();
           break;
@@ -27,12 +32,13 @@ export class ShapeFactoryService {
           created = this.myKonvaService.ellipse();
           break;
           case 'square':
+            console.log('square created');
           created = this.myKonvaService.square();
           break;
           case 'text': created = this.myKonvaService.text();
           break;
           default:
-            console.log('ERROR shape not defined');
+            console.log('ERROR shape not defined ', shape);
         }
         
       return created;

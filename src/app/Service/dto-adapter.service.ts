@@ -58,16 +58,5 @@ export class DtoAdapterService {
     return myShape;
   }
 
-  getClone(id: string){
-    let dto: any;
-    return this.myService.getClone(id)
-    /* .subscribe((data => {
-      dto = data;
-      let myShape = this.shapeFactory.createShape(<string>dto.className);
-      myShape.attrs = dto;
-      myShape.className = <string>dto.className;
-    })); 
-    return myShape; */
-  }
   
 }
