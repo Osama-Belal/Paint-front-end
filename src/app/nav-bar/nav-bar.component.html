@@ -11,7 +11,7 @@
          mat-mini-fab matTooltip="Save File" matTooltipPosition="below">
       <path d="M18,9h-2c-0.6,0-1,0.4-1,1s0.4,1,1,1h2c0.6,0,1,0.4,1,1v7c0,0.6-0.4,1-1,1H6c-0.6,0-1-0.4-1-1v-7c0-0.6,0.4-1,1-1h2c0.6,0,1-0.4,1-1S8.6,9,8,9H6c-1.7,0-3,1.3-3,3v7c0,1.7,1.3,3,3,3h12c1.7,0,3-1.3,3-3v-7C21,10.3,19.7,9,18,9z M8.3,14.7l3,3c0.2,0.2,0.4,0.3,0.7,0.3c0.3,0,0.5-0.1,0.7-0.3l3-3c0.4-0.4,0.4-1,0-1.4c-0.4-0.4-1-0.4-1.4,0L13,14.6V3c0-0.6-0.4-1-1-1s-1,0.4-1,1v11.6l-1.3-1.3c-0.4-0.4-1-0.4-1.4,0C7.9,13.7,7.9,14.3,8.3,14.7z"></path>
     </svg>
-    <input type="file" class="file-upload" onchange="console.log(event.target.files)">
+   <!--  <input type="file" class="file-upload" onchange="console.log(event.target.files)"> -->
     <svg (click)="load()" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
          class="button press" viewBox="0 0 23 27"
          mat-mini-fab matTooltip="Upload File" matTooltipPosition="below">
@@ -36,7 +36,7 @@
 
   </div>
 
-  <div id="help">
+<!--   <div id="help">
     <div>
       <h2>Paint Guide</h2>
       <p>
@@ -52,8 +52,45 @@
       </p>
       <button (click)="hide()">Close</button>
     </div>
-  </div>
+  </div> -->
+  <div id="help">
+    <div class="slideshow-container">
+      <h2>Paint Guide</h2>
+      <h1>Draw Shapes</h1>
+      <img src="../../assets/SnapShot/Draw/Screenshot (60).png" width="600px" height="300px">
+      <h1>Recolor</h1>
+      <img src="../../assets/SnapShot/Recolor/Screenshot (61).png" width="600px" height="300px">
+      <img src="../../assets/SnapShot/Recolor/Screenshot (62).png" width="600px" height="300px">
+      <img src="../../assets/SnapShot/Recolor/Screenshot (63).png" width="600px" height="300px">
+      <img src="../../assets/SnapShot/Recolor/Screenshot (64).png" width="600px" height="300px">
+      <h1>To show Menu</h1>
+      <img src="../../assets/SnapShot/save load/Screenshot (66).png"width="600px" height="300px">
+      <h1>Save as image</h1>
+      <img src="../../assets/SnapShot/save load/Screenshot (68).png"width="600px" height="300px">
+      <h1>Save current drawings</h1>
+      <img src="../../assets/SnapShot/save load/Screenshot (69).png"width="600px" height="300px">
+      <img src="../../assets/SnapShot/save load/Screenshot (77).png"width="600px" height="300px">
+      <h1>upload saved data</h1>
+      <img src="../../assets/SnapShot/save load/Screenshot (70).png"width="600px" height="300px">
 
+      <h1>Resizing brush & stroke width</h1>
+      <img src="../../assets/SnapShot/brush/Screenshot (71).png" width="600px" height="300px">
+      <img src="../../assets/SnapShot/brush/Screenshot (71).png" width="600px" height="300px">
+
+      <h1>How to delete</h1>
+      <img src="../../assets/SnapShot/delete/Screenshot (78).png"width="600px" height="300px">
+      <img src="../../assets/SnapShot/delete/Screenshot (79).png"width="600px" height="300px">
+      <h1>How to clone shapes</h1>
+      <img src="../../assets/SnapShot/delete/Screenshot (78).png" width="600px" height="300px">
+      <img src="../../assets/SnapShot/delete/Screenshot (80).png" width="600px" height="300px">
+      <h1>How to undo</h1>
+      <img src="../../assets/SnapShot/undo & redo/Screenshot (74).png" width="600px" height="300px">
+      <h1>How to redo</h1>
+      <img src="../../assets/SnapShot/undo & redo/Screenshot (76).png" width="600px" height="300px">
+
+      <button (click)="hide()">Close</button>
+    </div>
+  </div>
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
     <defs>
       <filter id="goo">

@@ -33,9 +33,15 @@ export class ShapesService {
   }
   
   postSave(myStage: Stage, myObj: Object){
-    this.http.post<any>(`${this.configUrl}/save`, myObj).subscribe((data => {
-      console.log("data: ", data);
-    }))
+    this.http.post<any>(`${this.configUrl}/save`, myObj).subscribe((data : any) => {
+      let blob:any = new Blob([data], { type: 'text/json; charset=utf-8' });
+      console.log('saved data: ', blob)
+      var downloadURL = window.URL.createObjectURL(data);
+      var link = document.createElement('a');
+      link.href = downloadURL;
+      link.download = "help.pdf";
+      link.click();
+    })
   }  
   
   getLoad(fileLocation: string){

@@ -66,6 +66,7 @@ export class DrawingSpaceComponent implements OnInit{
     });
     this.layer = new Layer();
     this.transformer = new Transformer();
+
     this.layer.add(this.transformer); 
     this.stage.add(this.layer);
     this.addLineListeners();
@@ -139,6 +140,8 @@ export class DrawingSpaceComponent implements OnInit{
     this.dtoAdapter.drawShape(newShape.toObject().attrs, newShape.toObject().className).subscribe(data => {
       newShape.attrs.id = data.id;
       this.selectedID = <string>data.id;
+      if(newShape.className == 'Triangle' && newShape.closed === true)
+        newShape.className = 'Line';
     });
 
     this.setShapeEvent(newShape);
