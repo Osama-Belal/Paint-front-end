@@ -64,6 +64,9 @@ button:hover,
     10px 0 80px #0ff !important;
   transform: translate3d(0, -.6em , 0);
 }
+.right button.active svg{
+  stroke: #333;
+}
 
 button.noAnimate:hover{
   box-shadow: none !important;

@@ -13,21 +13,35 @@ export class EventsService {
   constructor(private shapeService: ShapesService) {
    }
 
-  saveXML(obj: any){
-    this.shapeService.postSave(obj.stage, obj)
+  saveXML(){
+   /*  let myObj = {
+      stage: this.drawingComp.stage,
+      path: 'saved.xml',
+      fileType: 'xml',
+    }
+    this.shapeService.postSave(this.drawingComp.stage, myObj) */
   }
   
-  saveJSON(obj: any){
-    this.shapeService.postSave(obj.stage, obj);
+  saveJSON(){
+    /* let myObj = {
+      stage: this.stage,
+      path: 'saved.json',
+      fileType: 'json',
+    }
+    console.log(this.drawingComp.stage);
+    this.shapeService.postSave(this.drawingComp.stage, myObj); */
   }
 
   load(){
-    return this.shapeService.getLoad('saved.json')
+   /*  this.shapeService.getLoad('saved.json').subscribe((data => {
+      this.drawingComp.stage = <Stage>data;
+      console.log('load called ', this.drawingComp.stage);
+    }));; */
   }
 
-  saveAsImage(stage: Stage): void {
+  saveAsImage(): void {
     console.log('saveAsImage called')
-    const dataUrl: string = stage.toDataURL({
+    const dataUrl: string = this.stage.toDataURL({
       mimeType: 'image/png',
       quality: 1,
       pixelRatio: 1

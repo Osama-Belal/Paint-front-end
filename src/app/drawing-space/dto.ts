@@ -4,7 +4,6 @@ export class Dto {
     public id?:  string
     public x?: number
     public y?: number
-    public points?: number[]
     public scaleX: number = 1
     public scaleY: number = 1
     public name = "shape"

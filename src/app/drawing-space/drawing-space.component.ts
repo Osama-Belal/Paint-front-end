@@ -43,6 +43,7 @@ export class DrawingSpaceComponent implements OnInit{
     oldY: number
   } = {oldX: 2, oldY: 2}
 
+  activeShape!: string
   selectedButton: any = {
     'circle': false,
     'rect': false,
@@ -141,7 +142,7 @@ export class DrawingSpaceComponent implements OnInit{
   setSelection(type: string) {
     this.clearSelection();
     this.selectedButton[type] = true;
-    console.log(this.selectedButton)
+    this.activeShape = (type == 'brush' || type == 'erase' ? '' : type);
   }
 
   clearSelection(){
@@ -291,6 +292,7 @@ export class DrawingSpaceComponent implements OnInit{
     const component = this;
     let freeHand: any;
     let isFreeHand: boolean = false;
+    let isCreateShape: boolean = false;
 
     this.stage.on('mousedown touchstart', (e: any) => {
       let position = component.stage.getPointerPosition();
@@ -300,26 +302,27 @@ export class DrawingSpaceComponent implements OnInit{
 
       if(e.target.name === 'shape'){
         isFreeHand = false;
+        isCreateShape = false;
         this.transformer.nodes([e.target])
       }
 
       if(e.target === this.stage) {
         this.transformer.nodes([])
 
+        isCreateShape = true;
         this.konvaService.x1 = this.x1 = position?.x
         this.konvaService.y1 = this.y1 = position?.y
-        console.log("started at x: " + this.x1 + "and y: " + this.y1)
-
-        this.Update();
+        // console.log("started at x: " + this.x1 + "and y: " + this.y1)
 
         // Free Hand Concerns
-        // Return if it's false to brush or eraser
-        if(!isFreeHand) return;
-
-        freeHand = component.selectedButton['eraser'] ?
-          component.konvaService.erase(position) : component.konvaService.brush(position);
-        component.shapes.push(freeHand);
-        component.layer.add(freeHand);
+        // if it's ok to brush or erase
+        this.Update();
+        if(isFreeHand) {
+          freeHand = component.selectedButton['eraser'] ?
+            component.konvaService.erase(position) : component.konvaService.brush(position);
+          component.shapes.push(freeHand);
+          component.layer.add(freeHand);
+        }
       }
     });
 
@@ -338,9 +341,10 @@ export class DrawingSpaceComponent implements OnInit{
       this.konvaService.x2 = this.x2 = position?.x
       this.konvaService.y2 = this.y2 = position?.y
 
-      // TODO creating shape when mouseup
+      if(!this.selectedButton['brush'] && !this.selectedButton['eraser'] && isCreateShape)
+        this.createShape(this.activeShape)
 
-      console.log("ended at x: " + this.x2 + "and y: " + this.y2)
+      // console.log("ended at x: " + this.x2 + "and y: " + this.y2)
       isFreeHand = false;
       this.showPalette();
     });
@@ -388,7 +392,7 @@ export class DrawingSpaceComponent implements OnInit{
     })
 
     newShape.on('transformend', (e: any) =>{
-      this.dtoAdapter.putResize(newShape.toObject().attrs, newShape.getClassName());
+      this.dtoAdapter.putResize(newShape.toObject().attrs, newShape.getClassName(), this.oldContainer);
     })
 
     newShape.on('')
