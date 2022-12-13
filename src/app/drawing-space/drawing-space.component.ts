@@ -51,7 +51,7 @@ export class DrawingSpaceComponent implements OnInit{
     private reqService: ShapesService,
     private dtoAdapter: DtoAdapterService,
     private shapeFactory: ShapeFactoryService,
-   /*  private eventService: EventsService */
+    private eventService: EventsService
   ) { }
 
   ngOnInit(): void {
@@ -65,6 +65,7 @@ export class DrawingSpaceComponent implements OnInit{
     this.transformer = new Transformer();
     this.layer.add(this.transformer); 
     this.stage.add(this.layer);
+    this.eventService.stage = this.stage
     this.addLineListeners();
   }
   
@@ -180,6 +181,7 @@ export class DrawingSpaceComponent implements OnInit{
       this.layer.find('#' + data.id)[0]._setAttr('scaleY', data.scaleY)
       this.layer.find('#' + data.id)[0]._setAttr('x', data.x)
       this.layer.find('#' + data.id)[0]._setAttr('y', data.y)
+      this.layer.find('#' + data.id)[0]._setAttr('rotation', data.rotation)
       /* console.log(this.layer.find('#' + data.id)[0]) */
     }else if(data.commandType == 'recolor'){
       this.layer.find('#' + data.id)[0]._setAttr('fill', data.fill);
@@ -209,6 +211,7 @@ export class DrawingSpaceComponent implements OnInit{
       this.layer.find('#' + data.id)[0]._setAttr('scaleY', data.scaleY)
       this.layer.find('#' + data.id)[0]._setAttr('x', data.x)
       this.layer.find('#' + data.id)[0]._setAttr('y', data.y)
+      this.layer.find('#' + data.id)[0]._setAttr('rotation', data.rotation)
     }else if(data.commandType == 'recolor'){
       this.layer.find('#' + data.id)[0]._setAttr('fill', data.fill);
       this.layer.find('#' + data.id)[0]._setAttr('stroke', data.stroke);
@@ -237,12 +240,13 @@ export class DrawingSpaceComponent implements OnInit{
     let myShape = this.stage.find('#'+ this.selectedID)[0];
     myShape._setAttr('fill', this.fillColor);
     myShape._setAttr('stroke', this.strokeColor);
+    myShape._setAttr('strokeWidth', this.strokeWidth);
     this.dtoAdapter.putRecolor(myShape.toObject().attrs, myShape.className);
   }
   
   clone(){
     console.log(this.selectedID);
-    this.dtoAdapter.getClone(this.selectedID).subscribe((data => {
+    this.reqService.getClone(this.selectedID).subscribe((data => {
       let dto:Dto = data;
       let myShape = this.shapeFactory.createShape(<string>dto.className);
       myShape.attrs = dto;
@@ -376,6 +380,9 @@ export class DrawingSpaceComponent implements OnInit{
     newShape.on('transformend', (e: any) =>{
       this.dtoAdapter.putResize(newShape.toObject().attrs, newShape.getClassName(), this.oldContainer);
     })
+
+    newShape.on('')
+
     newShape.name = 'shape';
     this.transformer.nodes([newShape])
     console.log('setShape', newShape);

@@ -10,7 +10,7 @@ import { ShapesService } from './shapes.service';
 export class EventsService {
   stage!:Stage;
 
-  constructor(private shapeService: ShapesService, private drawingComp: DrawingSpaceComponent) {
+  constructor(private shapeService: ShapesService) {
    }
 
   saveXML(){
@@ -41,7 +41,7 @@ export class EventsService {
 
   saveAsImage(): void {
     console.log('saveAsImage called')
-    const dataUrl: string = this.drawingComp.stage.toDataURL({
+    const dataUrl: string = this.stage.toDataURL({
       mimeType: 'image/png',
       quality: 1,
       pixelRatio: 1
