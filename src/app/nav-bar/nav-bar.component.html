@@ -33,13 +33,13 @@
     </mat-menu>
 
     <mat-menu #menuLoad="matMenu" mat-mini-fab matTooltipPosition="below">
-      <a mat-menu-item (click)="saveXML()">Load as XML</a>
-      <a mat-menu-item (click)="saveJSON()">Load as JSon</a>
+      <a mat-menu-item (click)="loadXML()">Load as XML</a>
+      <a mat-menu-item (click)="loadJSON()">Load as JSon</a>
     </mat-menu>
 
   </div>
 
-  <div id="help">
+<!--   <div id="help">
     <div>
       <h2>Paint Guide</h2>
       <p>
@@ -55,8 +55,45 @@
       </p>
       <button (click)="hide()">Close</button>
     </div>
-  </div>
+  </div> -->
+  <div id="help">
+    <div class="slideshow-container">
+      <h2>Paint Guide</h2>
+      <h1>Draw Shapes</h1>
+      <img src="../../assets/SnapShot/Draw/Screenshot (60).png" width="600px" height="300px">
+      <h1>Recolor</h1>
+      <img src="../../assets/SnapShot/Recolor/Screenshot (61).png" width="600px" height="300px">
+      <img src="../../assets/SnapShot/Recolor/Screenshot (62).png" width="600px" height="300px">
+      <img src="../../assets/SnapShot/Recolor/Screenshot (63).png" width="600px" height="300px">
+      <img src="../../assets/SnapShot/Recolor/Screenshot (64).png" width="600px" height="300px">
+      <h1>To show Menu</h1>
+      <img src="../../assets/SnapShot/save load/Screenshot (66).png"width="600px" height="300px">
+      <h1>Save as image</h1>
+      <img src="../../assets/SnapShot/save load/Screenshot (68).png"width="600px" height="300px">
+      <h1>Save current drawings</h1>
+      <img src="../../assets/SnapShot/save load/Screenshot (69).png"width="600px" height="300px">
+      <img src="../../assets/SnapShot/save load/Screenshot (77).png"width="600px" height="300px">
+      <h1>upload saved data</h1>
+      <img src="../../assets/SnapShot/save load/Screenshot (70).png"width="600px" height="300px">
 
+      <h1>Resizing brush & stroke width</h1>
+      <img src="../../assets/SnapShot/brush/Screenshot (71).png" width="600px" height="300px">
+      <img src="../../assets/SnapShot/brush/Screenshot (71).png" width="600px" height="300px">
+
+      <h1>How to delete</h1>
+      <img src="../../assets/SnapShot/delete/Screenshot (78).png"width="600px" height="300px">
+      <img src="../../assets/SnapShot/delete/Screenshot (79).png"width="600px" height="300px">
+      <h1>How to clone shapes</h1>
+      <img src="../../assets/SnapShot/delete/Screenshot (78).png" width="600px" height="300px">
+      <img src="../../assets/SnapShot/delete/Screenshot (80).png" width="600px" height="300px">
+      <h1>How to undo</h1>
+      <img src="../../assets/SnapShot/undo & redo/Screenshot (74).png" width="600px" height="300px">
+      <h1>How to redo</h1>
+      <img src="../../assets/SnapShot/undo & redo/Screenshot (76).png" width="600px" height="300px">
+
+      <button (click)="hide()">Close</button>
+    </div>
+  </div>
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
     <defs>
       <filter id="goo">

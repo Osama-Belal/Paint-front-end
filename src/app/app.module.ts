@@ -24,11 +24,11 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { ColorPickerComponent } from '@syncfusion/ej2-angular-inputs';
 
 import { enableRipple } from '@syncfusion/ej2-base';
-import { NavBarComponent } from './nav-bar/nav-bar.component';
 import {ReactiveFormsModule} from "@angular/forms";
 // import { ColorPickerModule } from 'ngx-color-picker';
 import { ColorPickerModule } from '@syncfusion/ej2-angular-inputs';
 import { SideBarComponent } from './side-bar/side-bar.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 
 enableRipple(true);
@@ -66,7 +66,7 @@ enableRipple(true);
     MatSlideToggleModule,
     FormsModule
   ],
-  providers: [KonvaService, DrawingSpaceComponent],
+  providers: [KonvaService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

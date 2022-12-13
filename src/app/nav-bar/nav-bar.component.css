@@ -401,6 +401,9 @@
   transition: .3s ease-in-out;
 }
 
-#help h2{
-
+#help .slideshow-container{
+  overflow: auto;
+  background-color: #ec2525;
+  width: 1000px;
+  height: 500px;
 }

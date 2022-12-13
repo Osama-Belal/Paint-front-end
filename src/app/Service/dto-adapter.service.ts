@@ -19,8 +19,11 @@ export class DtoAdapterService {
       let dto:Dto = new Dto();
       dto = shape;
       dto.className = className;
+      if(dto.className == 'Line' && dto.closed == true)
+        dto.className = 'Triangle'
       dto.commandType = 'draw';
-      return this.myService.drawShape(dto);
+      let myShape = this.myService.drawShape(dto); 
+      return myShape
   }
 
   putMove(shape: any, className:string){
@@ -54,6 +57,8 @@ export class DtoAdapterService {
     console.log(myShape);
     myShape.attrs = dto;
     myShape.className = dto.className;
+    if(myShape.className == 'Triangle')
+      myShape.className = 'Line'
     myShape.name = 'shape';
     return myShape;
   }
