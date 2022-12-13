@@ -20,14 +20,14 @@ export class ShapeFactoryService {
           case 'rect':
           created = this.myKonvaService.rect();
           break;
-          case 'rectangle':
+          case 'rectangle': // square
           created = this.myKonvaService.rect();
           break;
           case 'triangle':
             created = this.myKonvaService.triangle();
             break;
           case 'line':
-          created = this.myKonvaService.triangle();
+          created = this.myKonvaService.triangle(); // simple triangle
           break;
           case 'ellipse':
           created = this.myKonvaService.ellipse();

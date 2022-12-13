@@ -253,10 +253,16 @@ export class DrawingSpaceComponent implements OnInit{
   clone(){
     console.log(this.selectedID);
     this.reqService.getClone(this.selectedID).subscribe((data => {
+      console.log(data);
       let dto:Dto = data;
       let myShape = this.shapeFactory.createShape(<string>dto.className);
       myShape.attrs = dto;
       myShape.className = <string>dto.className;
+      if(myShape.className == 'Triangle'){
+        myShape.className = 'Line'
+        /* myShape.attrs.closed = true; */
+      }
+
       this.selectedID = <string>data.id;
       this.setShapeEvent(myShape);
       this.layer.add(myShape)
@@ -375,7 +381,7 @@ export class DrawingSpaceComponent implements OnInit{
 
   setShapeEvent(newShape : any){
     newShape.on('mouseup', (e: any) => {
-      console.log('triangle ', newShape);
+      console.log('mouse up ', newShape);
       this.dtoAdapter.putMove(newShape.toObject().attrs, newShape.getClassName());
     });
 
