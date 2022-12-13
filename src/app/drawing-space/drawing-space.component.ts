@@ -26,15 +26,17 @@ export class DrawingSpaceComponent implements OnInit{
   transformer!: Transformer;
   shapes: any = [];
   selectedID: string = 's';
-  testSave!: string;
 
   fillColor: string = '#1792e0';
   strokeColor: string = '#e1c019';
 
-  public strokeWidth = 5;
-  public brushWidth = 10;
-  public brushOp = 1;
-  public eraserWidth = 10;
+  strokeWidth = 5;
+  brushWidth = 10;
+  brushOp = 1;
+  eraserWidth = 10;
+
+  x1: any; y1: any
+  x2: any; y2: any
 
   oldContainer: {
     oldX: number,
@@ -42,10 +44,15 @@ export class DrawingSpaceComponent implements OnInit{
   } = {oldX: 2, oldY: 2}
 
   selectedButton: any = {
+    'circle': false,
+    'rect': false,
+    'square': false,
+    'triangle': false,
+    'ellipse': false,
     'line': false,
+    'brush': false,
     'eraser': false
   }
-  eraser: boolean = false;
 
   constructor(
     private _bottomSheet: MatBottomSheet,
@@ -65,12 +72,13 @@ export class DrawingSpaceComponent implements OnInit{
     });
     this.layer = new Layer();
     this.transformer = new Transformer();
-    this.layer.add(this.transformer); 
+    this.layer.add(this.transformer);
     this.stage.add(this.layer);
     this.eventService.stage = this.stage
     this.addLineListeners();
   }
-  
+
+  // ----------------------------------------- Main Actions -----------------------------
   save(){
     let myObj = {
       stage: this.stage,
@@ -85,13 +93,13 @@ export class DrawingSpaceComponent implements OnInit{
       this.stage.destroy()
       this.layer.destroy()
       this.shapes = [];
-      
+
       this.stage = new Stage({
         container: 'container',
         width: window.innerWidth,
         height: window.innerHeight
       });
-  
+
       this.stage = Konva.Node.create(data, 'container');
       console.log('before', this.stage);
       this.layer = new Layer();
@@ -99,16 +107,16 @@ export class DrawingSpaceComponent implements OnInit{
       this.layer.add(this.transformer);
       this.stage.add(this.layer);
       this.addLineListeners();
-  
+
       this.stage?.children?.forEach(element => {
         this.layer = element
         element.children?.forEach(shapes => {
           if(!(shapes instanceof Transformer)){
             this.setShapeEvent(shapes);
-            
+
             this.layer.add(this.transformer);
             this.transformer.nodes([shapes]);
-            
+
             this.shapes.push(shapes);
             this.layer.add(shapes);
             /* console.log(shapes); */
@@ -119,21 +127,39 @@ export class DrawingSpaceComponent implements OnInit{
 
     }))
   }
+
   download(){
-    
+
           /* let blob:any = new Blob([data], { type: 'text/json; charset=utf-8' });
           const url =window.URL.createObjectURL(data);
           console.log('load called ', this.stage);
         }));; */
-    
+
   }
 
-  
-  
+  // ----------------------------------------- Shapes Actions -----------------------------
+  setSelection(type: string) {
+    this.clearSelection();
+    this.selectedButton[type] = true;
+  }
+
+  clearSelection(){
+    this.selectedButton = {
+      'circle': false,
+      'rect': false,
+      'square': false,
+      'triangle': false,
+      'ellipse': false,
+      'line': false,
+      'brush': false,
+      'eraser': false
+    }
+  }
+
   createShape(shape: string){
     this.Update();
     let newShape = this.shapeFactory.createShape(shape);
-    
+
     // send post request
     this.dtoAdapter.drawShape(newShape.toObject().attrs, newShape.toObject().className).subscribe(data => {
       newShape.attrs.id = data.id;
@@ -141,31 +167,31 @@ export class DrawingSpaceComponent implements OnInit{
     });
 
     this.setShapeEvent(newShape);
-    
+
     this.layer.add(this.transformer);
     this.transformer.nodes([newShape]);
-    
+
     this.shapes.push(newShape);
     this.layer.add(newShape);
     this.stage.add(this.layer);
     console.log(this.stage);
   }
-  
+
   undo(){
     this.reqService.undo().subscribe((data => {
       this.setUndo(data);
     }))
   }
-  
+
   redo(){
     this.reqService.redo().subscribe((data => {
       this.setRedo(data);
     }))
   }
-  
+
   setUndo(data: Dto){
     if(data == null) return;
-    
+
     if(data.commandType == 'draw'){
       this.layer.find('#' + data.id)[0].destroy();
       this.transformer.nodes([]);
@@ -198,7 +224,7 @@ export class DrawingSpaceComponent implements OnInit{
 
   setRedo(data: Dto){
     if(data == null) return;
-    
+
     if(data.commandType == 'draw'){
       let myShape = this.dtoAdapter.fromDtoToKonva(data);
       this.setShapeEvent(myShape);
@@ -225,20 +251,20 @@ export class DrawingSpaceComponent implements OnInit{
     }
   }
 
+  @HostListener('keydown.delete')
   delete(){
     let myShape = this.layer.find('#' + this.selectedID)[0];
-    /*  console.log(myShape); */
+    console.log("delete called");
     if(myShape == null)
     return;
-    
+
     myShape.destroy();
     this.transformer.nodes([]);
     let dto = new Dto();
     dto.id = this.selectedID;
-    this.reqService.putDelete(dto).subscribe((data => {
-    }))
+    this.reqService.putDelete(dto).subscribe((data => {}))
   }
-  
+
   recolor(){
     let myShape = this.stage.find('#'+ this.selectedID)[0];
     myShape._setAttr('fill', this.fillColor);
@@ -246,7 +272,7 @@ export class DrawingSpaceComponent implements OnInit{
     myShape._setAttr('strokeWidth', this.strokeWidth);
     this.dtoAdapter.putRecolor(myShape.toObject().attrs, myShape.className);
   }
-  
+
   clone(){
     console.log(this.selectedID);
     this.reqService.getClone(this.selectedID).subscribe((data => {
@@ -259,31 +285,6 @@ export class DrawingSpaceComponent implements OnInit{
       this.layer.add(myShape)
     }));
   }
-  
-  clearSelection(): void {
-    this.selectedButton = {
-      'brush': false,
-      'eraser': false
-    }
-  }
-  
-  setSelection(type: string) {
-    this.clearSelection();
-    this.selectedButton[type] = true;
-    if (!(type === 'brush')) this.selectedButton['brush'] = false;
-    switch (type) {
-      case "eraser":
-        this.eraser = true;
-        break;
-      case "brush":
-        this.eraser = false;
-        this.selectedButton['brush'] = true;
-        break;
-      default:
-        this.eraser = false;
-        break;
-    }
-  }
 
   addLineListeners(): void {
     const component = this;
@@ -291,48 +292,58 @@ export class DrawingSpaceComponent implements OnInit{
     let isFreeHand: boolean = false;
 
     this.stage.on('mousedown touchstart', (e: any) => {
-      let pos = component.stage.getPointerPosition();
+      let position = component.stage.getPointerPosition();
+      isFreeHand = this.selectedButton['brush']
+                   || this.selectedButton['eraser'];
       this.hidePalette();
+
+      if(e.target.name === 'shape'){
+        isFreeHand = false;
+        this.transformer.nodes([e.target])
+      }
 
       if(e.target === this.stage) {
         this.transformer.nodes([])
 
-        isFreeHand = true
+        this.konvaService.x1 = this.x1 = position?.x
+        this.konvaService.y1 = this.y1 = position?.y
+        console.log("started at x: " + this.x1 + "and y: " + this.y1)
+
         this.Update();
-        freeHand = component.eraser ? component.konvaService.erase(pos) :
-          component.konvaService.brush(pos);
+
+        // Free Hand Concerns
+        // Return if it's false to brush or eraser
+        if(!isFreeHand) return;
+
+        freeHand = component.selectedButton['eraser'] ?
+          component.konvaService.erase(position) : component.konvaService.brush(position);
         component.shapes.push(freeHand);
         component.layer.add(freeHand);
-        this.hidePalette();
       }
-      // if(e.target.name === 'shape'){
-        isFreeHand = false;
-        this.transformer.nodes([e.target])
-      // }
+    });
+
+    this.stage.on('mousemove touchmove',  (e:any) => {
+      if (isFreeHand) {
+        e.evt.preventDefault();
+        const position: any = component.stage.getPointerPosition();
+        const newPoints = freeHand.points().concat([position.x, position.y]);
+        freeHand.points(newPoints);
+        component.layer.batchDraw();
+      }
     });
 
     this.stage.on('mouseup touchend', (e: any) => {
+      let position = this.stage.getPointerPosition()
+      this.konvaService.x2 = this.x2 = position?.x
+      this.konvaService.y2 = this.y2 = position?.y
+
+      // TODO creating shape when mouseup
+
+      console.log("ended at x: " + this.x2 + "and y: " + this.y2)
       isFreeHand = false;
       this.showPalette();
     });
 
-    this.stage.on('mousemove touchmove',  (e:any) => {
-      if (!isFreeHand) {
-        return;
-      }
-      e.evt.preventDefault();
-      const position: any = component.stage.getPointerPosition();
-      const newPoints = freeHand.points().concat([position.x, position.y]);
-      freeHand.points(newPoints);
-      component.layer.batchDraw();
-    });
-
-    //TODO handle with delete
-    this.stage.on('keydown.delete', (e:any) => {
-      if(e.evt.deleteKey){
-       this.stage.find(this.selectedID)[0].destroy();
-      }
-    })
   }
 
   Update() {
@@ -351,20 +362,13 @@ export class DrawingSpaceComponent implements OnInit{
     control_container_R?.classList.add('hide_palette');
     control_container_L?.classList.add('hide_palette');
   }
+
   showPalette(){
     const control_container_R = document.getElementById('control_container_R');
     const control_container_L = document.getElementById('control_container_L');
 
     control_container_R?.classList.remove('hide_palette');
     control_container_L?.classList.remove('hide_palette');
-  }
-
-  getCursorClass(): string {
-    if (this.selectedButton['brush'] || this.selectedButton['eraser']) {
-      return 'pointer_cursor';
-    } else {
-      return 'default';
-    }
   }
 
   setShapeEvent(newShape : any){
@@ -392,6 +396,5 @@ export class DrawingSpaceComponent implements OnInit{
     this.transformer.nodes([newShape])
     console.log('setShape', newShape);
   }
-
 
 }

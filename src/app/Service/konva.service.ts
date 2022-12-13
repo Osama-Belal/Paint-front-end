@@ -15,14 +15,19 @@ export class KonvaService {
   brushOp: string = '1';
   eraserWidth: string = '10';
 
+  x1: any = window.innerWidth / 4
+  y1: any = window.innerHeight / 4
+  x2: any = window.innerWidth / 2
+  y2: any = window.innerHeight / 2
+
   circle(){
     return new Konva.Circle({
-      radius: 50 * Math.random() + 40,
+      radius: Math.sqrt((this.x1 - this.x2)*(this.x1 - this.x2) + (this.y1 - this.y2)*(this.y1 - this.y2)) / 2,
       stroke: this.strokeColor,
       strokeWidth: Number(this.strokeWidth),
       fill: this.fillColor,
-      x: window.innerHeight * Math.random(),
-      y: window.innerHeight * Math.random(),
+      x: this.x1,
+      y: this.y1,
       draggable: true,
       name: 'shape',
       id:'s'
@@ -31,13 +36,13 @@ export class KonvaService {
 
   rect(){
     return new Konva.Rect({
-      width: 50 * Math.random() + 40,
-      height: 50 * Math.random() + 40,
+      width: Math.abs(this.x1 - this.x2),
+      height: Math.abs(this.y1 - this.y2),
       stroke: this.strokeColor,
       strokeWidth: Number(this.strokeWidth),
       fill: this.fillColor,
-      x: window.innerHeight * Math.random(),
-      y: window.innerHeight * Math.random(),
+      x: this.x1,
+      y: this.y1,
       name: 'shape',
       draggable: true
     });
@@ -46,13 +51,13 @@ export class KonvaService {
   square(){
     let w = Math.random();
     return new Konva.Rect({
-      width: 50 * w + 40,
-      height: 50 * w + 40,
+      width: Math.max(Math.abs(this.y1 - this.y2), Math.abs(this.x1 - this.x2)),
+      height: Math.max(Math.abs(this.y1 - this.y2), Math.abs(this.x1 - this.x2)),
       stroke: this.strokeColor,
       strokeWidth: Number(this.strokeWidth),
       fill: this.fillColor,
-      x: window.innerHeight * Math.random(),
-      y: window.innerHeight * Math.random(),
+      x: this.x1,
+      y: this.y1,
       name: 'shape',
       draggable: true
     });
@@ -60,13 +65,13 @@ export class KonvaService {
 
   triangle(){
     return new Konva.Line({
-      points: [0, 0, -50 * Math.sqrt(3),100, 50 * Math.sqrt(3), 100],
+      points: [(this.x1 + this.x2) / 2, this.y1, this.x1, this.y2, this.x2, this.y2],
       fill: this.fillColor,
       stroke: this.strokeColor,
       strokeWidth: Number(this.strokeWidth),
       closed: true,
-      x: window.innerHeight * Math.random(),
-      y: window.innerHeight * Math.random(),
+      x: this.x1,
+      y: this.y1,
       name: 'shape',
       draggable: true
     });
@@ -74,26 +79,26 @@ export class KonvaService {
 
   ellipse(){
     return new Konva.Ellipse({
-      radiusX: 100,
-      radiusY: 50,
+      radiusX: Math.abs(this.x1 - this.x2),
+      radiusY: Math.abs(this.y1 - this.y2),
       fill: this.fillColor,
       stroke: this.strokeColor,
       strokeWidth: Number(this.strokeWidth),
-      x: window.innerHeight * Math.random(),
-      y: window.innerHeight * Math.random(),
+      x: this.x1,
+      y: this.y1,
       name: 'shape',
       draggable: true
     });
   }
 
-  text(){
-    return new Konva.Text({
-      text: 'Write Here !',
-      fontSize: 30,
-      fontFamily: 'Calibri',
+  line(){
+    return new Konva.Line({
+      points: [this.x1, this.y1, this.x2, this.y2],
+      stroke: this.strokeColor,
       fill: this.fillColor,
-      x: window.innerHeight * Math.random(),
-      y: window.innerHeight * Math.random(),
+      strokeWidth: Number(this.strokeWidth),
+      lineCap: 'round',
+      lineJoin: 'round',
       name: 'shape',
       draggable: true
     });

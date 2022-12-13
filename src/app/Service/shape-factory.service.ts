@@ -15,32 +15,32 @@ export class ShapeFactoryService {
       let created: any;
       switch (shape.toLowerCase()){
         case 'circle':
-          created = this.myKonvaService.circle();
-          break;
-          case 'rect':
-          created = this.myKonvaService.rect();
-          break;
+            created = this.myKonvaService.circle();
+            break;
 
-          case 'rectangle':
-          created = this.myKonvaService.rect();
-          break;
+          case 'square':
+            created = this.myKonvaService.square();
+            break;
+
+          case 'rect':
+            created = this.myKonvaService.rect();
+            break;
 
           case 'triangle':
-          created = this.myKonvaService.triangle();
-          break;
+            created = this.myKonvaService.triangle();
+            break;
+
           case 'ellipse':
-          created = this.myKonvaService.ellipse();
-          break;
-          case 'square':
-            console.log('square created');
-          created = this.myKonvaService.square();
-          break;
-          case 'text': created = this.myKonvaService.text();
-          break;
+            created = this.myKonvaService.ellipse();
+            break;
+
+          case 'line':
+            created = this.myKonvaService.line();
+            break;
           default:
             console.log('ERROR shape not defined ', shape);
         }
-        
+
       return created;
     }
 }
