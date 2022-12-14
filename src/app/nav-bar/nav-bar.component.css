@@ -403,7 +403,57 @@
 
 #help .slideshow-container{
   overflow: auto;
-  background-color: #ec2525;
-  width: 1000px;
+  background-color: #446b8242;
+  width: 844px;
   height: 500px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: center;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: #23ff17;
+
+}
+
+#help .slideshow-container img{
+  margin: 10px 0;
+  padding: 10px;
+}
+button:hover {
+  box-shadow:
+    inset 0 0 50px #fff,
+    inset 20px 0 80px #f0f,
+    inset -20px 0 80px #0ff,
+    inset 20px 0 300px #f0f,
+    inset -20px 0 300px #0ff,
+    0 0 50px #fff,
+    -10px 0 80px #f0f,
+    10px 0 80px #0ff !important;
+  transform: translate3d(0, -.6em , 0);
+}
+
+
+button.noAnimate:hover{
+  box-shadow: none !important;
+  transform: translate3d(0, -.2em , 0);
+}
+button:hover svg.animate{
+  stroke: #2b4f60;
+  transform: translate3d(0, -.1em , 0);
+}
+button:hover svg.stroke {
+  animation: strok 2.5s reverse infinite;
+}
+button:hover svg.rotate{
+  animation: rotate 2.5s ease-in-out infinite;
+}
+button:hover svg.R{
+  animation: rotateR 2.5s ease-in-out infinite;
+}
+
+button {
+  background-color: #000;
+  color: white;
 }
