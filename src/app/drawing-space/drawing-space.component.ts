@@ -49,6 +49,7 @@ export class DrawingSpaceComponent implements OnInit{
     'brush': false,
     'eraser': false
   }
+  selectionRectangle!: any
 
   constructor(
     private _bottomSheet: MatBottomSheet,
@@ -68,7 +69,8 @@ export class DrawingSpaceComponent implements OnInit{
     });
     this.layer = new Layer();
     this.transformer = new Transformer();
-    this.layer.add(this.transformer);
+    this.selectionRectangle = new Konva.Rect();
+    this.layer.add(this.transformer, this.selectionRectangle);
     this.stage.add(this.layer);
     this.eventService.stage = this.stage
     this.addLineListeners();
@@ -302,6 +304,7 @@ export class DrawingSpaceComponent implements OnInit{
       let position = component.stage.getPointerPosition();
       isFreeHand = this.selectedButton['brush']
                    || this.selectedButton['eraser'];
+      isCreateShape = !isFreeHand
       this.hidePalette();
 
       if(e.target.name === 'shape'){
@@ -313,10 +316,8 @@ export class DrawingSpaceComponent implements OnInit{
       if(e.target === this.stage) {
         this.transformer.nodes([])
 
-        isCreateShape = true;
         this.konvaService.x1 = this.x1 = position?.x
         this.konvaService.y1 = this.y1 = position?.y
-        // console.log("started at x: " + this.x1 + "and y: " + this.y1)
 
         // Free Hand Concerns
         // if it's ok to brush or erase
@@ -327,16 +328,62 @@ export class DrawingSpaceComponent implements OnInit{
           component.shapes.push(freeHand);
           component.layer.add(freeHand);
         }
+
+        // faded shape
+        if(isCreateShape){
+          e.evt.preventDefault();
+          this.dynamicShape()
+          this.selectionRectangle.visible(true);
+          this.selectionRectangle.width(0);
+          this.selectionRectangle.height(0);
+        }
+
       }
     });
 
     this.stage.on('mousemove touchmove',  (e:any) => {
+      let position = this.stage.getPointerPosition()
+      this.konvaService.x2 = this.x2 = position?.x
+      this.konvaService.y2 = this.y2 = position?.y
+
       if (isFreeHand) {
         e.evt.preventDefault();
         const position: any = component.stage.getPointerPosition();
         const newPoints = freeHand.points().concat([position.x, position.y]);
         freeHand.points(newPoints);
         component.layer.batchDraw();
+      }
+
+      // faded shape
+      if(isCreateShape){
+        switch (this.activeShape){
+          case 'circle': this.selectionRectangle.setAttrs({
+            radius: Math.sqrt((this.x1 - this.x2)*(this.x1 - this.x2) + (this.y1 - this.y2)*(this.y1 - this.y2)) / 2,
+            x: (this.x1 + this.x2) / 2,
+            y: (this.y1 + this.y2) / 2,
+          });break;
+
+          case 'square': this.selectionRectangle.setAttrs({
+            x: Math.min(this.x1, this.x2),
+            y: Math.min(this.y1, this.y2),
+            width: Math.max(Math.abs(this.y1 - this.y2), Math.abs(this.x1 - this.x2)),
+            height: Math.max(Math.abs(this.y1 - this.y2), Math.abs(this.x1 - this.x2)),
+          });break;
+
+          case 'ellipse': this.selectionRectangle.setAttrs({
+            radiusX: Math.abs(this.x1 - this.x2) / 2,
+            radiusY: Math.abs(this.y1 - this.y2) / 2,
+            x: (this.x1 + this.x2) / 2,
+            y: (this.y1 + this.y2) / 2,
+          });break;
+
+          default : this.selectionRectangle.setAttrs({
+            x: Math.min(this.x1, this.x2),
+            y: Math.min(this.y1, this.y2),
+            width: Math.abs(this.x2 - this.x1),
+            height: Math.abs(this.y2 - this.y1),
+          });break;
+        }
       }
     });
 
@@ -345,8 +392,13 @@ export class DrawingSpaceComponent implements OnInit{
       this.konvaService.x2 = this.x2 = position?.x
       this.konvaService.y2 = this.y2 = position?.y
 
-      if(!this.selectedButton['brush'] && !this.selectedButton['eraser'] && isCreateShape)
+      if(!this.selectedButton['brush'] && !this.selectedButton['eraser'] && isCreateShape) {
+        // update visibility in timeout, so we can check it in click event
+        console.log("GoodBye!!!!!!!!")
+        e.evt.preventDefault();
+        setTimeout(() => {this.selectionRectangle.visible(false);});
         this.createShape(this.activeShape)
+      }
 
       // console.log("ended at x: " + this.x2 + "and y: " + this.y2)
       isFreeHand = false;
@@ -401,5 +453,26 @@ export class DrawingSpaceComponent implements OnInit{
     this.transformer.nodes([newShape])
     console.log('setShape', newShape);
   }
+
+  dynamicShape() {
+    // let's try faded shape
+    switch (this.activeShape){
+      case 'circle': this.selectionRectangle = new Konva.Circle();break;
+      case 'square': this.selectionRectangle = new Konva.Rect();break;
+      case 'ellipse': this.selectionRectangle = new Konva.Ellipse();break;
+      default :this.selectionRectangle = new Konva.Rect();break;
+    }
+
+    this.selectionRectangle.setAttrs({
+      fill: this.fillColor,
+      stroke: this.strokeColor,
+      strokeWidth: this.strokeWidth,
+      opacity: 0.5,
+      visible: false,
+    });
+
+    this.layer.add(this.selectionRectangle)
+  }
+
 
 }

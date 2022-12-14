@@ -9,7 +9,7 @@ import { ShapesService } from './shapes.service';
 })
 export class ShapeFactoryService {
 
-  constructor(private myKonvaService: KonvaService, private reqService: ShapesService){}
+  constructor(private myKonvaService: KonvaService){}
 
   createShape(shape: string){
       let created: any;
