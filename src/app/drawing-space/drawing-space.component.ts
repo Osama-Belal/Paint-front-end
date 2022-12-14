@@ -373,12 +373,6 @@ export class DrawingSpaceComponent implements OnInit{
             y: (this.y1 + this.y2) / 2,
           });break;
 
-          case 'line': this.selectionRectangle.setAttrs({
-            points: [this.x1, this.y1, this.x2, this.y2],
-            lineCap: 'round',
-            lineJoin: 'round',
-          });break;
-
           default : this.selectionRectangle.setAttrs({
             x: Math.min(this.x1, this.x2),
             y: Math.min(this.y1, this.y2),

@@ -70,8 +70,8 @@ export class KonvaService {
       stroke: this.strokeColor,
       strokeWidth: Number(this.strokeWidth),
       closed: true,
-      x: this.x1,
-      y: this.y1,
+      x: 0,
+      y: 0,
       name: 'shape',
       draggable: true
     });
