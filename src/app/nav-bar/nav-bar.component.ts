@@ -1,23 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import {MatDialog} from "@angular/material/dialog";
 import {Stage} from "konva/lib/Stage";
-import {Layer} from "konva/lib/Layer";
-import {Transformer} from "konva/lib/shapes/Transformer";
-import {MatBottomSheet} from "@angular/material/bottom-sheet";
-import {KonvaService} from "../Service/konva.service";
-import {ShapesService} from "../Service/shapes.service";
-import {DtoAdapterService} from "../Service/dto-adapter.service";
-import {Dto} from "../drawing-space/dto";
-import {toNumbers} from "@angular/compiler-cli/src/version_helpers";
 import { AppComponent } from '../app.component';
 import { EventsService } from '../Service/events.service';
-
-export interface Tile {
-  color: string;
-  cols: number;
-  rows: number;
-  text: string;
-}
 
 @Component({
   selector: 'app-nav-bar',
@@ -37,7 +21,7 @@ export class NavBarComponent implements OnInit {
   }
 
 
-  
+
   saveXML(){
     let obj ={
       stage: this.stage,
@@ -55,7 +39,7 @@ export class NavBarComponent implements OnInit {
     console.log(this.stage);
     this.eventService.saveJSON(obj);
   }
-  
+
   saveAsImage(): void {
     this.eventService.saveAsImage(this.stage);
   }
@@ -66,7 +50,7 @@ export class NavBarComponent implements OnInit {
       this.stageChange.emit(data);
     }));
   };
-  
+
   loadJSON(){
     this.eventService.load('saved.json').subscribe((data => {
       console.log('data in nav component ', data);
@@ -74,11 +58,9 @@ export class NavBarComponent implements OnInit {
     }));
   };
 
-  
+
   toggleGuide(){
     const help = document.getElementById('help');
-    // const w = String(window.innerWidth / 2);
-    // const h = String(window.innerHeight / 2);
 
     if(this.helpActive && help) {
       help.style.visibility = 'hidden';
