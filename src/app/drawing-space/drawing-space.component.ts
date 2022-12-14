@@ -87,6 +87,7 @@ export class DrawingSpaceComponent implements OnInit{
   }
 
   load(data : any){
+    console.log(data);
       this.stage.destroy()
       this.layer.destroy()
       this.shapes = [];
@@ -124,15 +125,6 @@ export class DrawingSpaceComponent implements OnInit{
 
   }
 
-  download(){
-
-          /* let blob:any = new Blob([data], { type: 'text/json; charset=utf-8' });
-          const url =window.URL.createObjectURL(data);
-          console.log('load called ', this.stage);
-        }));; */
-
-  }
-
   // ----------------------------------------- Shapes Actions -----------------------------
   setSelection(type: string) {
     this.clearSelection();
@@ -152,9 +144,10 @@ export class DrawingSpaceComponent implements OnInit{
       'eraser': false
     }
   }
-
+  transfromStart = false
   createShape(shape: string){
     this.Update();
+    if(this.transfromStart) return;
     let newShape = this.shapeFactory.createShape(shape);
     
     // send post request
@@ -312,6 +305,10 @@ export class DrawingSpaceComponent implements OnInit{
         isCreateShape = false;
         this.transformer.nodes([e.target])
       }
+      if(this.transfromStart){
+        isFreeHand = false;
+        isCreateShape = false;
+      }
 
       if(e.target === this.stage) {
         this.transformer.nodes([])
@@ -445,6 +442,11 @@ export class DrawingSpaceComponent implements OnInit{
 
     newShape.on('transformend', (e: any) =>{
       this.dtoAdapter.putResize(newShape.toObject().attrs, newShape.getClassName());
+      this.transfromStart = false;
+    })
+
+    newShape.on('transformstart', (e: any) =>{
+      this.transfromStart = true;
     })
 
     newShape.on('')
