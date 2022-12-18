@@ -16,7 +16,7 @@ export class EventsService {
    saveXML(obj: any){
     this.shapeService.postSave(obj.stage, obj)
   }
-  
+
   saveJSON(obj: any){
     this.shapeService.postSave(obj.stage, obj);
   }
@@ -26,7 +26,6 @@ export class EventsService {
   }
 
   saveAsImage(stage: Stage): void {
-    console.log('saveAsImage called')
     const dataUrl: string = stage.toDataURL({
       mimeType: 'image/png',
       quality: 1,
