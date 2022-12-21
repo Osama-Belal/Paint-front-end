@@ -41,8 +41,8 @@ export class KonvaService {
       stroke: this.strokeColor,
       strokeWidth: Number(this.strokeWidth),
       fill: this.fillColor,
-      x: this.x1,
-      y: this.y1,
+      x: Math.min(this.x1, this.x2),
+      y: Math.min(this.y1, this.y2),
       name: 'shape',
       draggable: true
     });
