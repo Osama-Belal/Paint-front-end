@@ -51,13 +51,13 @@ export class KonvaService {
   square(){
     let w = Math.random();
     return new Konva.Rect({
-      width: Math.max(Math.abs(this.y1 - this.y2), Math.abs(this.x1 - this.x2)),
-      height: Math.max(Math.abs(this.y1 - this.y2), Math.abs(this.x1 - this.x2)),
+      width: Math.abs(this.x2 - this.x1),
+      height: Math.abs(this.y2 - this.y1),
       stroke: this.strokeColor,
       strokeWidth: Number(this.strokeWidth),
       fill: this.fillColor,
-      x: this.x1,
-      y: this.y1,
+      x: Math.min(this.x1, this.x2),
+      y: Math.min(this.y1, this.y2),
       name: 'shape',
       draggable: true
     });
