@@ -3,7 +3,7 @@ import { Line } from 'konva/lib/shapes/Line';
 import Konva from "konva";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root' 
 })
 
 export class KonvaService {
