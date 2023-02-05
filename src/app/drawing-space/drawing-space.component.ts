@@ -436,6 +436,7 @@ export class DrawingSpaceComponent implements OnInit{
       case 'square': this.selectionRectangle = new Konva.Rect();break;
       case 'ellipse': this.selectionRectangle = new Konva.Ellipse();break;
       case 'line': this.selectionRectangle = new Konva.Line();break;
+      case 'triangle': this.selectionRectangle = new Konva.Line();break;
       default :this.selectionRectangle = new Konva.Rect();break;
     }
 
@@ -476,6 +477,13 @@ export class DrawingSpaceComponent implements OnInit{
         points: [this.x1, this.y1, this.x2, this.y2],
         lineCap: 'round',
         lineJoin: 'round',
+      });break;
+
+      case 'triangle': this.selectionRectangle.setAttrs({
+        points: [(this.x1 + this.x2) / 2, this.y1, this.x1, this.y2, this.x2, this.y2],
+        closed: true,
+        x: 0,
+        y: 0,
       });break;
 
       default : this.selectionRectangle.setAttrs({
